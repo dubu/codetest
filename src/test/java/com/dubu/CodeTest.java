@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -229,6 +230,13 @@ public class CodeTest {
     }
 
 
+    public static List<long[]> removNb(long n) {
+        // your code
+        // 먼소린지
+        return null;
+    }
+
+
     @Test
     public void test12() {
         List<long[]> res = new ArrayList<long[]>();
@@ -237,6 +245,9 @@ public class CodeTest {
         List<long[]> a = removNb(26);
         assertArrayEquals(res.get(0), a.get(0));
         assertArrayEquals(res.get(1), a.get(1));
+
+
+
     }
     @Test
     public void test14() {
@@ -246,10 +257,103 @@ public class CodeTest {
     }
 
 
-    public static List<long[]> removNb(long n) {
-        // your code
-        return null;
+    public static String[] dirReduc(String[] arr) {
+        // Your code here.
+
+
+        List<String> arrList = Arrays.asList(arr);
+        List<String> rs = new ArrayList();
+
+        String reducWord = "";
+
+        for (int i = 0; i < arrList.size(); i++) {
+
+            String bh = arrList.get(i);
+
+
+            if(bh.equals(reducWord)){
+
+                rs.remove(rs.size()-1);
+//                reducWord = "";
+                if(rs.size() == 0){
+                    reducWord = "";
+
+                }else{
+                    reducWord = getString(rs.get(rs.size()-1));
+
+                }
+
+//                bh = rs.get(rs.size()-1);
+//                rs.remove(1);
+            }else {
+                rs.add(bh);
+
+                reducWord = getString(bh);
+
+            }
+
+
+
+
+        }
+
+
+        //return new String[] {};
+        //return (String[]) rs.toArray();
+        return  rs.toArray(new String[rs.size()]);
     }
+
+    private static String getString( String bh) {
+        String reducWord= "";
+        switch (bh){
+            case "NORTH":
+                reducWord = "SOUTH";
+                break;
+            case "SOUTH":
+                reducWord = "NORTH";
+                break;
+            case "EAST":
+                reducWord = "WEST";
+                break;
+            case "WEST":
+                reducWord = "EAST";
+                break;
+
+        }
+        return reducWord;
+    }
+
+    @Test
+    public void testSimpleDirReduc() throws Exception {
+        assertEquals("\"NORTH\", \"SOUTH\", \"SOUTH\", \"EAST\", \"WEST\", \"NORTH\", \"WEST\"",
+            new String[]{"WEST"},
+            dirReduc(new String[]{"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"}));
+
+        assertEquals("\"NORTH\", \"WEST\", \"SOUTH\", \"EAST\"",
+            new String[]{"NORTH", "WEST", "SOUTH", "EAST"},
+            dirReduc(new String[]{"NORTH", "WEST", "SOUTH", "EAST"}));
+    }
+
+
+    public boolean isValid(String braces) {
+        // Add code here
+    }
+
+
+
+
+
+    @Test
+    public void testValid() {
+        assertEquals(true, isValid("()"));
+    }
+
+    @Test
+    public void testInvalid() {
+        assertEquals(false, isValid("[(])"));
+    }
+
+
 
 
 }
