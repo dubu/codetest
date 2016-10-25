@@ -6,8 +6,11 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by rigel on 10/25/16.
@@ -336,11 +339,71 @@ public class CodeTest {
 
 
     public boolean isValid(String braces) {
+//        BraceChecker
+
         // Add code here
+
+
+        List<Character> arrList = braces.chars().mapToObj((i) -> Character.valueOf((char)i)).collect(Collectors.toList());
+        List<Character> rs = new ArrayList();
+
+
+        Character reducWord = 0;
+        for (int i = 0; i < arrList.size(); i++) {
+
+            Character bh = arrList.get(i);
+
+
+            if(bh.equals(reducWord)){
+
+                rs.remove(rs.size()-1);
+                if(rs.size() == 0){
+                    reducWord = 0;
+
+                }else{
+                    reducWord = getCloseString(rs.get(rs.size()-1));
+
+                }
+
+            }else {
+                rs.add(bh);
+
+                reducWord = getCloseString(bh);
+
+            }
+
+
+
+        }
+
+        System.out.println(rs.size());
+
+        if(rs.size() > 0 ){
+
+            return false;
+        }
+        return true;
+
+
+
+
     }
 
-
-
+    private static char getCloseString( char c) {
+        char reducWord = 0;
+        switch (c) {
+            case '(':
+                reducWord = ')';
+                break;
+            case '{':
+                reducWord = '}';
+                break;
+            case '[':
+                reducWord = ']';
+                break;
+        }
+        return reducWord;
+    }
 
 
     @Test
