@@ -3,6 +3,8 @@ package com.dubu;
 import org.junit.Test;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -117,8 +119,137 @@ public class CodeTest {
         assertArrayEquals(new int[]{3, 21, 49}, race(80, 91, 37));
         assertArrayEquals(new int[]{2, 0, 0}, race(80, 100, 40));
 
+    }
+
+    public long evaluate(String s) {
+        // write your magic code here
+
+        String[] splits = s.split(" ");
+
+        List<Long> intQueue = new ArrayList<Long>();
+
+        Integer length = splits.length;
+
+
+        Long sum = -99999999L ;
+        for (int i = 0; i < splits.length; i++) {
+            String el = splits[i];
+//            System.out.println(el);
+
+
+            Long lastVal;
+            switch (el){
+                case "+" :
+
+                    lastVal = intQueue.remove(intQueue.size()-1);
+                    if(sum == -99999999){
+                        sum = lastVal;
+                        lastVal = intQueue.remove(intQueue.size()-1);
+                    }
+                    sum =  lastVal + sum;
+                   break;
+                case "-" :
+
+                    lastVal = intQueue.remove(intQueue.size()-1);
+                    if(sum == -99999999){
+                        sum = lastVal;
+                        lastVal = intQueue.remove(intQueue.size()-1);
+                    }
+                    sum =  lastVal - sum;
+                    break;
+                case "*" :
+                    lastVal = intQueue.remove(intQueue.size()-1);
+                    if(sum == -99999999){
+                        sum = lastVal;
+                        lastVal = intQueue.remove(intQueue.size()-1);
+                    }
+                    sum =  lastVal * sum;
+                    break;
+               case "/" :
+                    lastVal = intQueue.remove(intQueue.size()-1);
+                    if(sum == -99999999){
+                        sum = lastVal;
+                        lastVal = intQueue.remove(intQueue.size()-1);
+                    }
+                    sum =  lastVal / sum.intValue();
+                    break;
+
+                default:
+                    intQueue.add(Long.valueOf(el));
+            }
+
+
+        }
+
+        return sum;
+
+    }
+
+
+    @Test
+    public void test1() throws Exception {
+
+        assertEquals(70, evaluate("25 45 +"));
+        assertEquals(3600, evaluate("20 40 + 60 *"));  // (20+40) * 60
+        assertEquals(2000, evaluate("20 40 60 + *")); // 20 * (40 + 60)
+        assertEquals(10, evaluate("2 3 9 4 / + *"));
+
+        assertEquals(10, evaluate("100 50 10 2 1 / / / /"));
+
+
+        // fail !
+
+    }
+
+    public int solution(int number) {
+        //TODO: Code stuff here
+
+        int sum = 0;
+        for (int i = 1; i <number ; i++) {
+
+            if(i % 3  == 0 || i % 5  == 0){
+                sum = sum + i;
+
+            }
+
+        }
+
+
+        return  sum ;
+    }
+
+
+    @Test
+    public void test() {
+//        assertEquals(23, solution(10));
+        assertEquals(23, solution(25));
+
 
 
     }
+
+
+    @Test
+    public void test12() {
+        List<long[]> res = new ArrayList<long[]>();
+        res.add(new long[] {15, 21});
+        res.add(new long[] {21, 15});
+        List<long[]> a = removNb(26);
+        assertArrayEquals(res.get(0), a.get(0));
+        assertArrayEquals(res.get(1), a.get(1));
+    }
+    @Test
+    public void test14() {
+        List<long[]> res = new ArrayList<long[]>();
+        List<long[]> a = removNb(100);
+        assertTrue(res.size() == a.size());
+    }
+
+
+    public static List<long[]> removNb(long n) {
+        // your code
+        return null;
+    }
+
 
 }
