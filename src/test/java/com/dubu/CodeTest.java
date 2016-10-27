@@ -1,11 +1,16 @@
 package com.dubu;
 
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
+import java.math.BigInteger;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -418,5 +423,107 @@ public class CodeTest {
 
 
 
+    public BigInteger listPosition(String word) {
 
+        List<Character> charList = word.chars().mapToObj((i) -> Character.valueOf((char)i)).collect(Collectors.toList());
+
+        int charNum = 0;
+        Integer integer = 0;
+
+        Map<Character,Integer> wordMap  = new HashMap<Character, Integer>();
+        for (int i = 0; i < charList.size(); i++) {
+            Character character = charList.get(i);
+            if(i == 0 ){
+                wordMap.put(character,charNum);
+            }else{
+                integer = wordMap.get(character);
+                if (integer == null) {
+                    wordMap.put(character, ++charNum);
+                }
+            }
+        }
+
+        ArrayList<Integer> oriIntegerList = new ArrayList<>();
+
+        for (int i = 0; i < charList.size(); i++) {
+            Character character = charList.get(i);
+            //System.out.print(wordMap.get(character));
+            oriIntegerList.add(wordMap.get(character));
+        }
+
+        Collections.sort(oriIntegerList);
+
+        System.out.print(oriIntegerList);
+
+        ArrayList<Integer> baseIntegerList = new ArrayList<>(oriIntegerList);
+
+//        01111111
+//        11111110
+//        11101111
+
+        // java 8
+//        Comparator<Employee> byEmployeeNumber = (e1, e2) -> Integer.compare(
+//            e1.getEmployeeNumber(), e2.getEmployeeNumber());
+//
+//        employees.stream().sorted(byEmployeeNumber)
+//            .forEach(e -> System.out.println(e));
+
+//
+//        for (int i = 0; i < baseIntegerList.size(); i++) {
+//            Integer idx = baseIntegerList.get(i);
+//
+//            for (int j = 0; j < wordMap.size(); j++) {
+//
+//                Integer ele = wordMap.get(j);
+//            }
+//
+//
+//        }
+
+//        ArrayList<List> all = new ArrayList<>();
+//
+
+        //순서를 우찌 찾나요 모르겠다
+
+        int [][] all = new int[baseIntegerList.size()][wordMap.size()];
+        for (int i = 0; i < baseIntegerList.size(); i++) {
+            Integer integer1 = baseIntegerList.get(i);
+            for (int j = 0; j < wordMap.size(); j++) {
+                Character keyChar = (Character) wordMap.keySet().toArray()[j];
+                Integer num = wordMap.get(keyChar);
+                all[i][j] = num;
+            }
+        }
+
+        System.out.println(all);
+
+
+        return BigInteger.ZERO;
+    }
+
+
+
+    @Test
+    public void testKnownInputs() {
+        Anagrams anagram = new Anagrams();
+
+//        assertEquals("Position for 'A' incorrect", BigInteger.ONE, listPosition("A"));
+//        assertEquals("Position for 'ABAB' incorrect", BigInteger.valueOf(2), listPosition("ABAB"));
+//        assertEquals("Position for 'AAAB' incorrect", BigInteger.ONE, listPosition("AAAB"));
+//        assertEquals("Position for 'BAAA' incorrect", BigInteger.valueOf(4), listPosition("BAAA"));
+//        assertEquals("Position for 'QUESTION' incorrect", BigInteger.valueOf(24572), listPosition("QUESTION"));
+        assertEquals("Position for 'BOOKKEEPER' incorrect", BigInteger.valueOf(10743), listPosition("BOOKKEEPER"));
+    }
+
+
+    private class Anagrams {
+    }
+
+    @Test
+    public void testListsfs() throws Exception {
+
+        ArrayList<Integer> integers = new ArrayList<>();
+        Lists.newArrayList(1,integers);
+
+    }
 }
