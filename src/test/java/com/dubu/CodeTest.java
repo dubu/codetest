@@ -538,8 +538,22 @@ public class CodeTest {
             StringBuilder sb  = new StringBuilder();
             for (int i = 0; i < idx.size(); i++) { // 다음 위치로
 
+                 //int startJ = rsList.size() / factorial(integers.size()-i-1);
+
+//                int startJ = 0;
+//                if(rsList.size() >=  i * factorial(integers.size()-i-1) ){
+//                    startJ = rsList.size() / factorial(integers.size()-i-1);
+//                }
                 for (int j = 0; j < integers.size(); j++) {
 //                    Integer integer = integers.get(j);
+
+
+
+                    if( j > 0 && rsList.size() >= j * factorial(integers.size()-i-1) ){
+//                    if(i > 0 && factorial(integers.size()-i-1) != 0 &&  rsList.size() >= j * factorial(integers.size()-i-1) ){
+                        continue;
+                    }
+
 
                     Integer x = idx.get(j);
                     int keyVal = i * 25 + x;
@@ -547,7 +561,10 @@ public class CodeTest {
 
                     if(lineTrash.contains(j) ){
                         continue; // 숫자를 올린다
-                    }else{
+                    }
+                    else{
+
+                        // 이하 선택처리
                         trash.add(keyVal);
                         lineTrash.add(j);
 //                        System.out.print(x);
