@@ -484,19 +484,19 @@ public class CodeTest {
 //
 
         //순서를 우찌 찾나요 모르겠다
+        //아이디어부제.
 
-        int [][] all = new int[baseIntegerList.size()][wordMap.size()];
-        for (int i = 0; i < baseIntegerList.size(); i++) {
-            Integer integer1 = baseIntegerList.get(i);
-            for (int j = 0; j < wordMap.size(); j++) {
-                Character keyChar = (Character) wordMap.keySet().toArray()[j];
-                Integer num = wordMap.get(keyChar);
-                all[i][j] = num;
-            }
-        }
-
-        System.out.println(all);
-
+//        int [][] all = new int[baseIntegerList.size()][wordMap.size()];
+//        for (int i = 0; i < baseIntegerList.size(); i++) {
+//            Integer integer1 = baseIntegerList.get(i);
+//            for (int j = 0; j < wordMap.size(); j++) {
+//                Character keyChar = (Character) wordMap.keySet().toArray()[j];
+//                Integer num = wordMap.get(keyChar);
+//                all[i][j] = num;
+//            }
+//        }
+//
+//        System.out.println(all);
 
         return BigInteger.ZERO;
     }
@@ -515,15 +515,89 @@ public class CodeTest {
         assertEquals("Position for 'BOOKKEEPER' incorrect", BigInteger.valueOf(10743), listPosition("BOOKKEEPER"));
     }
 
-
     private class Anagrams {
+
     }
 
     @Test
     public void testListsfs() throws Exception {
 
-        ArrayList<Integer> integers = new ArrayList<>();
-        Lists.newArrayList(1,integers);
+
+        ArrayList<String> rsList = new ArrayList<>();
+//        ArrayList<Integer> integers = new ArrayList<>();
+        ArrayList<Integer> integers = Lists.newArrayList(1,2,3);
+//        Lists.newArrayList(1,integers);
+
+        ArrayList<Integer> idx = new ArrayList<>();
+        idx.addAll(integers);
+        int flag =0;
+        ArrayList<Integer> trash = new ArrayList<>();
+
+        while(true){
+            ArrayList<Integer> lineTrash = new ArrayList<>();
+            StringBuilder sb  = new StringBuilder();
+            for (int i = 0; i < idx.size(); i++) { // 다음 위치로
+
+                for (int j = 0; j < integers.size(); j++) {
+//                    Integer integer = integers.get(j);
+
+                    Integer x = idx.get(j);
+                    int keyVal = i * 25 + x;
+//                    if(trash.contains(keyVal) || lineTrash.contains(j) ){
+
+                    if(lineTrash.contains(j) ){
+                        continue; // 숫자를 올린다
+                    }else{
+                        trash.add(keyVal);
+                        lineTrash.add(j);
+//                        System.out.print(x);
+                        sb.append(x);
+                        break;
+                    }
+
+                }
+
+
+            }
+            System.out.println(sb.toString());
+
+
+            rsList.add(sb.toString());
+
+            if(rsList.size() >= factorial(integers.size()) ){
+                break;
+            }
+            //
+        }
+
 
     }
+
+    @Test
+    public void testFactory() throws Exception {
+
+        // 20
+        ArrayList<Integer> intList = new ArrayList<>();
+
+//        fact(intList);
+        // num  0~24 25자
+        //25진법
+    }
+
+    @Test
+    public void testPick() throws Exception {
+
+        System.out.println(factorial(25));
+
+    }
+
+    int factorial(int n)
+    {
+        int fact = 1;
+        for(int c = 1; c <= n; c++)
+            fact = fact * c;
+        return fact;
+    }
+
 }
+
