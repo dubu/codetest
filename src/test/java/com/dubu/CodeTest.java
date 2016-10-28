@@ -522,7 +522,6 @@ public class CodeTest {
     @Test
     public void testListsfs() throws Exception {
 
-
         ArrayList<String> rsList = new ArrayList<>();
 //        ArrayList<Integer> integers = new ArrayList<>();
         ArrayList<Integer> integers = Lists.newArrayList(1,2,3);
@@ -531,12 +530,30 @@ public class CodeTest {
         ArrayList<Integer> idx = new ArrayList<>();
         idx.addAll(integers);
         int flag =0;
+        int maxCapacity = 0;
         ArrayList<Integer> trash = new ArrayList<>();
 
+
+        HashMap<Integer, Integer> maxValueMap = new HashMap<>();
+
+
+        int hereI = 0;
+        int hereJ = 0;
+        StringBuilder sb  = new StringBuilder();
+        List<Integer> lineTrash = new ArrayList<>();
         while(true){
-            ArrayList<Integer> lineTrash = new ArrayList<>();
-            StringBuilder sb  = new StringBuilder();
-            for (int i = 0; i < idx.size(); i++) { // 다음 위치로
+
+
+
+
+            for (int i = hereI; i < idx.size(); i++) { // 다음 위치로
+
+                sb.setLength(Math.max(i, 0));
+                if(hereI != 0){
+                    lineTrash = lineTrash.subList(0,hereI);
+                }
+
+
 
                  //int startJ = rsList.size() / factorial(integers.size()-i-1);
 
@@ -544,31 +561,68 @@ public class CodeTest {
 //                if(rsList.size() >=  i * factorial(integers.size()-i-1) ){
 //                    startJ = rsList.size() / factorial(integers.size()-i-1);
 //                }
-                for (int j = 0; j < integers.size(); j++) {
+
+
+/*
+                if( i > 0 && i < idx.size()-1  && rsList.size() >= i * factorial(integers.size()-i-1) ){
+//                    if(i > 0 && factorial(integers.size()-i-1) != 0 &&  rsList.size() >= j * factorial(integers.size()-i-1) ){
+                    continue;
+                }
+*/
+
+
+
+
+
+
+
+//                maxCapacity = factorial(integers.size()-i-1);
+
+                for (int j = hereJ; j < integers.size(); j++) {
 //                    Integer integer = integers.get(j);
 
-
-
-                    if( j > 0 && rsList.size() >= j * factorial(integers.size()-i-1) ){
+//                    if( j > 0 && i < idx.size()-1  && rsList.size() >= j * factorial(integers.size()-i-1) ){
 //                    if(i > 0 && factorial(integers.size()-i-1) != 0 &&  rsList.size() >= j * factorial(integers.size()-i-1) ){
-                        continue;
-                    }
+//                    if(   rsList.size() >= (j+1) * factorial(integers.size()-i-1)  ){
+//                        continue;
+//                    }
 
-
+//                    if(maxCapacity == 0 ){
+//                        continue;
+//                    }
                     Integer x = idx.get(j);
+
                     int keyVal = i * 25 + x;
 //                    if(trash.contains(keyVal) || lineTrash.contains(j) ){
 
+
+
+
                     if(lineTrash.contains(j) ){
                         continue; // 숫자를 올린다
-                    }
-                    else{
+                    }else{
+
+//                        Integer capa = maxValueMap.get(keyVal);
+//                        if (capa == null) {
+//                            maxValueMap.put(keyVal, factorial(integers.size() - 1));
+//                        }
+//
+//                        Integer currentSize = maxValueMap.get(keyVal);
+//                        if (currentSize == 0) {
+//                            continue;
+//                        } else {
+//                            maxValueMap.put(keyVal, maxValueMap.get(keyVal) - 1);
+//                        }
 
                         // 이하 선택처리
                         trash.add(keyVal);
                         lineTrash.add(j);
 //                        System.out.print(x);
                         sb.append(x);
+                        hereI= i ;
+                        hereJ = j ;
+
+
                         break;
                     }
 
@@ -578,8 +632,8 @@ public class CodeTest {
             }
             System.out.println(sb.toString());
 
-
             rsList.add(sb.toString());
+//            maxCapacity = maxCapacity -1;
 
             if(rsList.size() >= factorial(integers.size()) ){
                 break;
@@ -593,7 +647,7 @@ public class CodeTest {
     @Test
     public void testFactory() throws Exception {
 
-        // 20
+        // 20억
         ArrayList<Integer> intList = new ArrayList<>();
 
 //        fact(intList);
@@ -604,7 +658,14 @@ public class CodeTest {
     @Test
     public void testPick() throws Exception {
 
+
+//        int factorial = factorial(25);
+
+        // 20억
         System.out.println(factorial(25));
+
+
+        System.out.println(Integer.MAX_VALUE);
 
     }
 
