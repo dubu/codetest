@@ -562,18 +562,11 @@ public class CodeTest {
 //                    startJ = rsList.size() / factorial(integers.size()-i-1);
 //                }
 
-
-/*
-                if( i > 0 && i < idx.size()-1  && rsList.size() >= i * factorial(integers.size()-i-1) ){
-//                    if(i > 0 && factorial(integers.size()-i-1) != 0 &&  rsList.size() >= j * factorial(integers.size()-i-1) ){
-                    continue;
-                }
-*/
-
-
-
-
-
+//
+//
+//                if( rsList.size() >= (i+1) * factorial(integers.size()-i -1) ){
+//                    continue;
+//                }
 
 
 //                maxCapacity = factorial(integers.size()-i-1);
