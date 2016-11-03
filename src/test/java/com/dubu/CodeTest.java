@@ -549,9 +549,9 @@ public class CodeTest {
             for (int i = hereI; i < idx.size(); i++) { // 다음 위치로
 
                 sb.setLength(Math.max(i, 0));
-                if(hereI != 0){
-                    lineTrash = lineTrash.subList(0,hereI);
-                }
+//                if(hereI != 0){
+//                    lineTrash = lineTrash.subList(0,hereI);
+//                }
 
 
 
@@ -670,5 +670,25 @@ public class CodeTest {
         return fact;
     }
 
+
+
+//
+//        012
+//        021   020  021
+//        102   022 100 101 102
+//        120   110 111 112 120
+//        201   121 122 200 201
+//        210   202 210
+//
+
+
+    @Test
+    public void testName() throws Exception {
+        // 25 이하 convert
+
+
+        // calc 진법  +
+
+    }
 }
 
