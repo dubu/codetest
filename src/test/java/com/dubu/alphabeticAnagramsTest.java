@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -267,7 +268,7 @@ public class AlphabeticAnagramsTest {
                     System.out.printf(" ");
                 }
 //                int lowPostionOrder = (positionRankOrder ) * factorial(nextPosion) / (dupleCount+1);
-                int lowPostionOrder = (positionRankOrder ) * factorial(nextPosion) / factorial(dupleCount) ;
+                long lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / factorial((long) dupleCount) ;
 
                 sum = sum.add(BigInteger.valueOf(lowPostionOrder)) ;
 
@@ -349,13 +350,73 @@ public class AlphabeticAnagramsTest {
 
     }
 
-    int factorial(int n)
+    Long factorial(Long n)
     {
-        int fact = 1;
+        Long fact = 1L;
         for(int c = 1; c <= n; c++)
             fact = fact * c;
         return fact;
     }
 
 
+    @Test
+    public void testBlowDupleCount() throws Exception {
+
+
+
+        ArrayList<Integer> list = Lists.newArrayList(3,3,2,2,7,7,7);
+
+
+
+//        System.out.println(integers.stream().reduce(0 , (a, b) -> {
+//
+//            int count = 0;
+//            if(a ==  b){
+//                count = count +1 ;
+//            }else{
+//                return a + factorial(count);
+//
+//
+//            }
+//            return a;
+//        }));
+
+
+
+//        for (int i = 0; i < integers.size(); i++) {
+//            Integer integer = integers.get(i);
+//            integers.remove(integer);
+//            int count = 1 ;
+//            if(integers.contains(integer)){
+//                integers.remove(integers.get(i));
+//                count = count +1;
+//
+//            }
+//
+//            System.out.println(factorial(count));
+//
+//
+//        }
+
+//
+//        list.stream()
+//            .collect(Collectors.groupingBy(x -> x, Collectors.counting()))
+//            .forEach((id,count)->System.out.println(id+"\t"+count));
+
+
+        dupleFactory(list);
+
+
+    }
+
+    private Long dupleFactory(ArrayList<Integer> list) {
+        Collection<Long> values = list.stream()
+            .collect(Collectors.groupingBy(x -> x, Collectors.counting())).values();
+
+        Long reduce = values.stream().reduce(0L, (a, b) -> a + factorial(b));
+
+//        System.out.println(reduce);
+        return reduce;
+
+    }
 }
