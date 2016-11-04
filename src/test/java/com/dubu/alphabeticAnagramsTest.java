@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.stream.Collectors;
 
@@ -92,24 +93,7 @@ public class AlphabeticAnagramsTest {
     }
 
 
-    @Test
-    public void test0101() throws Exception {
 
-        /*
-        0011
-        0101
-        0110
-        1100
-         */
-
-        ArrayList<Integer> integers = Lists.newArrayList(0,1,0,1);
-        BigInteger bigInteger = wordOrder(integers);
-
-        System.out.println();
-
-
-
-    }
 
     private class Anagrams {
 
@@ -214,15 +198,44 @@ public class AlphabeticAnagramsTest {
 
     }
 
+    @Test
+    public void test0101() throws Exception {
+
+        /*
+        0011
+        0101
+        0110
+        1100
+         */
+
+        ArrayList<Integer> integers = Lists.newArrayList(1,1,0,0);
+        BigInteger bigInteger = wordOrder(integers);
+
+        System.out.println(bigInteger);
+
+
+
+    }
+
     private BigInteger wordOrder(ArrayList<Integer> integers) {
         BigInteger sum = BigInteger.valueOf(1);
 
 //        ArrayList<Integer> integers = Lists.newArrayList(0,1,2);
         ArrayList<Integer> useAbleNumberList = new ArrayList<>();
-        ArrayList<Integer> orderList = new ArrayList<>();
+        ArrayList<Integer> orderListTemp = new ArrayList<>();
         useAbleNumberList.addAll(integers);
-        orderList.addAll(integers);
-        Collections.sort(orderList);
+        orderListTemp.addAll(integers);
+        Collections.sort(orderListTemp);
+
+        Set<Integer> fooSet = new HashSet<Integer>(orderListTemp);
+        ArrayList<Integer> orderList = new ArrayList<>();
+        Iterator<Integer> iterator = fooSet.iterator();
+        while (iterator.hasNext()) {
+            Integer next =  iterator.next();
+            orderList.add(next);
+        }
+
+
 
         for (int i = 0; i < integers.size(); i++) { // 자리수
 
@@ -232,7 +245,18 @@ public class AlphabeticAnagramsTest {
             for (int j = 0; j < positionRankOrder; j++) {
                 useAbleNumberList = new ArrayList<>();
                 useAbleNumberList.addAll(integers);
-                useAbleNumberList.remove(j);
+
+                //useAbleNumberList.remove(j);
+//                useAbleNumberList.remove(integers.get(i));
+//                useAbleNumberList.remove(integers.get(j));
+                if(i >0){
+                    for (int k = 0; k <= i; k++) {
+                        Integer integerK = integers.get(k);
+                        useAbleNumberList.remove(integerK);
+
+                    }
+                }
+
 
                 int nextPosion = integers.size() - 1 - i;
                 int dupleCount = 1;
@@ -242,7 +266,8 @@ public class AlphabeticAnagramsTest {
                 if(dupleCount ==0){
                     System.out.printf(" ");
                 }
-                int lowPostionOrder = (positionRankOrder ) * factorial(nextPosion) / (dupleCount+1);
+//                int lowPostionOrder = (positionRankOrder ) * factorial(nextPosion) / (dupleCount+1);
+                int lowPostionOrder = (positionRankOrder ) * factorial(nextPosion) / factorial(dupleCount) ;
 
                 sum = sum.add(BigInteger.valueOf(lowPostionOrder)) ;
 
