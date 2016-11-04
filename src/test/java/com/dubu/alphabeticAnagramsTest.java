@@ -76,12 +76,12 @@ public class AlphabeticAnagramsTest {
     public void testKnownInputs() {
         Anagrams anagram = new Anagrams();
 
-        assertEquals("Position for 'A' incorrect", BigInteger.ONE, listPosition("A"));
-        assertEquals("Position for 'ABAB' incorrect", BigInteger.valueOf(2), listPosition("ABAB"));
-        assertEquals("Position for 'AAAB' incorrect", BigInteger.ONE, listPosition("AAAB"));
-        assertEquals("Position for 'BAAA' incorrect", BigInteger.valueOf(4), listPosition("BAAA"));
+//        assertEquals("Position for 'A' incorrect", BigInteger.ONE, listPosition("A"));
+//        assertEquals("Position for 'ABAB' incorrect", BigInteger.valueOf(2), listPosition("ABAB"));
+//        assertEquals("Position for 'AAAB' incorrect", BigInteger.ONE, listPosition("AAAB"));
+//        assertEquals("Position for 'BAAA' incorrect", BigInteger.valueOf(4), listPosition("BAAA"));
         assertEquals("Position for 'QUESTION' incorrect", BigInteger.valueOf(24572), listPosition("QUESTION"));
-        assertEquals("Position for 'BOOKKEEPER' incorrect", BigInteger.valueOf(10743), listPosition("BOOKKEEPER"));
+//        assertEquals("Position for 'BOOKKEEPER' incorrect", BigInteger.valueOf(10743), listPosition("BOOKKEEPER"));
     }
 
     private BigInteger listPosition(String str) {
@@ -93,8 +93,29 @@ public class AlphabeticAnagramsTest {
         return i;
     }
 
+    @Test
+    public void testConvert() throws Exception {
 
 
+//        QUESTION
+//        [4, 7, 0, 5, 6, 1, 3, 2]
+
+
+        String str= "BOOKKEEPER";
+
+//        [0, 3, 3, 2, 2, 1, 1, 4, 1, 5]
+//        0B
+//        1E
+//        2K
+//        3O
+//        4P
+//        5R
+
+
+        ArrayList<Integer> integers = convertPosition(str);
+        System.out.println(integers);
+
+    }
 
     private class Anagrams {
 
@@ -103,7 +124,12 @@ public class AlphabeticAnagramsTest {
 
     public ArrayList<Integer> convertPosition(String word) {
 
+
+        List<Character> oriList = word.chars().mapToObj((i) -> Character.valueOf((char)i)).collect(Collectors.toList());
+
         List<Character> charList = word.chars().mapToObj((i) -> Character.valueOf((char)i)).collect(Collectors.toList());
+
+        Collections.sort(charList);
 
         int charNum = 0;
         Integer integer = 0;
@@ -133,12 +159,14 @@ public class AlphabeticAnagramsTest {
 
         ArrayList<Integer> oriIntegerList = new ArrayList<>();
 
-        for (int i = 0; i < charList.size(); i++) {
-            Character character = charList.get(i);
+        for (int i = 0; i < oriList.size(); i++) {
+            Character character = oriList.get(i);
             //System.out.print(wordMap.get(character));
             //oriIntegerList.add(orderList.indexOf(character));
             // oriIntegerList.add(wordMap.get(character));
-            oriIntegerList.add(orderList.indexOf(character));
+//            oriIntegerList.add(orderList.indexOf(character));
+            oriIntegerList.add(wordMap.get(character));
+
         }
 
 //        Collections.sort(oriIntegerList);
@@ -269,14 +297,10 @@ public class AlphabeticAnagramsTest {
                     dupleCount = dupleFactory(useAbleNumberList);
 
                     if(dupleCount ==0){
-                        System.out.printf(" ");
+//                        System.out.printf(" ");
                     }
-//                int lowPostionOrder = (positionRankOrder ) * factorial(nextPosion) / (dupleCount+1);
-//                long lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / factorial((long) dupleCount) ;
-
 
                     if(useAbleNumberList.size() == 0){
-//                    lowPostionOrder =1 ;
 
                     }else{
                         lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / dupleCount ;
@@ -287,93 +311,13 @@ public class AlphabeticAnagramsTest {
                     lowPostionOrder = 0;
 
                 }
-
-
-
-
-
-
-
-
                 sum = sum.add(BigInteger.valueOf(lowPostionOrder)) ;
 
             }
 
         }
 
-
-//        System.out.println(sum-1);
-//        if(sum.intValue()  > 1 ){
-//           sum =  sum.subtract(BigInteger.valueOf(1));
-//
-//        }
-//        return sum ;
-
         return  sum.add(BigInteger.ONE);
-
-    }
-
-    @Test
-    public void testListsfs() throws Exception {
-
-        ArrayList<String> rsList = new ArrayList<>();
-        ArrayList<Integer> integers = Lists.newArrayList(1,2,3);
-
-        ArrayList<Integer> idx = new ArrayList<>();
-        idx.addAll(integers);
-        int flag =0;
-        int maxCapacity = 0;
-        ArrayList<Integer> trash = new ArrayList<>();
-
-
-        HashMap<Integer, Integer> maxValueMap = new HashMap<>();
-
-
-        int hereI = 0;
-        int hereJ = 0;
-        StringBuilder sb  = new StringBuilder();
-        List<Integer> lineTrash = new ArrayList<>();
-        while(true){
-            for (int i = hereI; i < idx.size(); i++) { // 다음 위치로
-
-                sb.setLength(Math.max(i, 0));
-
-                for (int j = hereJ; j < integers.size(); j++) {
-                    Integer x = idx.get(j);
-
-                    int keyVal = i * 25 + x;
-
-                    if(lineTrash.contains(j) ){
-                        continue; // 숫자를 올린다
-                    }else{
-
-                        // 이하 선택처리
-                        trash.add(keyVal);
-                        lineTrash.add(j);
-//                        System.out.print(x);
-                        sb.append(x);
-                        hereI= i ;
-                        hereJ = j ;
-
-
-                        break;
-                    }
-
-                }
-
-
-            }
-            System.out.println(sb.toString());
-
-            rsList.add(sb.toString());
-//            maxCapacity = maxCapacity -1;
-
-//            if(rsList.size() >= factorial(integers.size()) ){
-//                break;
-//            }
-            //
-        }
-
 
     }
 
@@ -383,59 +327,6 @@ public class AlphabeticAnagramsTest {
         for(int c = 1; c <= n; c++)
             fact = fact * c;
         return fact;
-    }
-
-
-    @Test
-    public void testBlowDupleCount() throws Exception {
-
-
-
-//        ArrayList<Integer> list = Lists.newArrayList(3,3,2,2,7,7,7);
-
-        ArrayList<Integer> list = Lists.newArrayList(1,1,0);
-
-
-
-//        System.out.println(integers.stream().reduce(0 , (a, b) -> {
-//
-//            int count = 0;
-//            if(a ==  b){
-//                count = count +1 ;
-//            }else{
-//                return a + factorial(count);
-//
-//
-//            }
-//            return a;
-//        }));
-
-
-
-//        for (int i = 0; i < integers.size(); i++) {
-//            Integer integer = integers.get(i);
-//            integers.remove(integer);
-//            int count = 1 ;
-//            if(integers.contains(integer)){
-//                integers.remove(integers.get(i));
-//                count = count +1;
-//
-//            }
-//
-//            System.out.println(factorial(count));
-//
-//
-//        }
-
-//
-//        list.stream()
-//            .collect(Collectors.groupingBy(x -> x, Collectors.counting()))
-//            .forEach((id,count)->System.out.println(id+"\t"+count));
-
-
-        dupleFactory(list);
-
-
     }
 
     private Long dupleFactory(ArrayList<Integer> list) {
