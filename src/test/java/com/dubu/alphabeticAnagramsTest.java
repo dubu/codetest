@@ -203,25 +203,28 @@ public class AlphabeticAnagramsTest {
     public void test0101() throws Exception {
 
         /*
-        0011
-        0101
-        0110
-        1100
+        0011 o
+        0101 o
+        0110 0
+        1001 3
+        1010 4
+        1100 4
          */
 
-        ArrayList<Integer> integers = Lists.newArrayList(1,1,0,0);
-        BigInteger bigInteger = wordOrder(integers);
 
-        System.out.println(bigInteger);
-
+        assertEquals( BigInteger.valueOf(1L), wordOrder(Lists.newArrayList(0,0,1,1)));
+        assertEquals( BigInteger.valueOf(2L), wordOrder(Lists.newArrayList(0,1,0,1)));
+        assertEquals( BigInteger.valueOf(3L), wordOrder(Lists.newArrayList(0,1,1,0)));
+        assertEquals( BigInteger.valueOf(4L), wordOrder(Lists.newArrayList(1,0,0,1)));
+        assertEquals( BigInteger.valueOf(5L), wordOrder(Lists.newArrayList(1,0,1,0)));
+        assertEquals( BigInteger.valueOf(6L), wordOrder(Lists.newArrayList(1,1,0,0)));
 
 
     }
 
     private BigInteger wordOrder(ArrayList<Integer> integers) {
-        BigInteger sum = BigInteger.valueOf(1);
+        BigInteger sum = BigInteger.valueOf(0);
 
-//        ArrayList<Integer> integers = Lists.newArrayList(0,1,2);
         ArrayList<Integer> useAbleNumberList = new ArrayList<>();
         ArrayList<Integer> orderListTemp = new ArrayList<>();
         useAbleNumberList.addAll(integers);
@@ -247,11 +250,8 @@ public class AlphabeticAnagramsTest {
                 useAbleNumberList = new ArrayList<>();
                 useAbleNumberList.addAll(integers);
 
-                //useAbleNumberList.remove(j);
-//                useAbleNumberList.remove(integers.get(i));
-//                useAbleNumberList.remove(integers.get(j));
                 if(i >0){
-                    for (int k = 0; k <= i; k++) {
+                    for (int k = 0; k < i; k++) {
                         Integer integerK = integers.get(k);
                         useAbleNumberList.remove(integerK);
 
@@ -259,16 +259,41 @@ public class AlphabeticAnagramsTest {
                 }
 
 
-                int nextPosion = integers.size() - 1 - i;
-                int dupleCount = 1;
+                long lowPostionOrder = 0;
+                Integer tmpInt = orderList.get(j);
+                if(useAbleNumberList.contains(tmpInt)){
+                    useAbleNumberList.remove(tmpInt);
+                    int nextPosion = integers.size() -1 - i;
+                    long dupleCount = 1;
 
-                dupleCount = (int) useAbleNumberList.stream().filter(integer -> integer == integerValue).count();
+                    dupleCount = dupleFactory(useAbleNumberList);
 
-                if(dupleCount ==0){
-                    System.out.printf(" ");
-                }
+                    if(dupleCount ==0){
+                        System.out.printf(" ");
+                    }
 //                int lowPostionOrder = (positionRankOrder ) * factorial(nextPosion) / (dupleCount+1);
-                long lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / factorial((long) dupleCount) ;
+//                long lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / factorial((long) dupleCount) ;
+
+
+                    if(useAbleNumberList.size() == 0){
+//                    lowPostionOrder =1 ;
+
+                    }else{
+                        lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / dupleCount ;
+
+                    }
+
+                }else{
+                    lowPostionOrder = 0;
+
+                }
+
+
+
+
+
+
+
 
                 sum = sum.add(BigInteger.valueOf(lowPostionOrder)) ;
 
@@ -278,11 +303,13 @@ public class AlphabeticAnagramsTest {
 
 
 //        System.out.println(sum-1);
-        if(sum.intValue()  > 1 ){
-           sum =  sum.subtract(BigInteger.valueOf(1));
+//        if(sum.intValue()  > 1 ){
+//           sum =  sum.subtract(BigInteger.valueOf(1));
+//
+//        }
+//        return sum ;
 
-        }
-        return sum ;
+        return  sum.add(BigInteger.ONE);
 
     }
 
@@ -364,7 +391,9 @@ public class AlphabeticAnagramsTest {
 
 
 
-        ArrayList<Integer> list = Lists.newArrayList(3,3,2,2,7,7,7);
+//        ArrayList<Integer> list = Lists.newArrayList(3,3,2,2,7,7,7);
+
+        ArrayList<Integer> list = Lists.newArrayList(1,1,0);
 
 
 
@@ -413,7 +442,7 @@ public class AlphabeticAnagramsTest {
         Collection<Long> values = list.stream()
             .collect(Collectors.groupingBy(x -> x, Collectors.counting())).values();
 
-        Long reduce = values.stream().reduce(0L, (a, b) -> a + factorial(b));
+        Long reduce = values.stream().reduce(1L, (a, b) -> a * factorial(b));
 
 //        System.out.println(reduce);
         return reduce;
