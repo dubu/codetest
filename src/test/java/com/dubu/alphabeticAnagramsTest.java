@@ -17,7 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
@@ -76,24 +75,17 @@ public class AlphabeticAnagramsTest {
     public void testKnownInputs() {
         Anagrams anagram = new Anagrams();
 
-        assertEquals("Position for 'A' incorrect", BigInteger.ONE, listPosition("A"));
-        assertEquals("Position for 'ABAB' incorrect", BigInteger.valueOf(2), listPosition("ABAB"));
-        assertEquals("Position for 'AAAB' incorrect", BigInteger.ONE, listPosition("AAAB"));
-        assertEquals("Position for 'BAAA' incorrect", BigInteger.valueOf(4), listPosition("BAAA"));
+        assertEquals("Position for 'A' incorrect", BigInteger.ONE, anagram.listPosition("A"));
+        assertEquals("Position for 'ABAB' incorrect", BigInteger.valueOf(2), anagram.listPosition("ABAB"));
+        assertEquals("Position for 'AAAB' incorrect", BigInteger.ONE, anagram.listPosition("AAAB"));
+        assertEquals("Position for 'BAAA' incorrect", BigInteger.valueOf(4), anagram.listPosition("BAAA"));
 
         //[4, 7, 0, 5, 6, 1, 3, 2] 8
-        assertEquals("Position for 'QUESTION' incorrect", BigInteger.valueOf(24572), listPosition("QUESTION"));
-        assertEquals("Position for 'BOOKKEEPER' incorrect", BigInteger.valueOf(10743), listPosition("BOOKKEEPER"));
+        assertEquals("Position for 'QUESTION' incorrect", BigInteger.valueOf(24572), anagram.listPosition("QUESTION"));
+        assertEquals("Position for 'BOOKKEEPER' incorrect", BigInteger.valueOf(10743), anagram.listPosition("BOOKKEEPER"));
     }
 
-    private BigInteger listPosition(String str) {
 
-        ArrayList<Integer> integers = convertPosition(str);
-        System.err.println(integers);
-        BigInteger i = wordOrder(integers);
-
-        return i;
-    }
 
     @Test
     public void testConvert() throws Exception {
@@ -114,87 +106,10 @@ public class AlphabeticAnagramsTest {
 //        5R
 
 
-        ArrayList<Integer> integers = convertPosition(str);
+        Anagrams anagram = new Anagrams();
+        ArrayList<Integer> integers = anagram.convertPosition(str);
         System.out.println(integers);
 
-    }
-
-    private class Anagrams {
-
-    }
-
-
-    public ArrayList<Integer> convertPosition(String word) {
-
-
-        List<Character> oriList = word.chars().mapToObj((i) -> Character.valueOf((char)i)).collect(Collectors.toList());
-
-        List<Character> charList = word.chars().mapToObj((i) -> Character.valueOf((char)i)).collect(Collectors.toList());
-
-        Collections.sort(charList);
-
-        int charNum = 0;
-        Integer integer = 0;
-
-        Map<Character,Integer> wordMap  = new HashMap<Character, Integer>();
-        for (int i = 0; i < charList.size(); i++) {
-            Character character = charList.get(i);
-            if(i == 0 ){
-                wordMap.put(character,charNum);
-            }else{
-                integer = wordMap.get(character);
-                if (integer == null) {
-                    wordMap.put(character, ++charNum);
-                }
-            }
-        }
-
-
-        List<Character> orderList = new ArrayList<Character>();
-        Iterator<Character> iterator = wordMap.keySet().iterator();
-        while (iterator.hasNext()) {
-            Character next = iterator.next();
-            orderList.add(next);
-        }
-
-
-
-        ArrayList<Integer> oriIntegerList = new ArrayList<>();
-
-        for (int i = 0; i < oriList.size(); i++) {
-            Character character = oriList.get(i);
-            //System.out.print(wordMap.get(character));
-            //oriIntegerList.add(orderList.indexOf(character));
-            // oriIntegerList.add(wordMap.get(character));
-//            oriIntegerList.add(orderList.indexOf(character));
-            oriIntegerList.add(wordMap.get(character));
-
-        }
-
-//        Collections.sort(oriIntegerList);
-//
-//        System.out.print(oriIntegerList);
-//
-//        ArrayList<Integer> baseIntegerList = new ArrayList<>(oriIntegerList);
-
-
-
-//        return BigInteger.ZERO;
-
-
-
-//
-//        for (int i = 0; i < oriIntegerList.size(); i++) {
-//            Integer integer1 = oriIntegerList.get(i);
-//
-//            oriIntegerList.set(i, orderList.indexOf(integer1));
-//        }
-
-
-
-
-
-        return  oriIntegerList;
     }
 
 
@@ -219,10 +134,11 @@ public class AlphabeticAnagramsTest {
 //        210;
 //
 
-        ArrayList<Integer> cba = convertPosition("BAA");
+        Anagrams anagram = new Anagrams();
+        ArrayList<Integer> cba = anagram.convertPosition("BAA");
 
         System.err.println(cba);
-        BigInteger rs = wordOrder(cba);
+        BigInteger rs = anagram.wordOrder(cba);
 
         System.out.println(rs);
 
@@ -242,104 +158,168 @@ public class AlphabeticAnagramsTest {
          */
 
 
-        assertEquals( BigInteger.valueOf(1L), wordOrder(Lists.newArrayList(0,0,1,1)));
-        assertEquals( BigInteger.valueOf(2L), wordOrder(Lists.newArrayList(0,1,0,1)));
-        assertEquals( BigInteger.valueOf(3L), wordOrder(Lists.newArrayList(0,1,1,0)));
-        assertEquals( BigInteger.valueOf(4L), wordOrder(Lists.newArrayList(1,0,0,1)));
-        assertEquals( BigInteger.valueOf(5L), wordOrder(Lists.newArrayList(1,0,1,0)));
-        assertEquals( BigInteger.valueOf(6L), wordOrder(Lists.newArrayList(1,1,0,0)));
+//        assertEquals( BigInteger.valueOf(1L), wordOrder(Lists.newArrayList(0,0,1,1)));
+//        assertEquals( BigInteger.valueOf(2L), wordOrder(Lists.newArrayList(0,1,0,1)));
+//        assertEquals( BigInteger.valueOf(3L), wordOrder(Lists.newArrayList(0,1,1,0)));
+//        assertEquals( BigInteger.valueOf(4L), wordOrder(Lists.newArrayList(1,0,0,1)));
+//        assertEquals( BigInteger.valueOf(5L), wordOrder(Lists.newArrayList(1,0,1,0)));
+//        assertEquals( BigInteger.valueOf(6L), wordOrder(Lists.newArrayList(1,1,0,0)));
 
 
     }
 
-    private BigInteger wordOrder(ArrayList<Integer> integers) {
-        BigInteger sum = BigInteger.valueOf(0);
 
-        ArrayList<Integer> useAbleNumberList = new ArrayList<>();
-        ArrayList<Integer> orderListTemp = new ArrayList<>();
-        useAbleNumberList.addAll(integers);
-        orderListTemp.addAll(integers);
-        Collections.sort(orderListTemp);
+    public class Anagrams {
 
-        Set<Integer> fooSet = new HashSet<Integer>(orderListTemp);
-        ArrayList<Integer> orderList = new ArrayList<>();
-        Iterator<Integer> iterator = fooSet.iterator();
-        while (iterator.hasNext()) {
-            Integer next =  iterator.next();
-            orderList.add(next);
+
+        public BigInteger listPosition(String str) {
+
+            ArrayList<Integer> integers = convertPosition(str);
+            System.err.println(integers);
+            BigInteger i = wordOrder(integers);
+
+            return i;
         }
 
 
 
-        for (int i = 0; i < integers.size(); i++) { // 자리수
-
-            Integer integerValue = integers.get(i);
-
-            int positionRankOrder = orderList.indexOf(integerValue);
-            for (int j = 0; j < positionRankOrder; j++) {
-                useAbleNumberList = new ArrayList<>();
-                useAbleNumberList.addAll(integers);
-
-                if(i >0){
-                    for (int k = 0; k < i; k++) {
-                        Integer integerK = integers.get(k);
-                        useAbleNumberList.remove(integerK);
-
-                    }
-                }
+        public ArrayList<Integer> convertPosition(String word) {
 
 
-                long lowPostionOrder = 0;
-                Integer tmpInt = orderList.get(j);
-                if(useAbleNumberList.contains(tmpInt)){
-                    useAbleNumberList.remove(tmpInt);
-                    int nextPosion = integers.size() -1 - i;
-                    long dupleCount = 1;
+            List<Character> oriList = word.chars().mapToObj((i) -> Character.valueOf((char)i)).collect(Collectors.toList());
 
-                    dupleCount = dupleFactory(useAbleNumberList);
+            List<Character> charList = word.chars().mapToObj((i) -> Character.valueOf((char)i)).collect(Collectors.toList());
 
-                    if(dupleCount ==0){
-//                        System.out.printf(" ");
-                    }
+            Collections.sort(charList);
 
-                    if(useAbleNumberList.size() == 0){
+            int charNum = 0;
+            Integer integer = 0;
 
-                    }else{
-                        //lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / dupleCount ;
-                        lowPostionOrder = factorial((long) nextPosion) / dupleCount ;
-
-                    }
-
+            Map<Character,Integer> wordMap  = new HashMap<Character, Integer>();
+            for (int i = 0; i < charList.size(); i++) {
+                Character character = charList.get(i);
+                if(i == 0 ){
+                    wordMap.put(character,charNum);
                 }else{
-                    lowPostionOrder = 0;
-
+                    integer = wordMap.get(character);
+                    if (integer == null) {
+                        wordMap.put(character, ++charNum);
+                    }
                 }
-                sum = sum.add(BigInteger.valueOf(lowPostionOrder)) ;
+            }
+
+
+            List<Character> orderList = new ArrayList<Character>();
+            Iterator<Character> iterator = wordMap.keySet().iterator();
+            while (iterator.hasNext()) {
+                Character next = iterator.next();
+                orderList.add(next);
+            }
+
+
+
+            ArrayList<Integer> oriIntegerList = new ArrayList<>();
+
+            for (int i = 0; i < oriList.size(); i++) {
+                Character character = oriList.get(i);
+                oriIntegerList.add(wordMap.get(character));
 
             }
 
+            return  oriIntegerList;
         }
 
-        return  sum.add(BigInteger.ONE);
 
-    }
+        public BigInteger wordOrder(ArrayList<Integer> integers) {
+            BigInteger sum = BigInteger.valueOf(0);
 
-    Long factorial(Long n)
-    {
-        Long fact = 1L;
-        for(int c = 1; c <= n; c++)
-            fact = fact * c;
-        return fact;
-    }
+            ArrayList<Integer> useAbleNumberList = new ArrayList<>();
+            ArrayList<Integer> orderListTemp = new ArrayList<>();
+            useAbleNumberList.addAll(integers);
+            orderListTemp.addAll(integers);
+            Collections.sort(orderListTemp);
 
-    private Long dupleFactory(ArrayList<Integer> list) {
-        Collection<Long> values = list.stream()
-            .collect(Collectors.groupingBy(x -> x, Collectors.counting())).values();
+            Set<Integer> fooSet = new HashSet<Integer>(orderListTemp);
+            ArrayList<Integer> orderList = new ArrayList<>();
+            Iterator<Integer> iterator = fooSet.iterator();
+            while (iterator.hasNext()) {
+                Integer next =  iterator.next();
+                orderList.add(next);
+            }
 
-        Long reduce = values.stream().reduce(1L, (a, b) -> a * factorial(b));
+
+
+            for (int i = 0; i < integers.size(); i++) { // 자리수
+
+                Integer integerValue = integers.get(i);
+
+                int positionRankOrder = orderList.indexOf(integerValue);
+                for (int j = 0; j < positionRankOrder; j++) {
+                    useAbleNumberList = new ArrayList<>();
+                    useAbleNumberList.addAll(integers);
+
+                    if(i >0){
+                        for (int k = 0; k < i; k++) {
+                            Integer integerK = integers.get(k);
+                            useAbleNumberList.remove(integerK);
+
+                        }
+                    }
+
+
+                    long lowPostionOrder = 0;
+                    Integer tmpInt = orderList.get(j);
+                    if(useAbleNumberList.contains(tmpInt)){
+                        useAbleNumberList.remove(tmpInt);
+                        int nextPosion = integers.size() -1 - i;
+                        long dupleCount = 1;
+
+                        dupleCount = dupleFactory(useAbleNumberList);
+
+                        if(dupleCount ==0){
+//                        System.out.printf(" ");
+                        }
+
+                        if(useAbleNumberList.size() == 0){
+
+                        }else{
+                            //lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / dupleCount ;
+                            lowPostionOrder = factorial((long) nextPosion) / dupleCount ;
+
+                        }
+
+                    }else{
+                        lowPostionOrder = 0;
+
+                    }
+                    sum = sum.add(BigInteger.valueOf(lowPostionOrder)) ;
+
+                }
+
+            }
+
+            return  sum.add(BigInteger.ONE);
+
+        }
+
+        public Long factorial(Long n)
+        {
+            Long fact = 1L;
+            for(int c = 1; c <= n; c++)
+                fact = fact * c;
+            return fact;
+        }
+
+        public Long dupleFactory(ArrayList<Integer> list) {
+            Collection<Long> values = list.stream()
+                .collect(Collectors.groupingBy(x -> x, Collectors.counting())).values();
+
+            Long reduce = values.stream().reduce(1L, (a, b) -> a * factorial(b));
 
 //        System.out.println(reduce);
-        return reduce;
+            return reduce;
 
+        }
     }
+
 }
