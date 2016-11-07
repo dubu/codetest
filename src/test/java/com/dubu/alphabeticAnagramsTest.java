@@ -44,7 +44,7 @@ import static org.junit.Assert.assertEquals;
  * QUESTION = 24572
  * BOOKKEEPER = 10743
  */
-public class AlphabeticAnagramsTest {
+public class alphabeticAnagramsTest {
 
     @Test
     public void testStep1() throws Exception {
