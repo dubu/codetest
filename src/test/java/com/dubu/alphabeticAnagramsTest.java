@@ -267,7 +267,7 @@ public class AlphabeticAnagramsTest {
                     }
 
 
-                    long lowPostionOrder = 0;
+                    BigInteger lowPostionOrder = BigInteger.ZERO;
                     Integer tmpInt = orderList.get(j);
                     if(useAbleNumberList.contains(tmpInt)){
                         useAbleNumberList.remove(tmpInt);
@@ -284,15 +284,15 @@ public class AlphabeticAnagramsTest {
 
                         }else{
                             //lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / dupleCount ;
-                            lowPostionOrder = factorial((long) nextPosion) / dupleCount ;
+                            lowPostionOrder = factorial((long) nextPosion).divide(BigInteger.valueOf(dupleCount)) ;
 
                         }
 
                     }else{
-                        lowPostionOrder = 0;
+                        lowPostionOrder = BigInteger.ZERO;
 
                     }
-                    sum = sum.add(BigInteger.valueOf(lowPostionOrder)) ;
+                    sum = sum.add(lowPostionOrder) ;
 
                 }
 
@@ -302,7 +302,15 @@ public class AlphabeticAnagramsTest {
 
         }
 
-        public Long factorial(Long n)
+        public BigInteger factorial(Long n)
+        {
+            BigInteger fact = BigInteger.ONE;
+            for(int c = 1; c <= n; c++)
+                fact = fact.multiply(BigInteger.valueOf(c));
+            return fact;
+        }
+
+        public Long factorialLong(Long n)
         {
             Long fact = 1L;
             for(int c = 1; c <= n; c++)
@@ -314,7 +322,7 @@ public class AlphabeticAnagramsTest {
             Collection<Long> values = list.stream()
                 .collect(Collectors.groupingBy(x -> x, Collectors.counting())).values();
 
-            Long reduce = values.stream().reduce(1L, (a, b) -> a * factorial(b));
+            Long reduce = values.stream().reduce(1L, (a, b) -> a * factorialLong(b));
 
 //        System.out.println(reduce);
             return reduce;
