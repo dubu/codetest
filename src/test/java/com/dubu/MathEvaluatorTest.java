@@ -48,7 +48,7 @@ public class MathEvaluatorTest {
     }
 }
 
-public class MathEvaluator {
+class MathEvaluator {
 
     public double calculate(String expression) {
 
