@@ -76,12 +76,14 @@ public class AlphabeticAnagramsTest {
     public void testKnownInputs() {
         Anagrams anagram = new Anagrams();
 
-//        assertEquals("Position for 'A' incorrect", BigInteger.ONE, listPosition("A"));
-//        assertEquals("Position for 'ABAB' incorrect", BigInteger.valueOf(2), listPosition("ABAB"));
-//        assertEquals("Position for 'AAAB' incorrect", BigInteger.ONE, listPosition("AAAB"));
-//        assertEquals("Position for 'BAAA' incorrect", BigInteger.valueOf(4), listPosition("BAAA"));
+        assertEquals("Position for 'A' incorrect", BigInteger.ONE, listPosition("A"));
+        assertEquals("Position for 'ABAB' incorrect", BigInteger.valueOf(2), listPosition("ABAB"));
+        assertEquals("Position for 'AAAB' incorrect", BigInteger.ONE, listPosition("AAAB"));
+        assertEquals("Position for 'BAAA' incorrect", BigInteger.valueOf(4), listPosition("BAAA"));
+
+        //[4, 7, 0, 5, 6, 1, 3, 2] 8
         assertEquals("Position for 'QUESTION' incorrect", BigInteger.valueOf(24572), listPosition("QUESTION"));
-//        assertEquals("Position for 'BOOKKEEPER' incorrect", BigInteger.valueOf(10743), listPosition("BOOKKEEPER"));
+        assertEquals("Position for 'BOOKKEEPER' incorrect", BigInteger.valueOf(10743), listPosition("BOOKKEEPER"));
     }
 
     private BigInteger listPosition(String str) {
@@ -303,7 +305,8 @@ public class AlphabeticAnagramsTest {
                     if(useAbleNumberList.size() == 0){
 
                     }else{
-                        lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / dupleCount ;
+                        //lowPostionOrder = (positionRankOrder ) * factorial((long) nextPosion) / dupleCount ;
+                        lowPostionOrder = factorial((long) nextPosion) / dupleCount ;
 
                     }
 
