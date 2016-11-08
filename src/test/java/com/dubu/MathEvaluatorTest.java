@@ -6,6 +6,7 @@ package com.dubu;
  * Created by rigel on 11/7/16.
  */
 
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -69,6 +70,91 @@ public class MathEvaluatorTest {
 
 
     }
+
+    @Test
+    public void testToArray() throws Exception {
+
+//        String str = "2 / (2 + 3) * 4.33 - -6";
+
+
+        List<String> strings = toStringArray("2 / (2 + 3) * 4.33 - -6");
+
+        strings.stream().forEach(System.out::println);
+
+
+    }
+
+    private List<String> toStringArray(String str) {
+//        String str = "11 22 443 23429 ";
+//        str = "11.121 / { 22 443 23429 ";
+//        str = "2 / (2 + 3) * 4.33 - -6";
+
+        List<String> rs = new ArrayList<String>();
+
+        str = str.replace("---", "-");
+        str = str.replace("--", "+");
+
+        ArrayList<String> padingCharList = Lists.newArrayList("\\(", "\\)", "\\{", "\\}", "\\[", "\\]", "\\+", "\\-", "\\*", "\\/");
+
+
+        for (int i = 0; i < padingCharList.size(); i++) {
+            String s = padingCharList.get(i);
+            str = str.replaceAll(s, " "+s+" ");
+        }
+
+//        str = str.replaceAll("\\(", " \\( ");
+//        str = str.replaceAll("\\)", " \\) ");
+//        str = str.replaceAll("\\-", " \\- ");
+
+//        Pattern p = Pattern.compile("[d.\\/\\+\\*\\/\\]\\(\\)\\[\\]\\]\\{\\}");
+//        Pattern pattern = Pattern.compile(".*([\\d.\\/\\+\\*\\/\\]\\(\\)\\[\\]\\]\\{\\}]+).*");
+//        Pattern pattern = Pattern.compile("(\\d+)");
+        Pattern pattern = Pattern.compile("([\\d.\\/\\+\\*\\/\\]\\(\\)\\[\\]\\]\\{\\}\\-]+)");
+
+        Matcher matcher = pattern.matcher(str);
+
+
+        int groupCount = matcher.groupCount();
+
+
+        while(matcher.find()) {
+
+
+            for (int i = 0; i < groupCount; i++) {
+
+
+//                System.out.println(matcher.group(i));
+                rs.add(matcher.group(i));
+            }
+
+        }
+
+        return rs;
+    }
+
+    @Test
+    public void testGroup() throws Exception {
+
+        // Define regex to find the word 'quick' or 'lazy' or 'dog'
+        String regex = "(\\d+)";
+        String text = "11 22 443 23429 ";
+
+        // Obtain the required matcher
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+
+        int groupCount = matcher.groupCount();
+        System.out.println("Number of group = " + groupCount);
+
+        // Find every match and print it
+        while (matcher.find()) {
+            for (int i = 0; i <= groupCount; i++) {
+                // Group i substring
+                System.out.println("Group " + i + ": " + matcher.group(i));
+            }
+        }
+
+    }
 }
 
 class MathEvaluator {
@@ -91,6 +177,7 @@ class MathEvaluator {
 
 
         // 전처리 공백제거 - 음수부호 중복처리
+        // 덩어리 array로 만든다
         // 가로를 푼다 .
         // * / 먼저 하고 더한다
         // 숫자와 계산을 분리한다
@@ -107,9 +194,7 @@ class MathEvaluator {
 
         List<Character> arrList = braces.chars().mapToObj((i) -> Character.valueOf((char) i)).collect(Collectors.toList());
         List<Character> rs = new ArrayList();
-
         List<Integer> idxList = new ArrayList();
-
 
         Character reducWord = 0;
         int startIdx = 0;
@@ -188,5 +273,8 @@ class MathEvaluator {
         }
         return reducWord;
     }
+
+
+
 
 }
