@@ -112,39 +112,47 @@ class MathEvaluator {
 
 
         Character reducWord = 0;
+        int startIdx = 0;
         for (int i = 0; i < arrList.size(); i++) {
 
             Character bh = arrList.get(i);
 
+            if (bh.equals('(') ||bh.equals(')')) {
 
-            if (bh.equals(reducWord)) {
 
-                Integer sIdx = idxList.remove(idxList.lastIndexOf(idxList));
-                int eIdx = arrList.indexOf(bh);
-                String braceLessStr = braces.substring(sIdx, eIdx);
+                if (bh.equals(reducWord)) {
 
-                String rsStr = cc(braceLessStr);
+                    int eIdx = arrList.indexOf(bh);
+                    String braceLessStr = braces.substring(startIdx, eIdx);
 
-                braceLessStr.replace(braceLessStr, rsStr);
+                    String rsStr = cc(braceLessStr);
 
-                rs.remove(rs.size() - 1);
+                    braceLessStr.replace(braceLessStr, rsStr);
 
-                if (rs.size() == 0) {
-                    reducWord = 0;
+                    rs.remove(rs.size() - 1);
+
+                    if (rs.size() == 0) {
+                        reducWord = 0;
+
+                    } else {
+                        reducWord = getCloseString(rs.get(rs.size() - 1));
+                        startIdx = idxList.get(idxList.size() - 1);
+                    }
 
                 } else {
-                    reducWord = getCloseString(rs.get(rs.size() - 1));
-                    int startIdx = arrList.indexOf(bh);
+                    rs.add(bh);
+
+                    reducWord = getCloseString(bh);
+                    startIdx = arrList.indexOf(bh);
                     idxList.add(startIdx);
 
                 }
 
-            } else {
-                rs.add(bh);
-
-                reducWord = getCloseString(bh);
 
             }
+
+
+
 
 
         }
