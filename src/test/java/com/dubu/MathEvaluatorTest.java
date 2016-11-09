@@ -203,6 +203,8 @@ class MathEvaluator {
         String reducWord = null;
         int startIdx = 0;
         List<String> braceList =  Lists.newArrayList("(", ")", "{", "}", "[", "]");
+
+
         for (int i = 0; i < arrList.size(); i++) {
 
             String bh = arrList.get(i);
