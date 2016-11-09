@@ -222,6 +222,14 @@ class MathEvaluator {
 
                     List<String> braceLessList = arrList.subList(startIdx, eIdx);
 
+                    String value = cc(braceLessList);
+
+                    arrList.set(eIdx,value);
+                    // push null empty space
+                    for (int j = startIdx; j < eIdx ; j++) {
+
+                        arrList.set(j ,null);
+                    }
                    // cc 줄여
 
                     //return braceLessList
@@ -262,7 +270,27 @@ class MathEvaluator {
 
     }
 
+    private String cc(List<String> braceLessList) {
+
+
+        // !!
+        // CodeTest.evaluate()
+
+        // 1 +1
+
+        for (int i = 0; i < braceLessList.size(); i++) {
+            String s = braceLessList.get(i);
+
+
+
+        }
+
+        return null;
+    }
+
     private String cc(String braceLessStr) {
+
+
 
 
         String  rs = "1+1";

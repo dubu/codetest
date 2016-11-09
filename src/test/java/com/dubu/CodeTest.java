@@ -206,8 +206,6 @@ public class CodeTest {
         assertEquals(10, evaluate("100 50 10 2 1 / / / /"));
 
 
-        // fail !
-
     }
 
     public int solution(int number) {
