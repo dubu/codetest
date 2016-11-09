@@ -6,7 +6,6 @@ package com.dubu;
  * Created by rigel on 11/7/16.
  */
 
-import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -179,7 +178,7 @@ class MathEvaluator {
         str = str.replace("---", "-");
         str = str.replace("--", "+");
 
-        ArrayList<String> padingCharList = Lists.newArrayList("\\(", "\\)", "\\{", "\\}", "\\[", "\\]", "\\+", "\\-", "\\*", "\\/");
+        List<String> padingCharList = Arrays.asList("(", ")", "{", "}", "[", "]", "+", "-", "*", "/");
 
 
         for (int i = 0; i < padingCharList.size(); i++) {
@@ -263,7 +262,7 @@ class MathEvaluator {
 
         String reducWord = null;
         int startIdx = 0;
-        List<String> braceList =  Lists.newArrayList("(", ")", "{", "}", "[", "]");
+        List<String> braceList =  Arrays.asList("(", ")", "{", "}", "[", "]");
 
 
         for (int i = 0; i < arrList.size(); i++) {
