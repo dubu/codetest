@@ -214,11 +214,9 @@ class MathEvaluator {
 
                     int eIdx = arrList.indexOf(bh);
 
-
 //                    String braceLessStr = braces.substring(startIdx, eIdx);
 //                    String rsStr = cc(braceLessStr);
 //                    braceLessStr.replace(braceLessStr, rsStr);
-
 
                     List<String> braceLessList = arrList.subList(startIdx, eIdx);
 
@@ -233,9 +231,6 @@ class MathEvaluator {
                    // cc 줄여
 
                     //return braceLessList
-
-
-
 
                     rs.remove(rs.size() - 1);
 
@@ -256,22 +251,15 @@ class MathEvaluator {
 
                 }
 
-
             }
-
-
-
-
 
         }
 
         return Double.valueOf("99");
 
-
     }
 
     private String cc(List<String> braceLessList) {
-
 
         // !!
         // CodeTest.evaluate()
@@ -280,8 +268,6 @@ class MathEvaluator {
 
         for (int i = 0; i < braceLessList.size(); i++) {
             String s = braceLessList.get(i);
-
-
 
         }
 
