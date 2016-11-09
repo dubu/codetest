@@ -10,7 +10,9 @@ import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -84,7 +86,6 @@ public class MathEvaluatorTest {
     }
 
 
-
     @Test
     public void testGroup() throws Exception {
 
@@ -108,9 +109,53 @@ public class MathEvaluatorTest {
         }
 
     }
+
+    @Test
+    public void testDiscoverBrace() throws Exception {
+
+
+//        List<String> strings = new MathEvaluator().toMathStringArray("2 / (2 + 3) * 4.33 - -6");
+//        String rsStr = discoverBrace(strings);
+//        System.out.println(rsStr);
+
+        assertEquals(new MathEvaluator().discoverBrace(new MathEvaluator().toMathStringArray("25 + 45")).stream().reduce((a, b) -> a + " "+b).get(), "25 45 +");
+//        assertEquals(new MathEvaluator().discoverBrace(new MathEvaluator().toMathStringArray("(20+40) * 60")).stream().reduce((a, b) -> a + " "+b).get(), "20 40 + 60 *");
+//        assertEquals(new MathEvaluator().discoverBrace(new MathEvaluator().toMathStringArray("20 * (40 + 60)")).stream().reduce((a, b) -> a + " "+b).get(), "20 40 60 + *");
+
+
+    }
+
+
+
 }
 
 class MathEvaluator {
+
+    public List<String> discoverBrace(List<String> strings) {
+
+
+        List<String> leftList  = new ArrayList<>();
+        List<String> rightList  = new ArrayList<>();
+        List<String> calMarkList = Arrays.asList("+", "-", "*", "/");
+
+        for (int i = 0; i < strings.size(); i++) {
+            String item = strings.get(i);
+
+            if(calMarkList.contains(item)){
+                rightList.add(item);
+
+            }else{
+                leftList.add(item);
+            }
+
+        }
+
+        leftList.addAll(rightList);
+
+
+        leftList.stream().reduce((a, b) -> a + " "+b).get();
+        return leftList;
+    }
 
     public List<String> toMathStringArray(String str) {
 //        String str = "11 22 443 23429 ";
@@ -196,6 +241,10 @@ class MathEvaluator {
 //        List<Character> arrList = braces.chars().mapToObj((i) -> Character.valueOf((char) i)).collect(Collectors.toList());
 
         List<String> arrList = toMathStringArray(braces);
+
+
+
+
 
         List<String> rs = new ArrayList();
         List<Integer> idxList = new ArrayList();
