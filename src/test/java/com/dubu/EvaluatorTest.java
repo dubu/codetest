@@ -31,10 +31,10 @@ public class EvaluatorTest {
         assertEquals(10, eval.evaluate("2 3 9 4 / + *"));
         assertEquals(5, eval.evaluate("2 3 +"));
         assertEquals(1, eval.evaluate("1"));
-
+        assertEquals(3, eval.evaluate("4, 8, +, 6, 5, -, *, 3, 2, -, 2, 2, +, *, /"));
 
 //        assertEquals(-1, eval.evaluate("2 - 3 +"));  // -1
-//        assertEquals(3, eval.evaluate("4, 8, +, 6, 5, -, *, 3, 2, -, 2, 2, +, *, /"));
+
 
 
 
@@ -65,8 +65,6 @@ public class EvaluatorTest {
                     }
                     if(numberStack.size()-2 >= 0){
                         leftVal  = numberStack.get(numberStack.size()-2);
-
-
                     }
 
                     switch (charCalMark) {
@@ -88,6 +86,7 @@ public class EvaluatorTest {
                             break;
                     }
                     numberStack.remove(numberStack.size()-1);
+                    numberStack.set(numberStack.size() -1,rightVal);
 
                 }else{
 
@@ -105,11 +104,14 @@ public class EvaluatorTest {
                     }
 
                 }
+
+//                if(i != 0 && numberStack.size() == 1){
+//                    numberStack.set(0, rightVal);
+//                }
+
             }
 
             return  rightVal;
-
-
         }
 
         public List<String> toMathStringArray(String str) {
