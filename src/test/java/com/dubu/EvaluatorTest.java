@@ -33,14 +33,15 @@ public class EvaluatorTest {
         assertEquals(1, eval.evaluate("1"));
         assertEquals(3, eval.evaluate("4, 8, +, 6, 5, -, *, 3, 2, -, 2, 2, +, *, /"));
 
-//        assertEquals(-1, eval.evaluate("2 - 3 +"));  // -1
-
-
-
+        assertEquals(-1, eval.evaluate("2 - 3 +"));  // -1
 
     }
 
     public class Evaluator {
+
+        public  final Integer POSITIVE = 1;
+        private final Integer NEGATIVE = -1;
+
         public long evaluate(String str) {
 
             List<String> calMarkList =Arrays.asList("+", "-", "*", "/");
@@ -53,6 +54,7 @@ public class EvaluatorTest {
             Integer leftVal = 0;
             Integer rightVal = 0;
             Integer nextLeftVal = 0 ;
+            Integer nextTimeFlag = POSITIVE;
             for (int i = 0; i < strList.size(); i++) {
 
                 String item = strList.get(i);
@@ -73,8 +75,15 @@ public class EvaluatorTest {
                             leftVal = nextLeftVal;
                             break;
                         case '-':
-                            rightVal = leftVal - rightVal;
-                            leftVal = nextLeftVal;
+                            if(numberStack.size() <= 1){
+                                nextTimeFlag = NEGATIVE;
+
+                            }else{
+                                rightVal = leftVal - rightVal;
+                                leftVal = nextLeftVal;
+
+                            }
+
                             break;
                         case '*':
                             rightVal = leftVal * rightVal;
@@ -85,14 +94,19 @@ public class EvaluatorTest {
                             leftVal = nextLeftVal;
                             break;
                     }
-                    numberStack.remove(numberStack.size()-1);
-                    numberStack.set(numberStack.size() -1,rightVal);
+                    if(numberStack.size() >1) {
+                        numberStack.remove(numberStack.size() - 1);
+                        numberStack.set(numberStack.size() - 1, rightVal);
+                    }
 
                 }else{
 
                     // 이하 스택에 숫자 추가
 
-                    numberStack.add(Integer.valueOf(item));
+                    Integer currentItem = nextTimeFlag * Integer.valueOf(item);
+
+                    numberStack.add(currentItem);
+                    nextTimeFlag = POSITIVE;
 
                     if(i == 0 ){
                         // init
@@ -100,7 +114,7 @@ public class EvaluatorTest {
                         leftVal = rightVal;
                     }else{
                         leftVal = rightVal;
-                        rightVal = Integer.valueOf(item);
+                        rightVal = currentItem;
                     }
 
                 }
