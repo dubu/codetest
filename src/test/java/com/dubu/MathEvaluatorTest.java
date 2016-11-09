@@ -257,7 +257,7 @@ class MathEvaluator {
 
         }
 
-        return Double.valueOf(braces);
+        return Double.valueOf("99");
 
 
     }
