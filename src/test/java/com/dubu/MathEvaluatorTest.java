@@ -113,14 +113,23 @@ public class MathEvaluatorTest {
     @Test
     public void testDiscoverBrace() throws Exception {
 
-
 //        List<String> strings = new MathEvaluator().toMathStringArray("2 / (2 + 3) * 4.33 - -6");
 //        String rsStr = discoverBrace(strings);
 //        System.out.println(rsStr);
 
-        assertEquals(new MathEvaluator().discoverBrace(new MathEvaluator().toMathStringArray("25 + 45")).stream().reduce((a, b) -> a + " "+b).get(), "25 45 +");
-//        assertEquals(new MathEvaluator().discoverBrace(new MathEvaluator().toMathStringArray("(20+40) * 60")).stream().reduce((a, b) -> a + " "+b).get(), "20 40 + 60 *");
+//        assertEquals(new MathEvaluator().discoverBrace(new MathEvaluator().toMathStringArray("25 + 45")).stream().reduce((a, b) -> a + " "+b).get(), "25 45 +");
+        assertEquals(new MathEvaluator().discoverBrace(new MathEvaluator().toMathStringArray("(20+40) * 60")).stream().reduce((a, b) -> a + " "+b).get(), "20 40 + 60 *");
 //        assertEquals(new MathEvaluator().discoverBrace(new MathEvaluator().toMathStringArray("20 * (40 + 60)")).stream().reduce((a, b) -> a + " "+b).get(), "20 40 60 + *");
+
+//        (4+8)*(6-5)/(3-2)*(2+2)
+//        [4, 8, +, 6, 5, -, *, 3, 2, -, 2, 2, +, *, /]
+
+//        2+2+2+2+2*10
+        // 2 2 2 2 2 2 ++++  2 10 *
+
+        // 괄호 먼저
+        // * / 먼저
+        // 같으면 앞에 부터
 
 
     }

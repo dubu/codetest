@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
  * 20 40 + 60 * // (20+40) * 60
  * 20 40 60 + * // 20 * (40 + 60) = 2000
  * 2 3 9 4 / + *  //  2* ( 3 + (9/4))
+ * 4 8 + 6 5 - * 3 2 - 2 2 + * /    //   (4+8)*(6-5)/(3-2)*(2+2)
  */
 
 public class EvaluatorTest {
