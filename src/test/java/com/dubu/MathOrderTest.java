@@ -4,6 +4,7 @@ import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,10 +18,51 @@ public class MathOrderTest {
     public void testName() throws Exception {
 
 
+        List<String> rsList = new ArrayList();
+
         String str  = "(4+8)*(6-5)/(3-2)*(2+2)";
+
+
+        List<String> braceList =  Arrays.asList("(", ")", "{", "}", "[", "]");
         List<String> strings = toMathStringArray(str);
 
-        System.out.println(strings);
+        List<String> depthControlCharList = new ArrayList<>();
+        String comsumerChar = "0";
+        int depth = 0;
+        for (int i = 0; i < strings.size(); i++) {
+            String s = strings.get(i);
+
+            if (braceList.contains(s)) {
+                if(s.equals(comsumerChar)){
+                    depthControlCharList.remove(depthControlCharList.size()-1);
+                    if(depthControlCharList.size() > 0){
+                        comsumerChar = depthControlCharList.get(depthControlCharList.size()-1);
+                    }
+
+
+
+                }else{
+                    depth = depth +1;
+                    depthControlCharList.add(s);
+                    comsumerChar = String.valueOf(getCloseString(s.charAt(0)));
+                }
+
+
+//                System.out.println(s);
+
+            }else{
+                // 숫자 또는 기호
+
+            }
+
+
+        }
+
+//        System.out.println(strings);
+
+
+
+
 
     }
 
@@ -71,6 +113,22 @@ public class MathOrderTest {
         }
 
         return rs;
+    }
+
+    private static char getCloseString( char c) {
+        char reducWord = 0;
+        switch (c) {
+            case '(':
+                reducWord = ')';
+                break;
+            case '{':
+                reducWord = '}';
+                break;
+            case '[':
+                reducWord = ']';
+                break;
+        }
+        return reducWord;
     }
 
 }
