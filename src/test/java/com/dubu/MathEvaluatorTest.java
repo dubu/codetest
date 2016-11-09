@@ -76,15 +76,43 @@ public class MathEvaluatorTest {
 
 //        String str = "2 / (2 + 3) * 4.33 - -6";
 
-
-        List<String> strings = toStringArray("2 / (2 + 3) * 4.33 - -6");
+        List<String> strings = new MathEvaluator().toMathStringArray("2 / (2 + 3) * 4.33 - -6");
 
         strings.stream().forEach(System.out::println);
 
 
     }
 
-    private List<String> toStringArray(String str) {
+
+
+    @Test
+    public void testGroup() throws Exception {
+
+        // Define regex to find the word 'quick' or 'lazy' or 'dog'
+        String regex = "(\\d+)";
+        String text = "11 22 443 23429 ";
+
+        // Obtain the required matcher
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+
+        int groupCount = matcher.groupCount();
+        System.out.println("Number of group = " + groupCount);
+
+        // Find every match and print it
+        while (matcher.find()) {
+            for (int i = 0; i <= groupCount; i++) {
+                // Group i substring
+                System.out.println("Group " + i + ": " + matcher.group(i));
+            }
+        }
+
+    }
+}
+
+class MathEvaluator {
+
+    public List<String> toMathStringArray(String str) {
 //        String str = "11 22 443 23429 ";
 //        str = "11.121 / { 22 443 23429 ";
 //        str = "2 / (2 + 3) * 4.33 - -6";
@@ -132,33 +160,6 @@ public class MathEvaluatorTest {
         return rs;
     }
 
-    @Test
-    public void testGroup() throws Exception {
-
-        // Define regex to find the word 'quick' or 'lazy' or 'dog'
-        String regex = "(\\d+)";
-        String text = "11 22 443 23429 ";
-
-        // Obtain the required matcher
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(text);
-
-        int groupCount = matcher.groupCount();
-        System.out.println("Number of group = " + groupCount);
-
-        // Find every match and print it
-        while (matcher.find()) {
-            for (int i = 0; i <= groupCount; i++) {
-                // Group i substring
-                System.out.println("Group " + i + ": " + matcher.group(i));
-            }
-        }
-
-    }
-}
-
-class MathEvaluator {
-
     public double calculate(String expression) {
 
         expression = expression.replace("---", "-");
@@ -192,32 +193,46 @@ class MathEvaluator {
     public double c(String braces) {
 
 
-        List<Character> arrList = braces.chars().mapToObj((i) -> Character.valueOf((char) i)).collect(Collectors.toList());
-        List<Character> rs = new ArrayList();
+//        List<Character> arrList = braces.chars().mapToObj((i) -> Character.valueOf((char) i)).collect(Collectors.toList());
+
+        List<String> arrList = toMathStringArray(braces);
+
+        List<String> rs = new ArrayList();
         List<Integer> idxList = new ArrayList();
 
-        Character reducWord = 0;
+        String reducWord = null;
         int startIdx = 0;
+        List<String> braceList =  Lists.newArrayList("(", ")", "{", "}", "[", "]");
         for (int i = 0; i < arrList.size(); i++) {
 
-            Character bh = arrList.get(i);
+            String bh = arrList.get(i);
 
-            if (bh.equals('(') ||bh.equals(')')) {
-
+            //if (bh.equals('(') ||bh.equals(')')) {
+            if (braceList.contains(bh)) {
 
                 if (bh.equals(reducWord)) {
 
                     int eIdx = arrList.indexOf(bh);
-                    String braceLessStr = braces.substring(startIdx, eIdx);
 
-                    String rsStr = cc(braceLessStr);
 
-                    braceLessStr.replace(braceLessStr, rsStr);
+//                    String braceLessStr = braces.substring(startIdx, eIdx);
+//                    String rsStr = cc(braceLessStr);
+//                    braceLessStr.replace(braceLessStr, rsStr);
+
+
+                    List<String> braceLessList = arrList.subList(startIdx, eIdx);
+
+                   // cc 줄여
+
+                    //return braceLessList
+
+
+
 
                     rs.remove(rs.size() - 1);
 
                     if (rs.size() == 0) {
-                        reducWord = 0;
+                        reducWord = null;
 
                     } else {
                         reducWord = getCloseString(rs.get(rs.size() - 1));
@@ -228,7 +243,7 @@ class MathEvaluator {
                     rs.add(bh);
 
                     reducWord = getCloseString(bh);
-                    startIdx = arrList.indexOf(bh);
+                    startIdx = i;
                     idxList.add(startIdx);
 
                 }
@@ -258,7 +273,9 @@ class MathEvaluator {
         return  braceLessStr;
     }
 
-    private static char getCloseString(char c) {
+    private static String getCloseString(String str) {
+
+        char c = str.toCharArray()[0];
         char reducWord = 0;
         switch (c) {
             case '(':
@@ -271,7 +288,7 @@ class MathEvaluator {
                 reducWord = ']';
                 break;
         }
-        return reducWord;
+        return String.valueOf(reducWord);
     }
 
 
