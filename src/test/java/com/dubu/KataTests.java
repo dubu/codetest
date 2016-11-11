@@ -58,8 +58,6 @@ public class KataTests {
         assertEquals(414, convertNumber(144));
 
 
-
-
 //        "123345"
 //        Set<String> foo = new HashSet<String>(myList);
 
@@ -209,7 +207,51 @@ public class KataTests {
 
 
 class Kata {
+
+
     public static long nextBiggerNumber(long num) {
+
+        String numString = String.valueOf(num);
+        char[] chars = numString.toCharArray();
+
+        List<Character> intList = new ArrayList<>();
+        List<Integer> rsList = new ArrayList<>();
+        List<Integer> nextRsList = new ArrayList<>();
+        List<Character> ordList = new ArrayList<>();
+
+        for (int i = 0; i < chars.length; i++) {
+            char aChar = chars[i];
+            if (!ordList.contains(aChar)) {
+                intList.add(aChar);
+            }
+
+        }
+        ordList.addAll(intList);
+        Collections.sort(ordList);
+
+        for (int i = 0; i < intList.size(); i++) {
+            Character integer = intList.get(i);
+            rsList.add(ordList.indexOf(integer));
+        }
+
+        StringBuilder b = new StringBuilder();
+        rsList.stream().forEach(b::append);
+
+        nextRsList.addAll(rsList);
+
+        nextRsList.set(rsList.size() -2 ,nextRsList.size() -1)
+        nextRsList.set(nextRsList.size() -1 ,nextRsList.size() -2)
+
+
+
+
+
+
+
+        return  0L;
+    }
+
+    public static long nextBiggerNumberOld(long num) {
         String numString = String.valueOf(num);
         char[] chars = numString.toCharArray();
 
