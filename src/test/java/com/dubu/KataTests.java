@@ -208,19 +208,18 @@ public class KataTests {
 }
 
 
-
 class Kata {
     public static long nextBiggerNumber(long num) {
         String numString = String.valueOf(num);
         char[] chars = numString.toCharArray();
 
-        List<Character> intList =  new ArrayList<>();
-        List<Integer> rsList =  new ArrayList<>();
-        List<Character> ordList =  new ArrayList<>();
+        List<Character> intList = new ArrayList<>();
+        List<Integer> rsList = new ArrayList<>();
+        List<Character> ordList = new ArrayList<>();
 
         for (int i = 0; i < chars.length; i++) {
             char aChar = chars[i];
-            if( ! ordList.contains(aChar)){
+            if (!ordList.contains(aChar)) {
                 intList.add(aChar);
             }
 
@@ -244,20 +243,13 @@ class Kata {
         int integer = 0;
         for (int i = 0; i < chars3.length; i++) {
             char c = chars3[i];
-            integer = (int) (integer  + Integer.valueOf(String.valueOf(c)) *  Math.pow(ordList.size(), chars3.length -1 -i));
+            integer = (int) (integer + Integer.valueOf(String.valueOf(c)) * Math.pow(ordList.size(), chars3.length - 1 - i));
         }
-//        integer = integer + chars3[chars3.length-1];
-
-        //Integer integer = Integer.valueOf(b.toString());
         while (true) {
 
             integer = integer + 1;
 
-            String covert = covert(integer, ordList.size() );
-
-//            if(covert.compareTo(numString)){
-//
-//            }
+            String covert = covert(integer, ordList.size());
 
             char[] chars1 = b.toString().toCharArray();
             char[] chars2 = covert.toCharArray();
@@ -265,12 +257,7 @@ class Kata {
             Arrays.sort(chars1);
             Arrays.sort(chars2);
 
-//            boolean areEqual = Arrays.equals(chars1), Arrays.sort(numString.toCharArray()));
-
             if (Arrays.equals(chars1, chars2)) {
-
-
-                //String str = String.valueOf(covert);
 
                 StringBuffer sb = new StringBuffer();
                 for (int i = 0; i < covert.toCharArray().length; i++) {
@@ -279,8 +266,6 @@ class Kata {
                     sb.append(ordList.get(Integer.valueOf(String.valueOf(c))));
 
                 }
-
-
                 return Long.valueOf(sb.toString());
             }
         }
@@ -289,13 +274,13 @@ class Kata {
 
     private static String covert(int n, int base) {
 
-        List<String> t = Arrays.asList("0","1","2","3","4","5","6","7","8","9");
-        int q =  n / base;
-        int r =  n % base;
-        if(q == 0){
+        List<String> t = Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+        int q = n / base;
+        int r = n % base;
+        if (q == 0) {
             return t.get(r);
-        }else{
-            return  covert(q,base) + t.get(r);
+        } else {
+            return covert(q, base) + t.get(r);
         }
     }
 
