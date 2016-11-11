@@ -2,17 +2,12 @@ package com.dubu;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.runners.JUnit4;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by rigel on 11/10/16.
@@ -23,11 +18,11 @@ import java.util.Set;
 public class KataTests {
     @Test
     public void basicTests() {
-//        assertEquals(21, Kata.nextBiggerNumber(12));
-//        assertEquals(531, Kata.nextBiggerNumber(513));
-//        assertEquals(2071, Kata.nextBiggerNumber(2017));
-//        assertEquals(441, Kata.nextBiggerNumber(414));
-//        assertEquals(414, Kata.nextBiggerNumber(144));
+        assertEquals(21, Kata.nextBiggerNumber(12));
+        assertEquals(531, Kata.nextBiggerNumber(513));
+        assertEquals(2071, Kata.nextBiggerNumber(2017));
+        assertEquals(441, Kata.nextBiggerNumber(414));
+        assertEquals(414, Kata.nextBiggerNumber(144));
 
 
 
@@ -55,7 +50,12 @@ public class KataTests {
 //        assertEquals("011",convertNumber(144));
 
 
-        assertEquals("21",convertNumber(12));
+//        assertEquals("21",convertNumber(12));
+
+        assertEquals(531, convertNumber(513));
+        assertEquals(2071, convertNumber(2017));
+        assertEquals(441, convertNumber(414));
+        assertEquals(414, convertNumber(144));
 
 
 
@@ -126,7 +126,7 @@ public class KataTests {
     }
 
 
-    private String convertNumber(long num) {
+    private long convertNumber(long num) {
         String numString = String.valueOf(num);
         char[] chars = numString.toCharArray();
 
@@ -155,8 +155,16 @@ public class KataTests {
 ///   --- 이하 좀 다름 ---
 
 
-        Integer integer = Integer.valueOf(b.toString());
+        char[] chars3 = b.toString().toCharArray();
 
+        int integer = 0;
+        for (int i = 0; i < chars3.length; i++) {
+            char c = chars3[i];
+            integer = (int) (integer  + Integer.valueOf(String.valueOf(c)) *  Math.pow(ordList.size(), chars3.length -1 -i));
+        }
+//        integer = integer + chars3[chars3.length-1];
+
+        //Integer integer = Integer.valueOf(b.toString());
         while (true) {
 
             integer = integer + 1;
@@ -189,21 +197,107 @@ public class KataTests {
                 }
 
 
-                return sb.toString();
+                return Long.valueOf(sb.toString());
             }
         }
     }
 
-    class Kata {
-        public long nextBiggerNumber(long n) {
-            return n;
-        }
-    }
+
 
 
 }
 
 
 
+class Kata {
+    public static long nextBiggerNumber(long num) {
+        String numString = String.valueOf(num);
+        char[] chars = numString.toCharArray();
 
+        List<Character> intList =  new ArrayList<>();
+        List<Integer> rsList =  new ArrayList<>();
+        List<Character> ordList =  new ArrayList<>();
+
+        for (int i = 0; i < chars.length; i++) {
+            char aChar = chars[i];
+            if( ! ordList.contains(aChar)){
+                intList.add(aChar);
+            }
+
+        }
+        ordList.addAll(intList);
+        Collections.sort(ordList);
+
+        for (int i = 0; i < intList.size(); i++) {
+            Character integer = intList.get(i);
+            rsList.add(ordList.indexOf(integer));
+        }
+
+        StringBuilder b = new StringBuilder();
+        rsList.stream().forEach(b::append);
+
+///   --- 이하 좀 다름 ---
+
+
+        char[] chars3 = b.toString().toCharArray();
+
+        int integer = 0;
+        for (int i = 0; i < chars3.length; i++) {
+            char c = chars3[i];
+            integer = (int) (integer  + Integer.valueOf(String.valueOf(c)) *  Math.pow(ordList.size(), chars3.length -1 -i));
+        }
+//        integer = integer + chars3[chars3.length-1];
+
+        //Integer integer = Integer.valueOf(b.toString());
+        while (true) {
+
+            integer = integer + 1;
+
+            String covert = covert(integer, ordList.size() );
+
+//            if(covert.compareTo(numString)){
+//
+//            }
+
+            char[] chars1 = b.toString().toCharArray();
+            char[] chars2 = covert.toCharArray();
+
+            Arrays.sort(chars1);
+            Arrays.sort(chars2);
+
+//            boolean areEqual = Arrays.equals(chars1), Arrays.sort(numString.toCharArray()));
+
+            if (Arrays.equals(chars1, chars2)) {
+
+
+                //String str = String.valueOf(covert);
+
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < covert.toCharArray().length; i++) {
+                    char c = covert.toCharArray()[i];
+
+                    sb.append(ordList.get(Integer.valueOf(String.valueOf(c))));
+
+                }
+
+
+                return Long.valueOf(sb.toString());
+            }
+        }
+    }
+
+
+    private static String covert(int n, int base) {
+
+        List<String> t = Arrays.asList("0","1","2","3","4","5","6","7","8","9");
+        int q =  n / base;
+        int r =  n % base;
+        if(q == 0){
+            return t.get(r);
+        }else{
+            return  covert(q,base) + t.get(r);
+        }
+    }
+
+}
 
