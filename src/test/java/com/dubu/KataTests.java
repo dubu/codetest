@@ -23,10 +23,10 @@ public class KataTests {
         assertEquals(2071, Kata.nextBiggerNumber(2017));
         assertEquals(441, Kata.nextBiggerNumber(414));
         assertEquals(414, Kata.nextBiggerNumber(144));
+        assertEquals(214, Kata.nextBiggerNumber(142));
+        assertEquals(3145, Kata.nextBiggerNumber(1453));
 
-
-
-//        assertEquals("21", Kata.nextBiggerNumber(12));
+        assertEquals(3145, Kata.nextBiggerNumber(1543));
 
 
 
@@ -94,6 +94,25 @@ public class KataTests {
       }
 
         return null;
+    }
+
+
+    @Test
+    public void testGetIntegerVal() throws Exception {
+
+
+//        List<Integer> strings = Arrays.asList(2,4,6,1,2,3);
+//        double interValue = Kata.getInterValue(strings);
+//
+//        System.out.println(interValue);
+
+
+//        assertEquals(Double.parseDouble("12434"), Kata.getInterValue(Arrays.asList(1,2,4,3,4)));
+//        assertEquals(942.0, Kata.getInterValue(Arrays.asList(9,4,2)));
+
+
+        System.out.println(Kata.getInterValue(Arrays.asList(1, 2, 4, 3, 4)));
+
     }
 
     @Test
@@ -211,6 +230,9 @@ class Kata {
 
     public static long nextBiggerNumber(long num) {
 
+        List<Integer> dubuList = new ArrayList<>();
+
+
         String numString = String.valueOf(num);
         char[] chars = numString.toCharArray();
 
@@ -221,17 +243,17 @@ class Kata {
 
         for (int i = 0; i < chars.length; i++) {
             char aChar = chars[i];
-            if (!ordList.contains(aChar)) {
-                intList.add(aChar);
-            }
+            intList.add(aChar);
 
         }
+
+
         ordList.addAll(intList);
         Collections.sort(ordList);
 
         for (int i = 0; i < intList.size(); i++) {
             Character integer = intList.get(i);
-            rsList.add(ordList.indexOf(integer));
+            rsList.add(Integer.valueOf(String.valueOf(integer)));
         }
 
         StringBuilder b = new StringBuilder();
@@ -239,8 +261,54 @@ class Kata {
 
         nextRsList.addAll(rsList);
 
-        nextRsList.set(rsList.size() -2 ,nextRsList.size() -1)
-        nextRsList.set(nextRsList.size() -1 ,nextRsList.size() -2)
+//        nextRsList.set(rsList.size() -2 ,nextRsList.size() -1);
+//        if(getInterValue(nextRsList) > getInterValue(rsList)){
+//
+//        }else{
+//            nextRsList.set(nextRsList.size() -1 ,nextRsList.size() -2);
+//
+//        }
+
+        nextRsList = new ArrayList<>();
+        nextRsList.addAll(rsList);
+
+        for (int i = ordList.size() -2; i >= 0; i--) {
+
+
+
+            Integer lstVal = rsList.get(rsList.size() -1);
+            Integer curVal = rsList.get(i);
+
+            nextRsList.set(i+1 ,curVal);
+            nextRsList.set(i ,lstVal);
+
+            if(getInterValue(nextRsList) >  getInterValue(rsList)){
+
+
+                System.out.println(getInterValue(nextRsList));
+
+
+                List<Integer> sortAbleList = nextRsList.subList(i+1, nextRsList.size());
+                Collections.sort(sortAbleList);
+                List<Integer> headList = nextRsList.subList(0, i+1);
+
+                headList.addAll(sortAbleList);
+
+                dubuList = headList;
+
+
+                break;
+//                for (int j = i; j < ordList.size(); j++) {
+//
+////                    nextRsList.set(rsList.size()-j ,rsList.get(nextRsList.size() -1-i));
+////                    nextRsList.set(rsList.size() -1-i ,rsList.get(nextRsList.size() -2-i));
+//
+//                }
+
+
+            }
+
+        }
 
 
 
@@ -248,7 +316,23 @@ class Kata {
 
 
 
-        return  0L;
+
+        return (long) getInterValue(dubuList);
+    }
+
+    public static double getInterValue(List<Integer> rsList) {
+
+        double sum = 0;
+
+        for (int i = 0; i < rsList.size(); i++) {
+            Integer integer = rsList.get(i);
+            
+            sum = sum + integer * Math.pow(10, (rsList.size()- i -1));
+            
+        }
+//        sum = sum + rsList.get(rsList.size()-1);
+        
+        return sum;
     }
 
     public static long nextBiggerNumberOld(long num) {
