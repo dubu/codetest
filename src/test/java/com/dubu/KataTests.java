@@ -18,15 +18,24 @@ import static org.junit.Assert.assertEquals;
 public class KataTests {
     @Test
     public void basicTests() {
-        assertEquals(21, Kata.nextBiggerNumber(12));
-        assertEquals(531, Kata.nextBiggerNumber(513));
-        assertEquals(2071, Kata.nextBiggerNumber(2017));
-        assertEquals(441, Kata.nextBiggerNumber(414));
-        assertEquals(414, Kata.nextBiggerNumber(144));
-        assertEquals(214, Kata.nextBiggerNumber(142));
-        assertEquals(3145, Kata.nextBiggerNumber(1453));
+//        assertEquals(21, Kata.nextBiggerNumber(12));
+//        assertEquals(531, Kata.nextBiggerNumber(513));
+//        assertEquals(2071, Kata.nextBiggerNumber(2017));
+//        assertEquals(441, Kata.nextBiggerNumber(414));
+//        assertEquals(414, Kata.nextBiggerNumber(144));
+//        assertEquals(214, Kata.nextBiggerNumber(142));
+//        assertEquals(3145, Kata.nextBiggerNumber(1453));
+//        assertEquals(3145, Kata.nextBiggerNumber(1543));
 
-        assertEquals(3145, Kata.nextBiggerNumber(1543));
+
+//        assertEquals(1962525825, Kata.nextBiggerNumber(1962525528)); // 2122555689
+
+
+
+        assertEquals(1962525825, Kata.nextBiggerNumber(1962525582)); //
+
+
+
 
 
 
@@ -285,7 +294,7 @@ class Kata {
             if(getInterValue(nextRsList) >  getInterValue(rsList)){
 
 
-                System.out.println(getInterValue(nextRsList));
+//                System.out.println(getInterValue(nextRsList));
 
 
                 List<Integer> sortAbleList = nextRsList.subList(i+1, nextRsList.size());
