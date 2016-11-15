@@ -56,7 +56,7 @@ public class KataTests {
 
         List<Character> orderList = new ArrayList<>();
         List<Integer> intList = new ArrayList<>();
-        List<Integer> chkList = new ArrayList<>();
+        List<Integer> chkList ;
         List<Integer> tmpList ;
         Map<String,Integer> orderMap = new HashMap<>();
 //        List<Integer> nextRsList = new ArrayList<>();
@@ -97,37 +97,75 @@ public class KataTests {
 //
 //        }
 
+        chkList = new ArrayList<>();
+        chkList.addAll(intList);
 
-        for (int i = intList.size() -2; i >= 0; i--) {
+
+//        tmpList = new ArrayList<>();
+//        tmpList.addAll(intList);
 
 
-            // checkList set
-            chkList = new ArrayList<>();
-            chkList.addAll(intList);
+        tmpList = new ArrayList<>();
+        tmpList.addAll(intList);
 
-            for (int j = 0; j < i; j++) {
+        int updatePositon = -1;
+        while (true) {
 
-                Integer integer = intList.get(j);
+            for (int i = 0; i < intList.size(); i++) {  // 자리수
+                Integer integer = intList.get(i);
 
-                chkList.remove(integer);
+
+                Integer idx = 0;
+
+                idx = orderMap.get(String.valueOf(integer));
+
+                if(i < updatePositon){
+                    continue;
+                }
+
+                if(i == updatePositon){
+                    Integer integer1 = tmpList.get(i);
+                    idx = orderMap.get(String.valueOf(integer1));
+                }
+
+
+                chkList = new ArrayList<>();
+                chkList.addAll(intList);
+
+                for (int j = 0; j < tmpList.size(); j++) {
+                    Integer integer1 = tmpList.get(j);
+                    chkList.remove(integer1);
+
+                }
+
+                for (int j = idx; j < orderList.size(); j++) {
+
+                    Character character = orderList.get(j);
+
+                    if(chkList.contains(Integer.valueOf(String.valueOf(character)))){
+
+                        tmpList.set(i, Integer.valueOf(String.valueOf(character)));
+
+                        if(getInterValue(tmpList) >getInterValue(intList) ){
+
+                            System.err.println(tmpList);
+                        }
+
+
+                        break;
+
+
+                    }
+
+                }
+
+                updatePositon = i-1;
+
+            //for
             }
-
-            Integer currInt = intList.get(i);
-            chkList.remove(currInt);
-
-            Integer orderIdx = orderMap.get(String.valueOf(currInt));
-
-
-            for (int j = orderIdx; j < orderMap.size(); j++) {
-
-//                Character character = orderList.get(j);
-
-
-            }
-
-
-
+        //while
         }
+
 
 
 
