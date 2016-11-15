@@ -5,7 +5,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -39,6 +41,44 @@ public class KataTests {
 
 //        110
 //            111
+
+    }
+
+    @Test
+    public void testOrderMap() throws Exception {
+
+
+
+        int num = 252159;
+
+        String numString = String.valueOf(num);
+        char[] chars = numString.toCharArray();
+
+        List<Character> orderList = new ArrayList<>();
+        List<Character> strList = new ArrayList<>();
+        Map orderMap = new HashMap<>();
+//        List<Integer> nextRsList = new ArrayList<>();
+//        List<Character> ordList = new ArrayList<>();
+
+        // init
+        for (int i = 0; i < chars.length; i++) {
+            char aChar = chars[i];
+            orderList.add(aChar);
+            strList.add(aChar);
+
+        }
+        Collections.sort(orderList);
+
+        for (int i = 0; i < orderList.size(); i++) {
+            Character character = orderList.get(i);
+            orderMap.put(character,i);
+
+        }
+
+        System.out.println(orderMap);
+        System.out.println(strList);
+
+
 
     }
 
