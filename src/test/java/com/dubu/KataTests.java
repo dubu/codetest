@@ -55,8 +55,10 @@ public class KataTests {
         char[] chars = numString.toCharArray();
 
         List<Character> orderList = new ArrayList<>();
-        List<Character> strList = new ArrayList<>();
-        Map orderMap = new HashMap<>();
+        List<Integer> intList = new ArrayList<>();
+        List<Integer> chkList = new ArrayList<>();
+        List<Integer> tmpList ;
+        Map<String,Integer> orderMap = new HashMap<>();
 //        List<Integer> nextRsList = new ArrayList<>();
 //        List<Character> ordList = new ArrayList<>();
 
@@ -64,23 +66,88 @@ public class KataTests {
         for (int i = 0; i < chars.length; i++) {
             char aChar = chars[i];
             orderList.add(aChar);
-            strList.add(aChar);
+            intList.add(Integer.valueOf(String.valueOf(aChar)));
 
         }
         Collections.sort(orderList);
 
         for (int i = 0; i < orderList.size(); i++) {
             Character character = orderList.get(i);
-            orderMap.put(character,i);
+            orderMap.put(String.valueOf(character),i);
 
         }
 
         System.out.println(orderMap);
-        System.out.println(strList);
+        System.out.println(intList);
+
+//        for (int i = intList.size() -2; i >= 0; i--) {
+//            tmpList = new ArrayList<>();
+//            tmpList.addAll(intList);
+//
+//            Integer lstVal = intList.get(intList.size() - 1);
+//            Integer curVal = intList.get(i);
+//
+//            tmpList.set(i + 1, curVal);
+//            tmpList.set(i, lstVal);
+//
+//            if (getInterValue(tmpList) > getInterValue(intList)) {
+//
+//                System.out.println(tmpList);
+//            }
+//
+//        }
+
+
+        for (int i = intList.size() -2; i >= 0; i--) {
+
+
+            // checkList set
+            chkList = new ArrayList<>();
+            chkList.addAll(intList);
+
+            for (int j = 0; j < i; j++) {
+
+                Integer integer = intList.get(j);
+
+                chkList.remove(integer);
+            }
+
+            Integer currInt = intList.get(i);
+            chkList.remove(currInt);
+
+            Integer orderIdx = orderMap.get(String.valueOf(currInt));
+
+
+            for (int j = orderIdx; j < orderMap.size(); j++) {
+
+//                Character character = orderList.get(j);
+
+
+            }
+
+
+
+        }
+
+
 
 
 
     }
+
+    public static double getInterValue(List<Integer> rsList) {
+
+        double sum = 0;
+
+        for (int i = 0; i < rsList.size(); i++) {
+            Integer integer = rsList.get(i);
+
+            sum = sum + integer * Math.pow(10, (rsList.size()- i -1));
+
+        }
+        return sum;
+    }
+
 
     @Test
     public void testConvertNumber() throws Exception {
@@ -485,8 +552,6 @@ class Kata {
             sum = sum + integer * Math.pow(10, (rsList.size()- i -1));
             
         }
-//        sum = sum + rsList.get(rsList.size()-1);
-        
         return sum;
     }
 
