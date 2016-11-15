@@ -28,17 +28,8 @@ public class KataTests {
         assertEquals(3145, Kata.nextBiggerNumber(1453));
 //        assertEquals(3145, Kata.nextBiggerNumber(1543));
 
-
         //assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
-
-
-
 //        assertEquals(1962525825, Kata.nextBiggerNumber(1962525582)); //
-
-
-
-
-
 
         //  to conver 숫자
         // +1
@@ -326,13 +317,6 @@ class Kata {
                     }
 
                 }
-
-
-
-
-
-
-
 
 
 
