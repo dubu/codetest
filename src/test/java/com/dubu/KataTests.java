@@ -47,8 +47,6 @@ public class KataTests {
     @Test
     public void testOrderMap() throws Exception {
 
-
-
         int num = 252159;
 
         String numString = String.valueOf(num);
