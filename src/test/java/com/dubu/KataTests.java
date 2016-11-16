@@ -24,10 +24,10 @@ public class KataTests {
 //        assertEquals(531, Kata.nextBiggerNumber(513));
 //        assertEquals(2071, Kata.nextBiggerNumber(2017));
 //        assertEquals(441, Kata.nextBiggerNumber(414));
-//        assertEquals(414, Kata.nextBiggerNumber(144));
+//        assertEquals(414, Kata.nextBiggerNumber(144)); x
 
         assertEquals(214, Kata.nextBiggerNumber(142));
-        assertEquals(3145, Kata.nextBiggerNumber(1453));
+        assertEquals(1534, Kata.nextBiggerNumber(1453));
 //        assertEquals(3145, Kata.nextBiggerNumber(1543));
 
         //assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
@@ -170,14 +170,17 @@ public class KataTests {
                     Collections.sort(iintList, Collections.reverseOrder());
                     if(iintList.get(0) == Integer.valueOf(String.valueOf(character))){
 
-                        if(endPosition != i-2){
-                            endPosition =  i -1;
-                        }
+//                        if(endPosition != i-2){
+//                            endPosition =  i -1;
+//                        }
+
+                        endPosition =  i -1;
 
                     }
 
                     if(getInterValue(chkList.subList(0,i+1)) >= getInterValue(intList.subList(0,i+1))){
-                        if(i == endPosition){
+                        if(i == endPosition ){
+                            endPosition = -1;
                             continue;
                         }
 
