@@ -86,6 +86,13 @@ public class KataTests {
             for (int i = 0; i < intList.size(); i++) { // 자리수
                 Integer integer = intList.get(i);
 
+                tmpList= chkList.subList(0,i);
+                iintList = new ArrayList<>();
+                iintList.addAll(intList);
+                for (int k = 0; k < tmpList.size(); k++) {
+                    Integer integer1 = tmpList.get(k);
+                    iintList.remove(integer1);
+                }
 
                 for (int j = 0; j < orderList.size(); j++) {
 
@@ -93,13 +100,7 @@ public class KataTests {
 
                     // validate character
                     // useble charcter ?
-                    tmpList= chkList.subList(0,i+1);
-                    iintList = new ArrayList<>();
-                    iintList.addAll(intList);
-                    for (int k = 0; k < tmpList.size(); k++) {
-                        Integer integer1 = tmpList.get(k);
-                        iintList.remove(integer1);
-                    }
+
 
                     if(iintList.contains(Integer.valueOf(String.valueOf(character)))){
 
