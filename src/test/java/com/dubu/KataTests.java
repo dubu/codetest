@@ -25,12 +25,12 @@ public class KataTests {
 //        assertEquals(2071, Kata.nextBiggerNumber(2017));
 //        assertEquals(441, Kata.nextBiggerNumber(414));
 //        assertEquals(414, Kata.nextBiggerNumber(144));
+//        assertEquals(214, Kata.nextBiggerNumber(142));
+//        assertEquals(1534, Kata.nextBiggerNumber(1453));
 
-        assertEquals(214, Kata.nextBiggerNumber(142));
-        assertEquals(3145, Kata.nextBiggerNumber(1453));
-//        assertEquals(3145, Kata.nextBiggerNumber(1543));
+        assertEquals(3145, Kata.nextBiggerNumber(1543));
 
-        //assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
+//        assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
 //        assertEquals(1962525825, Kata.nextBiggerNumber(1962525582)); //
 
         //  to conver 숫자
@@ -53,9 +53,9 @@ public class KataTests {
         int num = 252159;
 
 
-        num = 142 ;
-        //num = 1962525528 ;
-        //num = 1453;
+//        num = 142 ;
+        num = 1962525528 ;
+//        num = 1453;
 
         System.out.println(mandu(num));
 
@@ -138,6 +138,7 @@ public class KataTests {
                         if(endPosition != i-2){
                             endPosition =  i -1;
                         }
+
 
                     }
 
@@ -492,113 +493,103 @@ class Kata {
 
 
     public static long nextBiggerNumber(long num) {
-
-        List<Integer> dubuList = new ArrayList<>();
-
         String numString = String.valueOf(num);
         char[] chars = numString.toCharArray();
 
-        List<Character> intList = new ArrayList<>();
-        List<Integer> rsList = new ArrayList<>();
-        List<Integer> nextRsList = new ArrayList<>();
-        List<Character> ordList = new ArrayList<>();
+        List<Character> orderList = new ArrayList<>();
+        List<Integer> intList = new ArrayList<>();
+        List<Integer> iintList = new ArrayList<>();
+        List<Integer> chkList = new ArrayList<>();
+        List<Integer> tmpList ;
+        Map<String,Integer> orderMap = new HashMap<>();
 
+        // init
         for (int i = 0; i < chars.length; i++) {
             char aChar = chars[i];
-            intList.add(aChar);
+            orderList.add(aChar);
+            intList.add(Integer.valueOf(String.valueOf(aChar)));
+
+        }
+        Collections.sort(orderList);
+
+        for (int i = 0; i < orderList.size(); i++) {
+            Character character = orderList.get(i);
+            if( ! orderMap.keySet().contains(String.valueOf(character))){
+                orderMap.put(String.valueOf(character),i);
+            }
 
         }
 
+        // init
 
-        ordList.addAll(intList);
-        Collections.sort(ordList);
+        chkList.addAll(intList);
 
-        for (int i = 0; i < intList.size(); i++) {
-            Character integer = intList.get(i);
-            rsList.add(Integer.valueOf(String.valueOf(integer)));
-        }
+        int endPosition = -99;
+        while(true){
 
-        StringBuilder b = new StringBuilder();
-        rsList.stream().forEach(b::append);
+            for (int i = 0; i < intList.size(); i++) { // 자리수
+                Integer integer = intList.get(i);
 
-        nextRsList.addAll(rsList);
+                if(endPosition != -1 && i < endPosition){
+                    continue;
+                }
 
-//        nextRsList.set(rsList.size() -2 ,nextRsList.size() -1);
-//        if(getInterValue(nextRsList) > getInterValue(rsList)){
-//
-//        }else{
-//            nextRsList.set(nextRsList.size() -1 ,nextRsList.size() -2);
-//
-//        }
+                tmpList= chkList.subList(0,i);
+                iintList = new ArrayList<>();
+                iintList.addAll(intList);
+                for (int k = 0; k < tmpList.size(); k++) {
+                    Integer integer1 = tmpList.get(k);
+                    iintList.remove(integer1);
+                }
 
+                for (int j = 0; j < orderList.size(); j++) {
 
-        for (int i = rsList.size() - 2; i >= 0; i--) {
+                    Character character = orderList.get(j);
 
-
-
-
-            nextRsList = new ArrayList<>();
-            nextRsList.addAll(rsList);
-
-            List<Integer> sortAbleList = nextRsList.subList(i , nextRsList.size());
-            Collections.sort(sortAbleList, Collections.reverseOrder());
-
-            if (getInterValue(sortAbleList) > getInterValue(rsList.subList(i, rsList.size()))) {
+                    // validate character
+                    // useble charcter ?
 
 
-//                System.out.println(getInterValue(nextRsList));
+                    if(iintList.contains(Integer.valueOf(String.valueOf(character)))){
 
+                    }else{
+                        continue;
+                    }
 
-                List<Integer> headList = nextRsList.subList(0, i);
+                    chkList.set(i,Integer.valueOf(String.valueOf(character)));
 
-                headList.addAll(sortAbleList);
+//                    if(j == orderList.size()-1){
+//                        endPosition =  i -1;
+//                    }
 
-                //dubuList = headList;
+                    Collections.sort(iintList, Collections.reverseOrder());
+                    if(iintList.get(0) == Integer.valueOf(String.valueOf(character))){
 
+                        if(endPosition != i-2){
+                            endPosition =  i -1;
+                        }
 
-                List<Integer> hheadList = new ArrayList<>();
-                for (int j = i; j <rsList.size() ; j++) {
-                    nextRsList = new ArrayList<>();
-                    nextRsList.addAll(headList);
+                    }
 
-                    sortAbleList = nextRsList.subList(j+1 , nextRsList.size());
-                    Collections.sort(sortAbleList);
+                    if(getInterValue(chkList.subList(0,i+1)) >= getInterValue(intList.subList(0,i+1))){
+                        if(i == endPosition){
+                            endPosition = -99;
+                            continue;
+                        }
 
-                    hheadList = nextRsList.subList(0, j+1);
-                    hheadList.addAll(sortAbleList);
+                        if(i == intList.size()-1 && getInterValue(chkList) > getInterValue(intList)) {
+                            System.err.println(chkList);
+                            return (long) getInterValue(chkList);
+                        }
 
-
-                    if (getInterValue(hheadList) > getInterValue(rsList)) {
-
-
-                        dubuList = hheadList;
-                        return (long) getInterValue(dubuList);
-
-
+                        break;
                     }
 
                 }
 
-
-
-//                for (int j = i; j < ordList.size(); j++) {
-//
-////                    nextRsList.set(rsList.size()-j ,rsList.get(nextRsList.size() -1-i));
-////                    nextRsList.set(rsList.size() -1-i ,rsList.get(nextRsList.size() -2-i));
-//
-//                }
-
-
             }
 
-
-
-
-
         }
-
-
-        return 0;
     }
 
 
