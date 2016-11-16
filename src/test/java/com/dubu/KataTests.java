@@ -45,10 +45,59 @@ public class KataTests {
     }
 
     @Test
-    public void testReTest() throws Exception {
+    public void testReReTest() throws Exception {
 
         int num = 252159;
 
+        String numString = String.valueOf(num);
+        char[] chars = numString.toCharArray();
+
+        List<Character> orderList = new ArrayList<>();
+        List<Integer> intList = new ArrayList<>();
+        List<Integer> iintList = new ArrayList<>();
+        List<Integer> chkList = new ArrayList<>();
+        List<Integer> tmpList;
+        Map<String, Integer> orderMap = new HashMap<>();
+
+        // init
+        for (int i = 0; i < chars.length; i++) {
+            char aChar = chars[i];
+            orderList.add(aChar);
+            intList.add(Integer.valueOf(String.valueOf(aChar)));
+
+        }
+        Collections.sort(orderList);
+
+        for (int i = 0; i < orderList.size(); i++) {
+            Character character = orderList.get(i);
+            if (!orderMap.keySet().contains(String.valueOf(character))) {
+                orderMap.put(String.valueOf(character), i);
+            }
+
+        }
+        // init
+
+        chkList.addAll(intList);
+
+
+
+    }
+
+
+
+
+    @Test
+    public void testReTest() throws Exception {
+
+        int num = 252159;
+        num = 142 ;
+
+        System.out.println(mandu(num));
+
+
+    }
+
+    private long mandu(int num) {
         String numString = String.valueOf(num);
         char[] chars = numString.toCharArray();
 
@@ -86,6 +135,10 @@ public class KataTests {
             for (int i = 0; i < intList.size(); i++) { // 자리수
                 Integer integer = intList.get(i);
 
+                if(endPosition != -1 && i < endPosition){
+                    continue;
+                }
+
                 tmpList= chkList.subList(0,i);
                 iintList = new ArrayList<>();
                 iintList.addAll(intList);
@@ -110,8 +163,17 @@ public class KataTests {
 
                     chkList.set(i,Integer.valueOf(String.valueOf(character)));
 
-                    if(j == orderList.size()-1){
-                        endPosition =  i -1;
+//                    if(j == orderList.size()-1){
+//                        endPosition =  i -1;
+//                    }
+
+                    Collections.sort(iintList, Collections.reverseOrder());
+                    if(iintList.get(0) == Integer.valueOf(String.valueOf(character))){
+
+                        if(endPosition != i-2){
+                            endPosition =  i -1;
+                        }
+
                     }
 
                     if(getInterValue(chkList.subList(0,i+1)) >= getInterValue(intList.subList(0,i+1))){
@@ -119,28 +181,19 @@ public class KataTests {
                             continue;
                         }
 
-
-
+                        if(i == intList.size()-1 && getInterValue(chkList) > getInterValue(intList)) {
+                            System.err.println(chkList);
+                            return (long) getInterValue(chkList);
+                        }
 
                         break;
                     }
 
-
-
                 }
-
-
 
             }
 
         }
-
-
-
-
-
-
-
     }
 
     @Test
