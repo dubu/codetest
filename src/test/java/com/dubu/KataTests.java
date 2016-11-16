@@ -1,15 +1,15 @@
 package com.dubu;
 
-import org.junit.Test;
+    import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.Collections;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+    import static org.junit.Assert.assertEquals;
 
 /**
  * Created by rigel on 11/10/16.
@@ -24,10 +24,10 @@ public class KataTests {
 //        assertEquals(531, Kata.nextBiggerNumber(513));
 //        assertEquals(2071, Kata.nextBiggerNumber(2017));
 //        assertEquals(441, Kata.nextBiggerNumber(414));
-//        assertEquals(414, Kata.nextBiggerNumber(144)); x
+//        assertEquals(414, Kata.nextBiggerNumber(144));
 
         assertEquals(214, Kata.nextBiggerNumber(142));
-        assertEquals(1534, Kata.nextBiggerNumber(1453));
+        assertEquals(3145, Kata.nextBiggerNumber(1453));
 //        assertEquals(3145, Kata.nextBiggerNumber(1543));
 
         //assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
@@ -44,45 +44,6 @@ public class KataTests {
 
     }
 
-    @Test
-    public void testReReTest() throws Exception {
-
-        int num = 252159;
-
-        String numString = String.valueOf(num);
-        char[] chars = numString.toCharArray();
-
-        List<Character> orderList = new ArrayList<>();
-        List<Integer> intList = new ArrayList<>();
-        List<Integer> iintList = new ArrayList<>();
-        List<Integer> chkList = new ArrayList<>();
-        List<Integer> tmpList;
-        Map<String, Integer> orderMap = new HashMap<>();
-
-        // init
-        for (int i = 0; i < chars.length; i++) {
-            char aChar = chars[i];
-            orderList.add(aChar);
-            intList.add(Integer.valueOf(String.valueOf(aChar)));
-
-        }
-        Collections.sort(orderList);
-
-        for (int i = 0; i < orderList.size(); i++) {
-            Character character = orderList.get(i);
-            if (!orderMap.keySet().contains(String.valueOf(character))) {
-                orderMap.put(String.valueOf(character), i);
-            }
-
-        }
-        // init
-
-        chkList.addAll(intList);
-
-
-
-    }
-
 
 
 
@@ -90,7 +51,11 @@ public class KataTests {
     public void testReTest() throws Exception {
 
         int num = 252159;
+
+
         num = 142 ;
+        //num = 1962525528 ;
+        //num = 1453;
 
         System.out.println(mandu(num));
 
@@ -129,7 +94,7 @@ public class KataTests {
 
         chkList.addAll(intList);
 
-        int endPosition = -1;
+        int endPosition = -99;
         while(true){
 
             for (int i = 0; i < intList.size(); i++) { // 자리수
@@ -170,17 +135,15 @@ public class KataTests {
                     Collections.sort(iintList, Collections.reverseOrder());
                     if(iintList.get(0) == Integer.valueOf(String.valueOf(character))){
 
-//                        if(endPosition != i-2){
-//                            endPosition =  i -1;
-//                        }
-
-                        endPosition =  i -1;
+                        if(endPosition != i-2){
+                            endPosition =  i -1;
+                        }
 
                     }
 
                     if(getInterValue(chkList.subList(0,i+1)) >= getInterValue(intList.subList(0,i+1))){
-                        if(i == endPosition ){
-                            endPosition = -1;
+                        if(i == endPosition){
+                            endPosition = -99;
                             continue;
                         }
 
@@ -314,9 +277,9 @@ public class KataTests {
 
                 updatePositon = i-1;
 
-            //for
+                //for
             }
-        //while
+            //while
         }
 
 
@@ -362,7 +325,7 @@ public class KataTests {
 
 
         String rs = addOne("210");
-   }
+    }
 
     private String addOne(String s) {
 
@@ -390,7 +353,7 @@ public class KataTests {
                 String rStr = revertNumber(integer);
                 break;
             }
-      }
+        }
 
         return null;
     }
@@ -739,9 +702,9 @@ class Kata {
 
         for (int i = 0; i < rsList.size(); i++) {
             Integer integer = rsList.get(i);
-            
+
             sum = sum + integer * Math.pow(10, (rsList.size()- i -1));
-            
+
         }
         return sum;
     }
