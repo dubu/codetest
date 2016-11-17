@@ -11,7 +11,9 @@ import org.junit.Test;
  * Created by rigel on 11/17/16.
  *
  * Honor Position:#24013 / 84%
+ *       Position:#22560 / 85%*
  *
+ *  https://www.codewars.com/kata/gap-in-primes/train/java
  *
  */
 public class GapInPrimesTest {
@@ -83,7 +85,11 @@ public class GapInPrimesTest {
 
 class GapInPrimes {
 
-    public static long[] gap(int g, int m, int n) {
+    public static long[] gap(long lg, long lm, long ln) {
+
+        int g = (int)lg;
+        int m = (int)lm;
+        int n = (int)ln;
 
 
         List<Integer> primes = new ArrayList<>();
