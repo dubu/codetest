@@ -40,6 +40,50 @@ public class KataTests {
         assertEquals(1962525825, Kata.nextBiggerNumber(1962525582)); //
 
 
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1232567980, Kata.nextBiggerNumber(1232567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1254567980, Kata.nextBiggerNumber(1254567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1232567980, Kata.nextBiggerNumber(1232567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1254567980, Kata.nextBiggerNumber(1254567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1232567980, Kata.nextBiggerNumber(1232567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1254567980, Kata.nextBiggerNumber(1254567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1232567980, Kata.nextBiggerNumber(1232567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1254567980, Kata.nextBiggerNumber(1254567908));
+
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(624567980, Kata.nextBiggerNumber(624567908));
+        assertEquals(1434567980, Kata.nextBiggerNumber(1434567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+        assertEquals(1634567980, Kata.nextBiggerNumber(1634567908));
+        assertEquals(1235567980, Kata.nextBiggerNumber(1235567908));
+
+
+//        assertEquals(1234567980, Kata.nextBiggerNumber(1235567908));
+//        assertEquals(1234567980, Kata.nextBiggerNumber(1235567908));
+//        assertEquals(1234567980, Kata.nextBiggerNumber(1235567908));
+//        assertEquals(1234567980, Kata.nextBiggerNumber(1235567908));
+//        assertEquals(1234567980, Kata.nextBiggerNumber(1235567908));
+//        assertEquals(1234567980, Kata.nextBiggerNumber(1235567908));
+
+
+
+
 //        Process was terminated. It took longer than 12000ms to complete
 
 
@@ -395,7 +439,7 @@ class Kata {
         String numString = String.valueOf(num);
         char[] chars = numString.toCharArray();
 
-        List<Character> orderList = new ArrayList<>();
+        List<Integer> orderList = new ArrayList<>();
         List<Integer> intList = new ArrayList<>();
         List<Integer> iintList = new ArrayList<>();
         List<Integer> chkList = new ArrayList<>();
@@ -408,13 +452,13 @@ class Kata {
         // init
         for (int i = 0; i < chars.length; i++) {
             char aChar = chars[i];
-            orderList.add(aChar);
+            orderList.add(Integer.valueOf(String.valueOf(aChar)));
             intList.add(Integer.valueOf(String.valueOf(aChar)));
 
         }
         Collections.sort(orderList);
 
-        Set<Character> hs = new HashSet<>();
+        Set<Integer> hs = new HashSet<>();
         hs.addAll(orderList);
         orderList.clear();
         orderList.addAll(hs);
@@ -422,7 +466,7 @@ class Kata {
 
 
         for (int i = 0; i < orderList.size(); i++) {
-            Character character = orderList.get(i);
+            Integer character = orderList.get(i);
             if( ! orderMap.keySet().contains(String.valueOf(character))){
                 orderMap.put(String.valueOf(character),i);
             }
@@ -430,6 +474,7 @@ class Kata {
 
         }
 
+        Integer initVal = getInterValue(intList).intValue();
         // init
 
         chkList.addAll(intList);
@@ -466,7 +511,7 @@ class Kata {
 
                 for (int j = 0; j < orderList.size(); j++) {
 
-                    Character character = orderList.get(j);
+                    Integer character = orderList.get(j);
 
                     // validate character
                     // useble charcter ?
@@ -497,16 +542,20 @@ class Kata {
                         }
                     }
 
+                    Integer chkVal = getInterValue(chkList).intValue();
 
-                    if(getInterValue(chkList.subList(0,i+1)) >= getInterValue(intList.subList(0,i+1))){
+
+
+//                    if(getInterValue(chkList.subList(0,i+1)) >= getInterValue(intList.subList(0,i+1))){
+                    if(chkVal / 10 / (intList.size()-i) >= initVal / 10 / (intList.size()-i )){
                         if(i == endPosition){
                             endPosition = -99;
                             continue;
                         }
 
-                        if(i == intList.size()-1 && getInterValue(chkList) > getInterValue(intList)) {
+                        if(i == intList.size()-1 && chkVal > initVal) {
                             System.err.println(chkList);
-                            return (long) getInterValue(chkList);
+                            return  Long.valueOf(String.valueOf(getInterValue(chkList).intValue()));
                         }
 
 //                        chkFlag =false;
@@ -612,10 +661,11 @@ class Kata {
 
 
 
-        return (long) getInterValue(dubuList);
+//        return (long) getInterValue(dubuList);
+        return 0;
     }
 
-    public static double getInterValue(List<Integer> rsList) {
+    public static Double getInterValue(List<Integer> rsList) {
 
         double sum = 0;
 
