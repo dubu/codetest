@@ -20,15 +20,16 @@ package com.dubu;
 public class KataTests {
     @Test
     public void basicTests() {
-//        assertEquals(21, Kata.nextBiggerNumber(12));
-//        assertEquals(531, Kata.nextBiggerNumber(513));
-//        assertEquals(2071, Kata.nextBiggerNumber(2017));
-//        assertEquals(441, Kata.nextBiggerNumber(414));
-//        assertEquals(414, Kata.nextBiggerNumber(144));
-//        assertEquals(214, Kata.nextBiggerNumber(142));
-//        assertEquals(1534, Kata.nextBiggerNumber(1453));
-
+        assertEquals(21, Kata.nextBiggerNumber(12));
+        assertEquals(531, Kata.nextBiggerNumber(513));
+        assertEquals(441, Kata.nextBiggerNumber(414));
+        assertEquals(414, Kata.nextBiggerNumber(144));
+        assertEquals(214, Kata.nextBiggerNumber(142));
+        assertEquals(1534, Kata.nextBiggerNumber(1453));
         assertEquals(3145, Kata.nextBiggerNumber(1543));
+
+
+                assertEquals(2071, Kata.nextBiggerNumber(2017));
 
 //        assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
 //        assertEquals(1962525825, Kata.nextBiggerNumber(1962525582)); //
@@ -54,8 +55,8 @@ public class KataTests {
 
 
 //        num = 142 ;
-        num = 1962525528 ;
-//        num = 1453;
+//        num = 1962525528 ;
+        num = 1543;
 
         System.out.println(mandu(num));
 
@@ -72,6 +73,9 @@ public class KataTests {
         List<Integer> chkList = new ArrayList<>();
         List<Integer> tmpList ;
         Map<String,Integer> orderMap = new HashMap<>();
+
+
+        List<Integer> markList = new ArrayList<>();
 
         // init
         for (int i = 0; i < chars.length; i++) {
@@ -95,8 +99,22 @@ public class KataTests {
         chkList.addAll(intList);
 
         int endPosition = -99;
+
         while(true){
 
+
+            for (int i = markList.size()-1; i >=0 ; i--) {
+
+
+                if (!markList.contains(i)){
+                    endPosition = i;
+                    break;
+                }
+
+            }
+
+            boolean chkFlag = true;
+            markList = new ArrayList<>();
             for (int i = 0; i < intList.size(); i++) { // 자리수
                 Integer integer = intList.get(i);
 
@@ -135,12 +153,16 @@ public class KataTests {
                     Collections.sort(iintList, Collections.reverseOrder());
                     if(iintList.get(0) == Integer.valueOf(String.valueOf(character))){
 
-                        if(endPosition != i-2){
-                            endPosition =  i -1;
+//                        if( endPosition != i-2){
+//                        if(!markList.contains(i-1)){
+                        if(true){
+                            markList.add(i);
+                            //endPosition =  i -1;
+//                            chkFlag =false;
+
                         }
-
-
                     }
+
 
                     if(getInterValue(chkList.subList(0,i+1)) >= getInterValue(intList.subList(0,i+1))){
                         if(i == endPosition){
@@ -153,6 +175,7 @@ public class KataTests {
                             return (long) getInterValue(chkList);
                         }
 
+//                        chkFlag =false;
                         break;
                     }
 
@@ -503,6 +526,9 @@ class Kata {
         List<Integer> tmpList ;
         Map<String,Integer> orderMap = new HashMap<>();
 
+
+        List<Integer> markList = new ArrayList<>();
+
         // init
         for (int i = 0; i < chars.length; i++) {
             char aChar = chars[i];
@@ -525,8 +551,22 @@ class Kata {
         chkList.addAll(intList);
 
         int endPosition = -99;
+
         while(true){
 
+
+            for (int i = markList.size()-1; i >=0 ; i--) {
+
+
+                if (!markList.contains(i)){
+                    endPosition = i;
+                    break;
+                }
+
+            }
+
+            boolean chkFlag = true;
+            markList = new ArrayList<>();
             for (int i = 0; i < intList.size(); i++) { // 자리수
                 Integer integer = intList.get(i);
 
@@ -565,11 +605,16 @@ class Kata {
                     Collections.sort(iintList, Collections.reverseOrder());
                     if(iintList.get(0) == Integer.valueOf(String.valueOf(character))){
 
-                        if(endPosition != i-2){
-                            endPosition =  i -1;
-                        }
+//                        if( endPosition != i-2){
+//                        if(!markList.contains(i-1)){
+                        if(true){
+                            markList.add(i);
+                            //endPosition =  i -1;
+//                            chkFlag =false;
 
+                        }
                     }
+
 
                     if(getInterValue(chkList.subList(0,i+1)) >= getInterValue(intList.subList(0,i+1))){
                         if(i == endPosition){
@@ -582,6 +627,7 @@ class Kata {
                             return (long) getInterValue(chkList);
                         }
 
+//                        chkFlag =false;
                         break;
                     }
 
