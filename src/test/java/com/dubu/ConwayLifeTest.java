@@ -74,7 +74,16 @@ public class ConwayLifeTest{
 //        System.out.println(generations);
         int lenY = cells.length;
         int lenX = cells[0].length;
-        int[][] generated = cells;
+        int[][] generated = new int[lenY][lenX];
+
+        for (int j = 0; j <lenY; j++) {
+
+            for (int i = 0; i < lenX; i++) {
+                int i1 = cells[j][i];
+                generated[j][i] = i1;
+            }
+        }
+
         for (int i = 0; i < generations; i++) {
 
             generated = getGenerationOneTime(generated);
@@ -266,7 +275,7 @@ class LifeDebug {
 
             for (int i = 0; i < lenX; i++) {
                 int i1 = cells[j][i];
-                int i2 = cells[j][i];
+                int i2 = res[j][i];
                 if(i1 != i2){
                     isEqual = false;
                     return isEqual;
