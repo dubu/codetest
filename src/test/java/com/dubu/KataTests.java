@@ -36,9 +36,19 @@ public class KataTests {
         assertEquals(1534, Kata.nextBiggerNumber(1453));
         assertEquals(3145, Kata.nextBiggerNumber(1543));
         assertEquals(2071, Kata.nextBiggerNumber(2017));
-
         assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
         assertEquals(1962525825, Kata.nextBiggerNumber(1962525582)); //
+
+
+//        Process was terminated. It took longer than 12000ms to complete
+
+
+//        assertEquals(2071, Kata.nextBiggerNumber(1234567890));
+
+//        assertEquals(150990099, Kata.nextBiggerNumber(150909990));
+
+
+
 
         //  to conver 숫자
         // +1
@@ -416,6 +426,7 @@ class Kata {
             if( ! orderMap.keySet().contains(String.valueOf(character))){
                 orderMap.put(String.valueOf(character),i);
             }
+//            orderMap.put(String.valueOf(character),i);
 
         }
 
@@ -473,8 +484,8 @@ class Kata {
 //                        endPosition =  i -1;
 //                    }
 
-                    Collections.sort(iintList, Collections.reverseOrder());
-                    if(iintList.get(0) == Integer.valueOf(String.valueOf(character))){
+//                    Collections.sort(iintList, Collections.reverseOrder());
+                    if(iintList.get(iintList.size()-1) == Integer.valueOf(String.valueOf(character))){
 
 //                        if( endPosition != i-2){
 //                        if(!markList.contains(i-1)){
