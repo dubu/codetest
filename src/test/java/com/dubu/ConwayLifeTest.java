@@ -57,29 +57,40 @@ public class ConwayLifeTest{
     public static int[][]  getGeneration(int[][] cells, int generations) {
 
         int lenY = cells.length;
-
         int lenX = cells[0].length;
+        int[][] generated = cells;
+        for (int i = 0; i <= generations; i++) {
 
-        int [][] copyCells = new int[lenY][lenX];
-
-        for (int j = 0; j < lenY; j++) {
-
-            for (int i = 0; i < lenX; i++) {
-
-                int curVal = cells[j][i];
-                int rsVal = -1;
-                if (curVal == LIVE){
-                    rsVal = isNextDie(cells,j,i);
-                }else if(curVal == DIE){
-                    rsVal = isNextLive(cells,j,i);
-                }
-                copyCells[j][i] = rsVal;
-
-            }
+            generated = getGenerationOneTime(generated);
         }
-
-        return copyCells;
+        return generated;
     }
+
+     private static int[][] getGenerationOneTime(int[][] cells) {
+         int lenY = cells.length;
+
+         int lenX = cells[0].length;
+
+         int [][] copyCells = new int[lenY][lenX];
+
+         for (int j = 0; j < lenY; j++) {
+
+             for (int i = 0; i < lenX; i++) {
+
+                 int curVal = cells[j][i];
+                 int rsVal = -1;
+                 if (curVal == LIVE){
+                     rsVal = isNextDie(cells,j,i);
+                 }else if(curVal == DIE){
+                     rsVal = isNextLive(cells,j,i);
+                 }
+                 copyCells[j][i] = rsVal;
+
+             }
+         }
+
+         return copyCells;
+     }
 
      private static int isNextLive(int[][] cells, int y, int x) {
          int startX = x -1;
