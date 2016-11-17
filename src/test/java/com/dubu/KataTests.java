@@ -26,16 +26,179 @@ import static org.junit.Assert.assertEquals;
 
  */
 public class KataTests {
+
+    @Test
+    public void testMakeTestCase() throws Exception {
+
+//        Kata.makeTestCase(12);
+//        Kata.makeTestCase(513);
+//        Kata.makeTestCase(2017);
+//        Kata.makeTestCase(414);
+//        Kata.makeTestCase(144);
+//        Kata.makeTestCase(572159231);
+//        Kata.makeTestCase(930458268);
+//        Kata.makeTestCase(1660602199);
+//        Kata.makeTestCase(1013388032);
+//        Kata.makeTestCase(1759205111);
+//        Kata.makeTestCase(1278754273);
+//        Kata.makeTestCase(1142948762);
+//        Kata.makeTestCase(1919511783);
+//        Kata.makeTestCase(78429885);
+//        Kata.makeTestCase(1542978633);
+//        Kata.makeTestCase(659842390);
+//        Kata.makeTestCase(637972185);
+//        Kata.makeTestCase(698658665);
+//        Kata.makeTestCase(1202410899);
+//        Kata.makeTestCase(1367614518);
+//        Kata.makeTestCase(1828309484);
+//        Kata.makeTestCase(674994563);
+//        Kata.makeTestCase(1487525443);
+//        Kata.makeTestCase(1414753002);
+//        Kata.makeTestCase(1807041661);
+//        Kata.makeTestCase(331690328);
+//        Kata.makeTestCase(2024075514);
+//        Kata.makeTestCase(855991271);
+//        Kata.makeTestCase(915887706);
+//        Kata.makeTestCase(569700221);
+//        Kata.makeTestCase(1140371586);
+//        Kata.makeTestCase(75590407);
+//        Kata.makeTestCase(839675576);
+//        Kata.makeTestCase(1782265444);
+//        Kata.makeTestCase(1651068903);
+//        Kata.makeTestCase(957573647);
+//        Kata.makeTestCase(1778721157);
+//        Kata.makeTestCase(1483219877);
+//        Kata.makeTestCase(537050398);
+//        Kata.makeTestCase(19159827);
+//        Kata.makeTestCase(549747781);
+//        Kata.makeTestCase(1184957761);
+//        Kata.makeTestCase(1634664554);
+//        Kata.makeTestCase(1556608064);
+//        Kata.makeTestCase(1890304864);
+//        Kata.makeTestCase(1196784100);
+//        Kata.makeTestCase(1152946080);
+//        Kata.makeTestCase(446462719);
+//        Kata.makeTestCase(1279825774);
+//        Kata.makeTestCase(813774981);
+//        Kata.makeTestCase(151881147);
+//        Kata.makeTestCase(2132393692);
+//        Kata.makeTestCase(1804239498);
+//        Kata.makeTestCase(1982299788);
+//        Kata.makeTestCase(901301564);
+//        Kata.makeTestCase(1946959208);
+//        Kata.makeTestCase(1285877199);
+//        Kata.makeTestCase(1385506827);
+//        Kata.makeTestCase(1780875485);
+//        Kata.makeTestCase(2056875295);
+//        Kata.makeTestCase(1522695680);
+//        Kata.makeTestCase(529952386);
+//        Kata.makeTestCase(1181068497);
+//        Kata.makeTestCase(684339227);
+//        Kata.makeTestCase(206493958);
+//        Kata.makeTestCase(476925943);
+//        Kata.makeTestCase(1967511666);
+//        Kata.makeTestCase(1043886206);
+//        Kata.makeTestCase(1580979147);
+//        Kata.makeTestCase(687185696);
+//        Kata.makeTestCase(246738655);
+//        Kata.makeTestCase(1377624767);
+//        Kata.makeTestCase(2034697811);
+//        Kata.makeTestCase(1057208655);
+//        Kata.makeTestCase(1254318243);
+//        Kata.makeTestCase(1201271085);
+//        Kata.makeTestCase(165988867);
+//        Kata.makeTestCase(665511615);
+//        Kata.makeTestCase(1396258138);
+//        Kata.makeTestCase(331403227);
+//        Kata.makeTestCase(1662361141);
+//        Kata.makeTestCase(314073412);
+//        Kata.makeTestCase(1800700866);
+//        Kata.makeTestCase(1936569974);
+//        Kata.makeTestCase(1745548811);
+//        Kata.makeTestCase(1397752881);
+//        Kata.makeTestCase(585487357);
+//        Kata.makeTestCase(1975010472);
+//        Kata.makeTestCase(1881173302);
+//        Kata.makeTestCase(355967568);
+//        Kata.makeTestCase(1537173670);
+//        Kata.makeTestCase(978652531);
+//        Kata.makeTestCase(1682859308);
+//        Kata.makeTestCase(1660815065);
+//        Kata.makeTestCase(218918940);
+//        Kata.makeTestCase(1910851893);
+//        Kata.makeTestCase(886770449);
+//        Kata.makeTestCase(1305123591);
+//        Kata.makeTestCase(1833245933);
+//        Kata.makeTestCase(282178179);
+//        Kata.makeTestCase(2041496611);
+//        Kata.makeTestCase(1950529202);
+//        Kata.makeTestCase(1913956501);
+//        Kata.makeTestCase(1005422545);
+//        Kata.makeTestCase(391185317);
+//        Kata.makeTestCase(110204618);
+//        Kata.makeTestCase(2145794893);
+//        Kata.makeTestCase(1086240851);
+//        Kata.makeTestCase(506628000);
+//        Kata.makeTestCase(977271940);
+//        Kata.makeTestCase(292404781);
+//        Kata.makeTestCase(1776825735);
+//        Kata.makeTestCase(1233780246);
+//        Kata.makeTestCase(1764259222);
+//        Kata.makeTestCase(748786689);
+//        Kata.makeTestCase(852717650);
+//        Kata.makeTestCase(111678225);
+//        Kata.makeTestCase(1400195532);
+//        Kata.makeTestCase(389692161);
+//        Kata.makeTestCase(1146485328);
+//        Kata.makeTestCase(1162339625);
+//        Kata.makeTestCase(758453231);
+//        Kata.makeTestCase(1854723333);
+//        Kata.makeTestCase(1051742864);
+//        Kata.makeTestCase(2097210025);
+//        Kata.makeTestCase(1152581636);
+//        Kata.makeTestCase(204839594);
+//        Kata.makeTestCase(602069030);
+//        Kata.makeTestCase(1402933106);
+//        Kata.makeTestCase(660583222);
+//        Kata.makeTestCase(2057777746);
+//        Kata.makeTestCase(938861988);
+//        Kata.makeTestCase(600224120);
+//        Kata.makeTestCase(934795831);
+//        Kata.makeTestCase(710144744);
+//        Kata.makeTestCase(1668420665);
+//        Kata.makeTestCase(1256744687);
+//        Kata.makeTestCase(657809763);
+//        Kata.makeTestCase(432409771);
+//        Kata.makeTestCase(249931519);
+//        Kata.makeTestCase(556442265);
+//        Kata.makeTestCase(1006129997);
+//        Kata.makeTestCase(949721774);
+//        Kata.makeTestCase(217325074);
+//        Kata.makeTestCase(1301123428);
+//        Kata.makeTestCase(123456789);
+//        Kata.makeTestCase(1234567890);
+        //Kata.makeTestCase(987654321);
+        Kata.makeTestCase(987654);
+
+
+    }
+
     @Test
     public void basicTests() {
         assertEquals(21, Kata.nextBiggerNumber(12));
         assertEquals(531, Kata.nextBiggerNumber(513));
+        assertEquals(2071, Kata.nextBiggerNumber(2017));
         assertEquals(441, Kata.nextBiggerNumber(414));
         assertEquals(414, Kata.nextBiggerNumber(144));
+
+
+        assertEquals(414, Kata.nextBiggerNumber(144));
+
+
         assertEquals(214, Kata.nextBiggerNumber(142));
         assertEquals(1534, Kata.nextBiggerNumber(1453));
         assertEquals(3145, Kata.nextBiggerNumber(1543));
-        assertEquals(2071, Kata.nextBiggerNumber(2017));
+
         assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
         assertEquals(1962525825, Kata.nextBiggerNumber(1962525582)); //
 
@@ -64,14 +227,14 @@ public class KataTests {
         assertEquals(1232567980, Kata.nextBiggerNumber(1232567908));
         assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
         assertEquals(1254567980, Kata.nextBiggerNumber(1254567908));
-
-        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
-        assertEquals(624567980, Kata.nextBiggerNumber(624567908));
-        assertEquals(1434567980, Kata.nextBiggerNumber(1434567908));
-        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
-        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
-        assertEquals(1634567980, Kata.nextBiggerNumber(1634567908));
-        assertEquals(1235567980, Kata.nextBiggerNumber(1235567908));
+//
+//        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+//        assertEquals(624567980, Kata.nextBiggerNumber(624567908));
+//        assertEquals(1434567980, Kata.nextBiggerNumber(1434567908));
+//        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+//        assertEquals(1234567980, Kata.nextBiggerNumber(1234567908));
+//        assertEquals(1634567980, Kata.nextBiggerNumber(1634567908));
+//        assertEquals(1235567980, Kata.nextBiggerNumber(1235567908));
 
 
 //        assertEquals(1234567980, Kata.nextBiggerNumber(1235567908));
@@ -434,6 +597,12 @@ public class KataTests {
 class Kata {
 
 
+    public static void makeTestCase(long num) {
+
+        System.out.printf("assertEquals(%d, Kata.nextBiggerNumber(%d)); \n" ,nextBiggerNumber(num) ,num );
+
+    }
+
 
     public static long nextBiggerNumber(long num) {
         String numString = String.valueOf(num);
@@ -489,8 +658,12 @@ class Kata {
                     endPosition = i;
                     break;
                 }
-
             }
+
+            if(markList.size() == intList.size()){
+                return -1;
+            }
+
 
             boolean chkFlag = true;
             markList = new ArrayList<>();
