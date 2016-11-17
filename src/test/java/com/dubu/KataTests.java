@@ -532,14 +532,8 @@ class Kata {
 //                    Collections.sort(iintList, Collections.reverseOrder());
                     if(iintList.get(iintList.size()-1) == Integer.valueOf(String.valueOf(character))){
 
-//                        if( endPosition != i-2){
-//                        if(!markList.contains(i-1)){
-                        if(true){
-                            markList.add(i);
-                            //endPosition =  i -1;
-//                            chkFlag =false;
 
-                        }
+                        markList.add(i);
                     }
 
                     Integer chkVal = getInterValue(chkList).intValue();
@@ -554,7 +548,7 @@ class Kata {
                         }
 
                         if(i == intList.size()-1 && chkVal > initVal) {
-                            System.err.println(chkList);
+//                            System.err.println(chkList);
                             return  Long.valueOf(String.valueOf(getInterValue(chkList).intValue()));
                         }
 
@@ -569,7 +563,18 @@ class Kata {
         }
     }
 
+    public static Double getInterValue(List<Integer> rsList) {
 
+        double sum = 0;
+
+        for (int i = 0; i < rsList.size(); i++) {
+            Integer integer = rsList.get(i);
+
+            sum = sum + integer * Math.pow(10, (rsList.size()- i -1));
+
+        }
+        return sum;
+    }
 
 
     public static long nextBiggerNumberOld2(long num) {
@@ -665,18 +670,7 @@ class Kata {
         return 0;
     }
 
-    public static Double getInterValue(List<Integer> rsList) {
 
-        double sum = 0;
-
-        for (int i = 0; i < rsList.size(); i++) {
-            Integer integer = rsList.get(i);
-
-            sum = sum + integer * Math.pow(10, (rsList.size()- i -1));
-
-        }
-        return sum;
-    }
 
     public static long nextBiggerNumberOld(long num) {
         String numString = String.valueOf(num);
