@@ -2,23 +2,28 @@ package com.dubu;
 
     import org.junit.Test;
 
-    import java.util.ArrayList;
-    import java.util.Arrays;
-    import java.util.Collections;
-    import java.util.HashMap;
-    import java.util.HashSet;
-    import java.util.List;
-    import java.util.Map;
-    import java.util.Set;
-    import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-    import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by rigel on 11/10/16.
  * <p/>
  * <p/>
  * https://www.codewars.com/kata/next-bigger-number-with-the-same-digits/train/java
+ *
+ * - 숫자 오더가 있다.
+ - 맨뒤를 바꾼다. 안크면
+ - 백자리를 올린다. 나머지 값으로 asc 한다.
+ - order max 면 다음 자리를 올리면서 asc 한다.
+
  */
 public class KataTests {
     @Test
