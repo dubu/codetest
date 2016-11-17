@@ -43,6 +43,21 @@ public class ConwayLifeTest{
 
 
 
+//
+//    testGlider(ConwayLifeTest)
+//    Log
+//        Glider
+//    ▓▓░░░░
+//    ░░▓▓▓▓
+//    ▓▓▓▓░░
+//        ✘ Got
+//    ░░░░░░
+//    ▓▓░░▓▓
+//    ░░▓▓▓▓
+//    instead of
+//    ░░▓▓░░
+//    ░░░░▓▓
+//    ▓▓▓▓▓▓
 
 
 }
@@ -56,10 +71,11 @@ public class ConwayLifeTest{
 
     public static int[][]  getGeneration(int[][] cells, int generations) {
 
+//        System.out.println(generations);
         int lenY = cells.length;
         int lenX = cells[0].length;
         int[][] generated = cells;
-        for (int i = 0; i <= generations; i++) {
+        for (int i = 0; i < generations; i++) {
 
             generated = getGenerationOneTime(generated);
         }
