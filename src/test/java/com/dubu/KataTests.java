@@ -6,8 +6,11 @@ package com.dubu;
     import java.util.Arrays;
     import java.util.Collections;
     import java.util.HashMap;
+    import java.util.HashSet;
     import java.util.List;
     import java.util.Map;
+    import java.util.Set;
+    import java.util.stream.Collectors;
 
     import static org.junit.Assert.assertEquals;
 
@@ -27,12 +30,10 @@ public class KataTests {
         assertEquals(214, Kata.nextBiggerNumber(142));
         assertEquals(1534, Kata.nextBiggerNumber(1453));
         assertEquals(3145, Kata.nextBiggerNumber(1543));
+        assertEquals(2071, Kata.nextBiggerNumber(2017));
 
-
-                assertEquals(2071, Kata.nextBiggerNumber(2017));
-
-//        assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
-//        assertEquals(1962525825, Kata.nextBiggerNumber(1962525582)); //
+        assertEquals(1962525582, Kata.nextBiggerNumber(1962525528)); // 2122555689
+        assertEquals(1962525825, Kata.nextBiggerNumber(1962525582)); //
 
         //  to conver 숫자
         // +1
@@ -45,146 +46,6 @@ public class KataTests {
 
     }
 
-
-
-
-    @Test
-    public void testReTest() throws Exception {
-
-        int num = 252159;
-
-
-//        num = 142 ;
-//        num = 1962525528 ;
-        num = 1543;
-
-        System.out.println(mandu(num));
-
-
-    }
-
-    private long mandu(int num) {
-        String numString = String.valueOf(num);
-        char[] chars = numString.toCharArray();
-
-        List<Character> orderList = new ArrayList<>();
-        List<Integer> intList = new ArrayList<>();
-        List<Integer> iintList = new ArrayList<>();
-        List<Integer> chkList = new ArrayList<>();
-        List<Integer> tmpList ;
-        Map<String,Integer> orderMap = new HashMap<>();
-
-
-        List<Integer> markList = new ArrayList<>();
-
-        // init
-        for (int i = 0; i < chars.length; i++) {
-            char aChar = chars[i];
-            orderList.add(aChar);
-            intList.add(Integer.valueOf(String.valueOf(aChar)));
-
-        }
-        Collections.sort(orderList);
-
-        for (int i = 0; i < orderList.size(); i++) {
-            Character character = orderList.get(i);
-            if( ! orderMap.keySet().contains(String.valueOf(character))){
-                orderMap.put(String.valueOf(character),i);
-            }
-
-        }
-
-        // init
-
-        chkList.addAll(intList);
-
-        int endPosition = -99;
-
-        while(true){
-
-
-            for (int i = markList.size()-1; i >=0 ; i--) {
-
-
-                if (!markList.contains(i)){
-                    endPosition = i;
-                    break;
-                }
-
-            }
-
-            boolean chkFlag = true;
-            markList = new ArrayList<>();
-            for (int i = 0; i < intList.size(); i++) { // 자리수
-                Integer integer = intList.get(i);
-
-                if(endPosition != -1 && i < endPosition){
-                    continue;
-                }
-
-                tmpList= chkList.subList(0,i);
-                iintList = new ArrayList<>();
-                iintList.addAll(intList);
-                for (int k = 0; k < tmpList.size(); k++) {
-                    Integer integer1 = tmpList.get(k);
-                    iintList.remove(integer1);
-                }
-
-                for (int j = 0; j < orderList.size(); j++) {
-
-                    Character character = orderList.get(j);
-
-                    // validate character
-                    // useble charcter ?
-
-
-                    if(iintList.contains(Integer.valueOf(String.valueOf(character)))){
-
-                    }else{
-                        continue;
-                    }
-
-                    chkList.set(i,Integer.valueOf(String.valueOf(character)));
-
-//                    if(j == orderList.size()-1){
-//                        endPosition =  i -1;
-//                    }
-
-                    Collections.sort(iintList, Collections.reverseOrder());
-                    if(iintList.get(0) == Integer.valueOf(String.valueOf(character))){
-
-//                        if( endPosition != i-2){
-//                        if(!markList.contains(i-1)){
-                        if(true){
-                            markList.add(i);
-                            //endPosition =  i -1;
-//                            chkFlag =false;
-
-                        }
-                    }
-
-
-                    if(getInterValue(chkList.subList(0,i+1)) >= getInterValue(intList.subList(0,i+1))){
-                        if(i == endPosition){
-                            endPosition = -99;
-                            continue;
-                        }
-
-                        if(i == intList.size()-1 && getInterValue(chkList) > getInterValue(intList)) {
-                            System.err.println(chkList);
-                            return (long) getInterValue(chkList);
-                        }
-
-//                        chkFlag =false;
-                        break;
-                    }
-
-                }
-
-            }
-
-        }
-    }
 
     @Test
     public void testOrderMap() throws Exception {
@@ -538,6 +399,13 @@ class Kata {
         }
         Collections.sort(orderList);
 
+        Set<Character> hs = new HashSet<>();
+        hs.addAll(orderList);
+        orderList.clear();
+        orderList.addAll(hs);
+
+
+
         for (int i = 0; i < orderList.size(); i++) {
             Character character = orderList.get(i);
             if( ! orderMap.keySet().contains(String.valueOf(character))){
@@ -553,11 +421,9 @@ class Kata {
         int endPosition = -99;
 
         while(true){
+            endPosition = -99;
 
-
-            for (int i = markList.size()-1; i >=0 ; i--) {
-
-
+            for (int i = intList.size()-1; i >=0 ; i--) {
                 if (!markList.contains(i)){
                     endPosition = i;
                     break;
