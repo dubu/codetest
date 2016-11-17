@@ -11,8 +11,6 @@ package com.dubu;
 
 import org.junit.Test;
 
-import java.net.SocketTimeoutException;
-
 import static org.junit.Assert.assertTrue;
 
 public class ConwayLifeTest{
