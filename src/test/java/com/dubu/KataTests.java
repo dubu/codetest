@@ -178,13 +178,29 @@ public class KataTests {
 //        Kata.makeTestCase(123456789);
 //        Kata.makeTestCase(1234567890);
         //Kata.makeTestCase(987654321);
-        Kata.makeTestCase(987654);
+//        Kata.makeTestCase(987654);
+
+        Kata.makeTestCase(9876543210l);
+        Kata.makeTestCase(9999999999l);
+        Kata.makeTestCase(59884848459853l);
+
+
+        Kata.makeTestCase(5988484845l);
 
 
     }
 
     @Test
     public void basicTests() {
+
+//        assertEquals(21, Kata.nextBiggerNumber(59884848459853L));
+
+        assertEquals(-1, Kata.nextBiggerNumber(9876543210l));
+        assertEquals(-1, Kata.nextBiggerNumber(9999999999l));
+        assertEquals(59884848483559l, Kata.nextBiggerNumber(59884848459853l));
+        assertEquals(5988484854l, Kata.nextBiggerNumber(5988484845l));
+
+
         assertEquals(21, Kata.nextBiggerNumber(12));
         assertEquals(531, Kata.nextBiggerNumber(513));
         assertEquals(2071, Kata.nextBiggerNumber(2017));
@@ -480,7 +496,7 @@ public class KataTests {
 //        assertEquals(942.0, Kata.getInterValue(Arrays.asList(9,4,2)));
 
 
-        System.out.println(Kata.getInterValue(Arrays.asList(1, 2, 4, 3, 4)));
+        System.out.println(Kata.getLongValue(Arrays.asList(1, 2, 4, 3, 4)));
 
     }
 
@@ -605,6 +621,7 @@ class Kata {
 
 
     public static long nextBiggerNumber(long num) {
+
         String numString = String.valueOf(num);
         char[] chars = numString.toCharArray();
 
@@ -643,7 +660,7 @@ class Kata {
 
         }
 
-        Integer initVal = getInterValue(intList).intValue();
+        Long initVal = getLongValue(intList);
         // init
 
         chkList.addAll(intList);
@@ -709,7 +726,7 @@ class Kata {
                         markList.add(i);
                     }
 
-                    Integer chkVal = getInterValue(chkList).intValue();
+                    Long chkVal = getLongValue(chkList);
 
 
 
@@ -722,7 +739,8 @@ class Kata {
 
                         if(i == intList.size()-1 && chkVal > initVal) {
 //                            System.err.println(chkList);
-                            return  Long.valueOf(String.valueOf(getInterValue(chkList).intValue()));
+                            //return  Long.valueOf(String.valueOf(getLongValue(chkList).intValue()));
+                            return chkVal;
                         }
 
 //                        chkFlag =false;
@@ -736,18 +754,35 @@ class Kata {
         }
     }
 
-    public static Double getInterValue(List<Integer> rsList) {
 
-        double sum = 0;
+    public static Long getLongValue(List<Integer> rsList) {
+
+        Long sum = 0l;
 
         for (int i = 0; i < rsList.size(); i++) {
             Integer integer = rsList.get(i);
 
-            sum = sum + integer * Math.pow(10, (rsList.size()- i -1));
+            sum = sum + integer * (long)Math.pow(10, (rsList.size()- i -1));
 
         }
         return sum;
     }
+
+//    public static Double getInterValue(List<Integer> rsList) {
+//
+//        double sum = 0;
+//
+//        for (int i = 0; i < rsList.size(); i++) {
+//            Integer integer = rsList.get(i);
+//
+//            sum = sum + integer * Math.pow(10, (rsList.size()- i -1));
+//
+//        }
+//        return sum;
+//    }
+
+
+
 
 
     public static long nextBiggerNumberOld2(long num) {
@@ -804,7 +839,7 @@ class Kata {
             nextRsList.set(i+1 ,curVal);
             nextRsList.set(i ,lstVal);
 
-            if(getInterValue(nextRsList) >  getInterValue(rsList)){
+            if(getLongValue(nextRsList) >  getLongValue(rsList)){
 
 
 //                System.out.println(getInterValue(nextRsList));
