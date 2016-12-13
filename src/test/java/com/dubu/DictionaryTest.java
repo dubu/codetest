@@ -29,7 +29,7 @@ public class DictionaryTest {
 
 }
 
-public class Dictionary {
+class Dictionary {
     private final String[] words;
 
     public Dictionary(String[] words) {
