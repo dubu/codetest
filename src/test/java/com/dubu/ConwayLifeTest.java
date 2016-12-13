@@ -26,14 +26,14 @@ public class ConwayLifeTest{
                 {1,1,0}
             },
             {
-                {0,1,0},
-                {0,0,1},
-                {1,1,1}
+                {1,0,1},
+                {0,1,1},
+                {0,1,0}
             }
         };
         System.out.println("Glider");
         LifeDebug.print(gliders[0]);
-        int[][] res = ConwayLife.getGeneration(gliders[0], 1);
+        int[][] res = ConwayLife.getGeneration(gliders[0], 2);
 
 
 //        System.out.println(res);
@@ -118,7 +118,7 @@ public class ConwayLifeTest{
              }
          }
 
-         int[][] cropCell = crop(cells);
+         int[][] cropCell = crop(copyCells);
 //         return copyCells;
          return cropCell;
      }
@@ -128,25 +128,76 @@ public class ConwayLifeTest{
 
          // find boundry
 
-         int lenY = cells.length;
+         int initY = -1;
+         int initX = -1;
 
+         int lenY = cells.length;
          int lenX = cells[0].length;
 
-         // ??
-         // int [][] copyCells = new int[lenY+2][lenX+2];
+         int endY = -1;
+         int endX = -1;
+
+
+
+         // check Y
 
          for (int j = 0; j < lenY; j++) {
 
+             int rowsum = 0;
              for (int i = 0; i < lenX; i++) {
 
+                 int curVal = cells[j][i];
+                 rowsum = rowsum + curVal;
              }
+
+             if(initY == -1 && rowsum >0 ){
+                 initY = j;
+             }
+
+             if(initY != -1 && rowsum != 0 ){
+                 endY = j;
+             }
+
 
          }
 
+         // ckeck X
+         for (int i = 0; i < lenX; i++) {
+             int virtSum = 0;
+             for (int j = 0; j < lenY; j++) {
+
+                 int curVal = cells[j][i];
+                 virtSum = virtSum +curVal;
+             }
 
 
+             if(initX == -1 && virtSum >0 ){
+                 initX = i;
+             }
 
-         return new int[0][];
+             if(initX != -1 && virtSum !=0 ){
+                 endX = i;
+             }
+         }
+
+
+//         System.err.printf("%d %d %d %d",initX,endX,initY,endY);
+
+
+         // ??
+          int [][] copyCells = new int[endY-initY+1][endX-initX+1];
+         for (int j = initY; j < endY+1; j++) {
+
+             for (int i = initX; i < endX+1; i++) {
+
+                 int curVal = cells[j][i];
+                 copyCells[j-initY][i-initX] = curVal;
+             }
+         }
+         return copyCells;
+
+
+//         return new int[0][];
      }
 
      private static int[][] addBoundry(int[][] cells) {
