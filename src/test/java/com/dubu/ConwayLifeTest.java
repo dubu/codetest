@@ -11,6 +11,8 @@ package com.dubu;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.junit.Assert.assertTrue;
 
 public class ConwayLifeTest{
@@ -91,7 +93,9 @@ public class ConwayLifeTest{
         return generated;
     }
 
-     private static int[][] getGenerationOneTime(int[][] cells) {
+     private static int[][] getGenerationOneTime(int[][] coreCells) {
+         int[][] cells  = addBoundry(coreCells);
+
          int lenY = cells.length;
 
          int lenX = cells[0].length;
@@ -114,6 +118,58 @@ public class ConwayLifeTest{
              }
          }
 
+         int[][] cropCell = crop(cells);
+//         return copyCells;
+         return cropCell;
+     }
+
+     private static int[][] crop(int[][] cells) {
+
+
+         // find boundry
+
+         int lenY = cells.length;
+
+         int lenX = cells[0].length;
+
+         // ??
+         // int [][] copyCells = new int[lenY+2][lenX+2];
+
+         for (int j = 0; j < lenY; j++) {
+
+             for (int i = 0; i < lenX; i++) {
+
+             }
+
+         }
+
+
+
+
+         return new int[0][];
+     }
+
+     private static int[][] addBoundry(int[][] cells) {
+
+//         int[][] data = {{1, 2}, {3, 4}};
+//         int[][] dataCopy = Arrays.stream(data)
+//             .map((int[] row) -> row.clone())
+//             .toArray((int length) -> new int[length][]);
+
+         int lenY = cells.length;
+
+         int lenX = cells[0].length;
+
+         int [][] copyCells = new int[lenY+2][lenX+2];
+
+         for (int j = 0; j < lenY; j++) {
+
+             for (int i = 0; i < lenX; i++) {
+
+                 int curVal = cells[j][i];
+                 copyCells[j+1][i+1] = curVal;
+             }
+         }
          return copyCells;
      }
 
