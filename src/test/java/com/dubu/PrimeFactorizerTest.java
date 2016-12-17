@@ -28,7 +28,7 @@ public class PrimeFactorizerTest {
     public static Collection<?> tests() {
         return Arrays.asList(new Object[][] {
                 {13L, asMap(13, 1)}
-                ,{24L, asMap(2, 3, 3, 1)}
+           ,     {24L, asMap(2, 3, 3, 1)}
                 ,{343L, asMap(7, 3)}
         });
     }
@@ -46,11 +46,70 @@ public class PrimeFactorizerTest {
     @Test
     public void test() {
         assertEquals(factors, worker.factor(n));
+//        worker.factor(n);
+
     }
 }
 
 class PrimeFactorizer{
     public java.util.Map<Long, Integer> factor(long n){
-        return null;
+
+//        System.out.println(n);
+
+
+        boolean isPrimeNumber = true;
+
+        Map map = new HashMap<Long,Integer>();
+
+        for (Long j = 2L; j <= 2; j++) {
+            long nn = n;
+            if (nn % j == 0) {
+                Integer cnt = 0;
+
+                long mod = nn % j;
+                while(mod == 0){
+                    nn =  nn /j;
+                    cnt = cnt +1;
+                    mod = nn % j;
+                }
+
+                map.put(j, cnt);
+
+                n = nn;
+                isPrimeNumber = false;
+                // break; // exit the inner for loop
+            }
+        }
+
+        for (Long j = 3L; j <= n; j=j+2) {
+            long nn = n;
+            if (nn % j == 0) {
+                Integer cnt = 0;
+
+                long mod = nn % j;
+                while(mod == 0){
+                    nn =  nn /j;
+                    cnt = cnt +1;
+                    mod = nn % j;
+                }
+
+                map.put(j, cnt);
+
+                n = nn;
+                isPrimeNumber = false;
+               // break; // exit the inner for loop
+            }
+        }
+
+
+//        for (int j = 2; j < i; j++) {
+//            if (i % j == 0) {
+//                isPrimeNumber = false;
+//                break; // exit the inner for loop
+//            }
+//        }
+
+
+        return map;
     }
 }
