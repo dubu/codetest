@@ -2,6 +2,8 @@ package com.dubu;
 
 /**
  * Created by dubu on 2016-12-17.
+ *
+ * https://www.codewars.com/kata/prime-factorization/train/java
  */
 import static org.junit.Assert.assertEquals;
 
@@ -27,9 +29,9 @@ public class PrimeFactorizerTest {
     @Parameterized.Parameters
     public static Collection<?> tests() {
         return Arrays.asList(new Object[][] {
-                {13L, asMap(13, 1)}
-           ,     {24L, asMap(2, 3, 3, 1)}
-                ,{343L, asMap(7, 3)}
+                {72057554846356487L, asMap(13, 1)}
+//                ,{24L, asMap(2, 3, 3, 1)}
+//                ,{343L, asMap(7, 3)}
         });
     }
 
@@ -82,6 +84,12 @@ class PrimeFactorizer{
         }
 
         for (Long j = 3L; j <= n; j=j+2) {
+
+            if(j > 400000000){
+                map.put(n, 1);
+                break;
+
+            }
             long nn = n;
             if (nn % j == 0) {
                 Integer cnt = 0;
@@ -96,6 +104,8 @@ class PrimeFactorizer{
                 map.put(j, cnt);
 
                 n = nn;
+
+
                 isPrimeNumber = false;
                // break; // exit the inner for loop
             }
