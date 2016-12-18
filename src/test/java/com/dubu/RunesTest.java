@@ -1,8 +1,14 @@
 package com.dubu;
 
 import static org.junit.Assert.assertEquals;
+
+import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
+import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode;
 import org.junit.Test;
 import org.junit.Ignore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,7 +27,6 @@ public class RunesTest {
         assertEquals( "Answer for expression '??*??=302?' " , 5 , Runes.solveExpression("??*??=302?") );
         assertEquals( "Answer for expression '?*11=??' " , 2 , Runes.solveExpression("?*11=??") );
     }
-
 }
 
 class Runes {
@@ -34,6 +39,56 @@ class Runes {
         //(number)[opperator](number)=(number)
         //Unknown digit will not be the same as any other digits used in expression
 
+        List<String> list = new ArrayList<>();
+        char[] chars = expression.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            char aChar = chars[i];
+            list.add(String.valueOf(aChar));
+        }
+
+        System.out.println(list);
+
+
+
+        List<String> numLIst = new ArrayList<>();
+
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < list.size(); i++) {
+            String s = list.get(i);
+
+            switch (s){
+                case "+" :
+                    numLIst.add(sb.toString());
+                    sb =  null;
+                    break;
+                case "-" :
+
+                    break;
+                case "*" :
+
+                    break;
+                case "/" :
+
+                    break;
+                case "?" :
+
+                    break;
+
+                case "=" :
+
+                    break;
+
+                default:
+
+                    if(sb == null){
+                        sb =new StringBuffer();
+                    }
+                    sb.append(s);
+                    System.out.println(s);
+            }
+
+        }
         return missingDigit;
     }
 
