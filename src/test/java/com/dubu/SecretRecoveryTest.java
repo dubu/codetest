@@ -10,36 +10,12 @@ package com.dubu;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
-public class SecretRecoveryTest {
-
-    private SecretDetective detective;
-
-    @Before public void setup() {
-        detective = new SecretDetective();
-    }
-
-    @Test public void secret1() {
-        char[][] triplets = {
-            {'t','u','p'},
-            {'w','h','i'},
-            {'t','s','u'},
-            {'a','t','s'},
-            {'h','a','p'},
-            {'t','i','s'},
-            {'w','h','s'}
-        };
-        assertEquals("whatisup", detective.recoverSecret(triplets));
-    }
-}
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 class SecretDetective {
 
@@ -120,3 +96,26 @@ class SecretDetective {
     }
 
 }
+
+public class SecretRecoveryTest {
+
+    private SecretDetective detective;
+
+    @Before public void setup() {
+        detective = new SecretDetective();
+    }
+
+    @Test public void secret1() {
+        char[][] triplets = {
+            {'t','u','p'},
+            {'w','h','i'},
+            {'t','s','u'},
+            {'a','t','s'},
+            {'h','a','p'},
+            {'t','i','s'},
+            {'w','h','s'}
+        };
+        assertEquals("whatisup", detective.recoverSecret(triplets));
+    }
+}
+
