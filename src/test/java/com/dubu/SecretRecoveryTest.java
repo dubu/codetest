@@ -78,36 +78,14 @@ class SecretDetective {
 
 //                if(rsList.indexOf(shortWord.get(2)) - rsList.indexOf(shortWord.get(0)) == 2 && rsList.indexOf(shortWord.get(1)) - rsList.indexOf(shortWord.get(0)) == 1 ){
 
-                if(false){
+                // insert
+                if(rsList.contains(shortWord.get(0)) && rsList.contains(shortWord.get(2))){
 
-                }else{
-                    // insert
-                    if(rsList.contains(shortWord.get(0)) && rsList.contains(shortWord.get(2))){
-
-                        if(rsList.indexOf(shortWord.get(2)) - rsList.indexOf(shortWord.get(0)) == 1){
-                            rsList.add(rsList.indexOf(shortWord.get(2)),shortWord.get(1));
-                        }
-
-
+                    if(rsList.indexOf(shortWord.get(2)) - rsList.indexOf(shortWord.get(0)) == 1){
+                        rsList.add(rsList.indexOf(shortWord.get(2)),shortWord.get(1));
                     }
 
-                    // add right
-//                    if(rsList.contains(shortWord.get(0)) && rsList.contains(shortWord.get(1))){
-//
-//                        if(rsList.indexOf(shortWord.get(1)) - rsList.indexOf(shortWord.get(0)) == 1){
-//                            rsList.add(rsList.indexOf(shortWord.get(1)),shortWord.get(2));
-//                        }
-//
-//                    }
 
-                    // add left
-//                    if(rsList.contains(shortWord.get(1)) && rsList.contains(shortWord.get(2))){
-//
-//                        if(rsList.indexOf(shortWord.get(2)) - rsList.indexOf(shortWord.get(1)) == 1){
-//                            rsList.add(rsList.indexOf(shortWord.get(1)),shortWord.get(0));
-//                        }
-//
-//                    }
                 }
 
 
@@ -126,38 +104,42 @@ class SecretDetective {
         }
 
 
-        for (int i = 0; i < validList.size(); i++) {
-            List<String> strings = validList.get(i);
+//        for (int i = 0; i < validList.size(); i++) {
 
-            int valCnt = 0;
-            for (int j = 0; j < strings.size(); j++) {
-                String s = strings.get(j);
+        while(validList.size() != 0) {
+            for (int i = 0; i < validList.size(); i++) {
+                List<String> strings = validList.get(i);
 
-                if (rsList.contains(s)) {
-                    valCnt++;
+                int valCnt = 0;
+                for (int j = 0; j < strings.size(); j++) {
+                    String s = strings.get(j);
+
+                    if (rsList.contains(s)) {
+                        valCnt++;
+                    }
+
+                }
+                if (valCnt == 3) {
+                    validList.remove(strings);
+                }
+
+                if (valCnt == 2) {
+
+                }
+
+                if (valCnt == 1) {
+
+                    if (rsList.contains(strings.get(0))) {
+                        rsList.add(rsList.indexOf(strings.get(0)) + 1, strings.get(1));
+                        rsList.add(rsList.indexOf(strings.get(0)) + 2, strings.get(2));
+                    } else if (rsList.contains(strings.get(2))) {
+                        rsList.add(rsList.indexOf(strings.get(2)), strings.get(0));
+                        rsList.add(rsList.indexOf(strings.get(2)), strings.get(1));
+                    }
+
                 }
 
             }
-            if(valCnt == 3){
-                validList.remove(strings);
-            }
-
-            if(valCnt == 2){
-
-            }
-
-            if(valCnt == 1){
-
-                if (rsList.contains(strings.get(0))) {
-                    rsList.add(rsList.indexOf(strings.get(0))+1,strings.get(1));
-                    rsList.add(rsList.indexOf(strings.get(0))+2,strings.get(2));
-                }else if (rsList.contains(strings.get(2))) {
-                    rsList.add(rsList.indexOf(strings.get(2)),strings.get(0));
-                    rsList.add(rsList.indexOf(strings.get(2)),strings.get(1));
-                }
-
-            }
-
         }
 
         // mod input re calculate
@@ -194,7 +176,9 @@ public class SecretRecoveryTest {
 //            {'t','i','s'},
 //            {'w','h','s'}
 //        };
+//        assertEquals("whatisup", detective.recoverSecret(triplets));
 
+/*
 
         char[][] triplets = {
             {'t','s','f'},
@@ -215,9 +199,27 @@ public class SecretRecoveryTest {
             {'m','s','n'},
             {'m','s','u'},
         };
-
-//        assertEquals("whatisup", detective.recoverSecret(triplets));
         assertEquals("mathisfun", detective.recoverSecret(triplets));
+*/
+
+
+
+
+        char[][] triplets = {
+            {'g','a','s'},
+            {'o','g','s'},
+            {'c','n','t'},
+            {'c','o','n'},
+            {'a','t','s'},
+            {'g','r','t'},
+            {'r','t','s'},
+            {'c','r','a'},
+            {'g','a','t'},
+            {'n','g','s'},
+            {'o','a','s'},
+
+        };
+        assertEquals("congrats", detective.recoverSecret(triplets));
     }
 }
 
