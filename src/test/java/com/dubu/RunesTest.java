@@ -52,7 +52,7 @@ class Runes {
 
 
         List<String> numLIst = new ArrayList<>();
-        String calcMark = "";
+        String calcMark = null;
         String right = "";
 
 
