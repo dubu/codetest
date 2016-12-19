@@ -20,12 +20,12 @@ public class RunesTest {
 
     @Test
     public void testSample() {
-//        assertEquals( "Answer for expression '1+1=?' " , 2 , Runes.solveExpression("1+1=?") );
-//        assertEquals( "Answer for expression '123*45?=5?088' " , 6 , Runes.solveExpression("123*45?=5?088") );
-//        assertEquals( "Answer for expression '-5?*-1=5?' " , 0 , Runes.solveExpression("-5?*-1=5?") );
+        assertEquals( "Answer for expression '1+1=?' " , 2 , Runes.solveExpression("1+1=?") );
+        assertEquals( "Answer for expression '123*45?=5?088' " , 6 , Runes.solveExpression("123*45?=5?088") );
+        assertEquals( "Answer for expression '-5?*-1=5?' " , 0 , Runes.solveExpression("-5?*-1=5?") );
 
-//        assertEquals( "Answer for expression '19--45=5?' " , -1 , Runes.solveExpression("19--45=5?") );
-//        assertEquals( "Answer for expression '??*??=302?' " , 5 , Runes.solveExpression("??*??=302?") );
+        assertEquals( "Answer for expression '19--45=5?' " , -1 , Runes.solveExpression("19--45=5?") );
+        assertEquals( "Answer for expression '??*??=302?' " , 5 , Runes.solveExpression("??*??=302?") );
         assertEquals( "Answer for expression '?*11=??' " , 2 , Runes.solveExpression("?*11=??") );
     }
 }
@@ -34,7 +34,7 @@ class Runes {
 
     public static int solveExpression( final String expression ) {
 
-        System.out.println(expression);
+//        System.out.println(expression);
 
         int missingDigit = -1;
 
@@ -95,9 +95,12 @@ class Runes {
                     break;
 
                 case "-" :
-                    if(numLIst.size() >0){
+
+//                    if(numLIst.size() >0){
+                    if(sb != null && sb.length() >0){
                         if(sb != null){
                             numLIst.add(sb.toString());
+
                         }else{
                             sb = new StringBuffer();
                             sb.append(s);
@@ -127,6 +130,13 @@ class Runes {
             String e2 = numLIst.get(1).replaceAll("\\?", String.valueOf(i));
             String answer = right.replaceAll("\\?", String.valueOf(i));
 
+            if(Integer.valueOf(answer) == 0 && answer.length() >1){
+                continue;
+            }
+
+            if(expression.contains(String.valueOf(i))){
+                continue;
+            }
 
             switch (calcMark) {
                 case "+":
