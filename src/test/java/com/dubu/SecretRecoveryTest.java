@@ -77,13 +77,26 @@ class SecretDetective {
                     }
                 }
 
+                // right expand
+                if(shortWord.indexOf(rEdge) !=  -1){
+                    int idx = shortWord.indexOf(rEdge);
+                    if(idx == 0 ){
+
+                        rsList.add(shortWord.get(1));
+                        rsList.add(shortWord.get(2));
+                    }else if(idx == 1){
+                        rsList.add(shortWord.get(2));
+                    }
+                }
+
+                // insert
+                if(rsList.contains(shortWord.get(0)) && rsList.contains(shortWord.get(2))){
+                    if(rsList.indexOf(shortWord.get(2)) - rsList.indexOf(shortWord.get(0)) == 1){
+                        rsList.add(rsList.indexOf(shortWord.get(2)),shortWord.get(1));
+                    }
+                }
+
             }
-
-
-
-            Character[] values = { 1, 3, 7 };
-            List<Character> list = Arrays.asList(values);
-
 
             if(i == 0) {
                 for (int j = 0; j < triplet.length; j++) {
@@ -96,9 +109,6 @@ class SecretDetective {
             }
 
         }
-
-
-
 
         String collect = rsList
             .stream()
