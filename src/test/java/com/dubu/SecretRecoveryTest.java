@@ -106,7 +106,10 @@ class SecretDetective {
 
 //        for (int i = 0; i < validList.size(); i++) {
 
+        int chkCnt =  validList.size();
+
         while(validList.size() != 0) {
+
             for (int i = 0; i < validList.size(); i++) {
                 List<String> strings = validList.get(i);
 
@@ -126,21 +129,21 @@ class SecretDetective {
 
 
                     // having hang up
-                    if(validList.size() == 1){
+                    if(validList.size() == chkCnt){
 
                         if(rsList.indexOf(strings.get(1)) - rsList.indexOf(strings.get(0)) == -1){
-//                        rsList.set(rsList.indexOf(strings.get(0)),strings.get(1));
-//                        rsList.set(rsList.indexOf(strings.get(0))+1,strings.get(0));
-//                        validList.remove(strings);
+                            rsList.set(rsList.indexOf(strings.get(0))+1,strings.get(0));
+                            rsList.set(rsList.indexOf(strings.get(0)),strings.get(1));
+                            validList.remove(strings);
                         }else if(rsList.indexOf(strings.get(2)) - rsList.indexOf(strings.get(1)) == -1){
-//                        rsList.set(rsList.indexOf(strings.get(2)),strings.get(1));
-//                        rsList.set(rsList.indexOf(strings.get(2))+1,strings.get(2));
-//                        validList.remove(strings);
+                            rsList.set(rsList.indexOf(strings.get(2))+1,strings.get(2));
+                            rsList.set(rsList.indexOf(strings.get(2)),strings.get(1));
+                            validList.remove(strings);
                         }
 
                     }
 
-
+                    chkCnt = validList.size();
 
                 }
 
@@ -195,17 +198,19 @@ public class SecretRecoveryTest {
     }
 
     @Test public void secret1() {
-//        char[][] triplets = {
-//            {'t','u','p'},
-//            {'w','h','i'},
-//            {'t','s','u'},
-//            {'a','t','s'},
-//            {'h','a','p'},
-//            {'t','i','s'},
-//            {'w','h','s'}
-//        };
-//        assertEquals("whatisup", detective.recoverSecret(triplets));
 
+        /*
+        char[][] triplets = {
+            {'t','u','p'},
+            {'w','h','i'},
+            {'t','s','u'},
+            {'a','t','s'},
+            {'h','a','p'},
+            {'t','i','s'},
+            {'w','h','s'}
+        };
+        assertEquals("whatisup", detective.recoverSecret(triplets));
+*/
 /*
 
         char[][] triplets = {
@@ -228,8 +233,8 @@ public class SecretRecoveryTest {
             {'m','s','u'},
         };
         assertEquals("mathisfun", detective.recoverSecret(triplets));
-*/
 
+*/
 
 
 
@@ -248,6 +253,7 @@ public class SecretRecoveryTest {
 
         };
         assertEquals("congrats", detective.recoverSecret(triplets));
+
     }
 }
 
