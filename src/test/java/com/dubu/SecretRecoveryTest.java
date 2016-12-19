@@ -120,11 +120,39 @@ class SecretDetective {
 
                 }
                 if (valCnt == 3) {
-                    validList.remove(strings);
+                    if(rsList.indexOf(strings.get(2)) >rsList.indexOf(strings.get(1)) && rsList.indexOf(strings.get(1)) >rsList.indexOf(strings.get(0))){
+                        validList.remove(strings);
+                    }
+
+
+                    // having hang up
+                    if(validList.size() == 1){
+
+                        if(rsList.indexOf(strings.get(1)) - rsList.indexOf(strings.get(0)) == -1){
+//                        rsList.set(rsList.indexOf(strings.get(0)),strings.get(1));
+//                        rsList.set(rsList.indexOf(strings.get(0))+1,strings.get(0));
+//                        validList.remove(strings);
+                        }else if(rsList.indexOf(strings.get(2)) - rsList.indexOf(strings.get(1)) == -1){
+//                        rsList.set(rsList.indexOf(strings.get(2)),strings.get(1));
+//                        rsList.set(rsList.indexOf(strings.get(2))+1,strings.get(2));
+//                        validList.remove(strings);
+                        }
+
+                    }
+
+
+
                 }
 
                 if (valCnt == 2) {
 
+                    if (rsList.contains(strings.get(0)) && rsList.contains(strings.get(1)) && rsList.indexOf(strings.get(1)) - rsList.indexOf(strings.get(0)) == 1)  {
+                        rsList.add(rsList.indexOf(strings.get(1)) +1, strings.get(2));
+                    }else if (rsList.contains(strings.get(1)) && rsList.contains(strings.get(2))  && rsList.indexOf(strings.get(2)) - rsList.indexOf(strings.get(1)) == 1)  {
+                        rsList.add(rsList.indexOf(strings.get(1)) , strings.get(0));
+                    }else if (rsList.contains(strings.get(0)) && rsList.contains(strings.get(2)) && rsList.indexOf(strings.get(2)) - rsList.indexOf(strings.get(0)) == 2)  {
+                        rsList.add(rsList.indexOf(strings.get(0)) + 1, strings.get(1));
+                    }
                 }
 
                 if (valCnt == 1) {
