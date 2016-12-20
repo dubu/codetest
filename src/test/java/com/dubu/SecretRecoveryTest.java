@@ -14,6 +14,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +25,10 @@ class SecretDetective {
 
 
         List<String> rsList = new ArrayList<>();
+        List<List<String>> tmpRss = new ArrayList<>();
 
         List<List<String>> validList = new ArrayList<>();
+        List<List<String>> modList = new ArrayList<>();
 
 
 //        Map<Integer,String> rsMap = new HashMap<>();
@@ -106,9 +110,11 @@ class SecretDetective {
 
 //        for (int i = 0; i < validList.size(); i++) {
 
-        int chkCnt =  validList.size();
 
         while(validList.size() != 0) {
+            int chkCnt =  validList.size() + rsList.size();
+//            int chkCnt =  validList.size() ;
+
 
             for (int i = 0; i < validList.size(); i++) {
                 List<String> strings = validList.get(i);
@@ -128,49 +134,61 @@ class SecretDetective {
                     }
 
 
-                    // having hang up
-                    if(validList.size() == chkCnt){
-
-                        if(rsList.indexOf(strings.get(1)) - rsList.indexOf(strings.get(0)) == -1){
-                            rsList.set(rsList.indexOf(strings.get(0))+1,strings.get(0));
-                            rsList.set(rsList.indexOf(strings.get(0)),strings.get(1));
-                            validList.remove(strings);
-                        }else if(rsList.indexOf(strings.get(2)) - rsList.indexOf(strings.get(1)) == -1){
-                            rsList.set(rsList.indexOf(strings.get(2))+1,strings.get(2));
-                            rsList.set(rsList.indexOf(strings.get(2)),strings.get(1));
-                            validList.remove(strings);
-                        }
-
-                    }
-
-                    chkCnt = validList.size();
-
                 }
 
-                if (valCnt == 2) {
-
-                    if (rsList.contains(strings.get(0)) && rsList.contains(strings.get(1)) && rsList.indexOf(strings.get(1)) - rsList.indexOf(strings.get(0)) == 1)  {
-                        rsList.add(rsList.indexOf(strings.get(1)) +1, strings.get(2));
-                    }else if (rsList.contains(strings.get(1)) && rsList.contains(strings.get(2))  && rsList.indexOf(strings.get(2)) - rsList.indexOf(strings.get(1)) == 1)  {
-                        rsList.add(rsList.indexOf(strings.get(1)) , strings.get(0));
-                    }else if (rsList.contains(strings.get(0)) && rsList.contains(strings.get(2)) && rsList.indexOf(strings.get(2)) - rsList.indexOf(strings.get(0)) == 2)  {
-                        rsList.add(rsList.indexOf(strings.get(0)) + 1, strings.get(1));
-                    }
-                }
-
-                if (valCnt == 1) {
-
-                    if (rsList.contains(strings.get(0))) {
-                        rsList.add(rsList.indexOf(strings.get(0)) + 1, strings.get(1));
-                        rsList.add(rsList.indexOf(strings.get(0)) + 2, strings.get(2));
-                    } else if (rsList.contains(strings.get(2))) {
-                        rsList.add(rsList.indexOf(strings.get(2)), strings.get(0));
-                        rsList.add(rsList.indexOf(strings.get(2)), strings.get(1));
-                    }
-
-                }
+//                chkCnt = validList.size() ;
 
             }
+
+            // having hang up
+            if(chkCnt == validList.size() + rsList.size() && tmpRss.size() == 0){
+
+//                if(tmpRss.size() > 0){
+//                    rsList = tmpRss.remove(0);
+//                    continue;
+//                }
+
+
+                for (int j = 0; j < validList.size(); j++) {
+                    List<String> stringList = validList.get(j);
+
+                    if(rsList.contains(stringList.get(0)) && rsList.contains(stringList.get(2))&& !rsList.contains(stringList.get(1)) ){
+                        modList.add(stringList);
+                    }
+                }
+                // sort
+                final List<String> finalRsList = rsList;
+                Collections.sort(modList, new Comparator<List<String>>() {
+                    @Override
+                    public int compare(List<String> o1, List<String> o2) {
+                        return (finalRsList.indexOf(o1.get(2))- finalRsList.indexOf(o1.get(0))) - (finalRsList.indexOf(o2.get(2))- finalRsList.indexOf(o2.get(0)));
+                    }
+                });
+
+//                System.out.println(modList);
+
+                int mLift = rsList.indexOf(modList.get(0).get(0));
+                int mRight = rsList.indexOf(modList.get(0).get(2));
+
+
+                for (int i = mLift; i < mRight ; i++) {
+                    List possibleAnswer = new ArrayList(rsList);
+                    possibleAnswer.add(i+1, modList.get(0).get(1));
+                    tmpRss.add(possibleAnswer);
+//                    System.out.println(possibleAnswer);
+                }
+                rsList = tmpRss.remove(0);
+
+
+            }
+//            else if(tmpRss.size() > 0){
+//                rsList = tmpRss.remove(0);
+//
+//            }
+
+
+
+
         }
 
         // mod input re calculate
