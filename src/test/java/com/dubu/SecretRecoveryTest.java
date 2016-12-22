@@ -154,23 +154,27 @@ class SecretDetective {
                     // 중간
                     // 맨오른쪽
                     if(!rsList.contains(el0)){
-                        int pos = rsList.indexOf(el1);
-                        rsList.add(pos, el0);
 
                         if(posEl1 > posEl2){
                             rsList.set(posEl1, el2);
                             rsList.set(posEl2, el1);
                         }
 
+//                        int pos = rsList.indexOf(el1);
+                        rsList.add(posEl2, el0);
+
+
 
                     }else if(!rsList.contains(el1)){
-                        int pos = rsList.indexOf(el2);
-                        rsList.add(pos, el1);
 
                         if(posEl0 > posEl2){
                             rsList.set(posEl0, el2);
                             rsList.set(posEl2, el0);
                         }
+
+//                        int pos = rsList.indexOf(el2);
+                        rsList.add(posEl0, el1);
+
 
 
                     }else if(!rsList.contains(el2)){
@@ -183,7 +187,7 @@ class SecretDetective {
 
                         }
                     }else{
-                       // System.err.println("etc2");
+                        System.err.println("etc2");
                     }
 
                     modList.remove(strings);
@@ -193,6 +197,8 @@ class SecretDetective {
                     // 일치하는거 기준
                     // 맨왼쪽일때
                     // 맨오른쪽
+
+                    /*
 
                     if(rsList.contains(el0)){
                         int pos = rsList.indexOf(el0);
@@ -214,13 +220,15 @@ class SecretDetective {
 
                     modList.remove(strings);
 
-
+*/
                 }else if (valCnt == 0) {
                     // pass
                 }
 
 
-              //  System.out.println(rsList);
+
+                System.out.println(rsList + "      "+ strings  );
+
             }
 
 
@@ -231,7 +239,7 @@ class SecretDetective {
             .map(s -> s)
             .collect(Collectors.joining());
 
-        System.out.println(collect);
+       // System.out.println(collect);
         return collect;
     }
 
