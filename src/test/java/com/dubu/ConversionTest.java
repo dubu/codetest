@@ -3,10 +3,8 @@ package com.dubu;
 /**
  * Created by dubu on 2016-12-22.
  */
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 
@@ -18,12 +16,17 @@ class Conversion {
         int len = (int) Math.log10(Double.valueOf(String.valueOf(n)));
         for (int i = len; i >= 0; i--) {
 
+            int ni = (int) (n % Math.pow(10,i+1));
             int moc = 1 ;
+            int nmg = 1 ;
             if(i >0){
-                moc = n / 10*i;
+                moc = (int) (ni / Math.pow(10,i));
+                nmg = (int) (ni % Math.pow(10,i));
+            }else{
+//                moc = (int) (n / Math.pow(10,i));
+                nmg = (int) (ni % 10);
             }
 
-            int nmg = n % 10;
 
             if (i == 3) {
                 switch (moc) {
@@ -107,7 +110,7 @@ class Conversion {
 
                         break;
                     case 9:
-                        sb.append("CX");
+                        sb.append("XC");
 
                         break;
 
@@ -157,6 +160,7 @@ class Conversion {
             }
 
 
+        System.out.println(sb.toString());
 
         return sb.toString();
     }
@@ -168,8 +172,13 @@ public class ConversionTest {
 
     @Test
     public void shouldCovertToRoman() {
-        assertEquals("solution(1) should equal to I", "I", conversion.solution(1));
-        assertEquals("solution(4) should equal to IV", "IV", conversion.solution(4));
-        assertEquals("solution(6) should equal to VI", "VI", conversion.solution(6));
+//        assertEquals("solution(1) should equal to I", "I", conversion.solution(1));
+//        assertEquals("solution(4) should equal to IV", "IV", conversion.solution(4));
+//        assertEquals("solution(6) should equal to VI", "VI", conversion.solution(6));
+//        assertEquals("solution(6) should equal to VI", "VI", conversion.solution(721));
+//        assertEquals("solution(6) should equal to VI", "XCI", conversion.solution(91));
+        assertEquals("solution(6) should equal to VI", "LXXXIX", conversion.solution(89));
+
     }
+
 }
