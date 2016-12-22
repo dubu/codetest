@@ -125,8 +125,8 @@ class SecretDetective {
 
         modList = new ArrayList(validList);
         while (modList.size() != 0) {
-
-            validList = new ArrayList<>(modList);
+            modList = new ArrayList(validList);
+//            validList = new ArrayList<>(modList);
 
             for (int i = 0; i < validList.size(); i++) {
                 List<String> strings = validList.get(i);
