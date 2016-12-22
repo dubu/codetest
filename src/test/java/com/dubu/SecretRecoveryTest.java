@@ -10,33 +10,109 @@ package com.dubu;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 class SecretDetective {
 
     public String recoverSecret(char[][] triplets) {
 
-        //regx
+
+        List<String> rsList = new ArrayList<>();
+        List<List<String>> tmpRss = new ArrayList<>();
+
+        List<List<String>> validList = new ArrayList<>();
+        List<List<String>> modList = new ArrayList<>();
 
 
-        List<String> integers = Arrays.asList("a","b","c");
+//        Map<Integer,String> rsMap = new HashMap<>();
+
+        for (int i = 0; i < triplets.length; i++) {
+
+            char[] triplet = triplets[i];
+
+            List<String> shortWord = new ArrayList<>();
+            for (int j = 0; j < triplet.length; j++) {
+                char c = triplet[j];
+                shortWord.add(String.valueOf(c));
+            }
+            String debug = shortWord
+                .stream()
+                .map(s -> s)
+                .collect(Collectors.joining());
+
+            System.out.println(debug);
+
+//            validList.add(shortWord);
 
 
-        System.out.println(integers.stream().collect(Collectors.joining(":")));
+            for (int j = 0; j < triplet.length; j++) {
+                char c = triplet[j];
 
-//        .collect(Collectors.joining());
+//                rsMap.put((int) c,String.valueOf(c));
+                rsList.add(String.valueOf(c));
 
-        return null;
+            }
+
+        }
+
+
+//        for (int i = 0; i < validList.size(); i++) {
+
+
+        while (validList.size() != 0) {
+
+
+            for (int i = 0; i < validList.size(); i++) {
+                List<String> strings = validList.get(i);
+
+                int valCnt = 0;
+                for (int j = 0; j < strings.size(); j++) {
+                    String s = strings.get(j);
+
+                    if (rsList.contains(s)) {
+                        valCnt++;
+                    }
+
+                }
+                if (valCnt == 3) {
+                    if (rsList.indexOf(strings.get(2)) > rsList.indexOf(strings.get(1)) && rsList.indexOf(strings.get(1)) > rsList.indexOf(strings.get(0))) {
+                        validList.remove(strings);
+                    }
+
+
+                }else if (valCnt == 2) {
+
+
+                    validList.remove(strings);
+
+
+                }else if (valCnt == 1) {
+                    validList.remove(strings);
+
+
+                }else{
+
+
+                    // continue
+                }
+
+
+            }
+
+
+        }
+
+        String collect = rsList
+            .stream()
+            .map(s -> s)
+            .collect(Collectors.joining());
+
+        System.out.println(collect);
+        return collect;
     }
 
 }
@@ -47,30 +123,6 @@ public class SecretRecoveryTest {
 
     @Before public void setup() {
         detective = new SecretDetective();
-    }
-
-
-    @Test
-    public void testRegx() throws Exception {
-
-        // pattern.compile
-        // string
-        // matcher
-
-
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("abd");
-        arrayList.add("cad");
-
-
-        Pattern pattern = Pattern.compile("a[bc]d");
-
-        Matcher matcher = pattern.matcher(arrayList.get(1));
-
-        System.out.println(matcher.find());
-
-
-
     }
 
     @Test public void secret1() {
