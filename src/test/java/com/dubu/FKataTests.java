@@ -16,6 +16,7 @@ class FKata {
     public static String Factorial(int n) {
 
 
+        System.out.println(n);
         BigInteger rs = Fac(n);
 
         return String.valueOf(rs);
