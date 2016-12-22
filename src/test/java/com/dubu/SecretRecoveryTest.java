@@ -54,7 +54,6 @@ class SecretDetective {
 
 //                rsMap.put((int) c,String.valueOf(c));
                 rsList.add(String.valueOf(c));
-
             }
 
         }
@@ -117,16 +116,26 @@ class SecretDetective {
                     // 맨왼쪽일때
                     // 맨오른쪽
 
+                    if(rsList.contains(el0)){
+                        int pos = rsList.indexOf(el0);
+                        rsList.set(pos+1, el2);
+                        rsList.set(pos+1, el1);
 
+                    }else if(rsList.contains(el1)){
+                        int pos = rsList.indexOf(el1);
+                        rsList.set(pos+1, el2);
+                        rsList.set(pos, el0);
 
-
+                    }else if(rsList.contains(el2)){
+                        int pos = rsList.indexOf(el2);
+                        rsList.set(pos, el1);
+                        rsList.set(pos, el0);
+                    }
 
                     validList.remove(strings);
 
 
                 }else if (valCnt == 0) {
-
-
                     // pass
                 }
 
