@@ -91,11 +91,36 @@ class SecretDetective {
 
                 }else if (valCnt == 2) {
 
+                    // 남은게
+                    // 맨왼쪽
+                    // 중간
+                    // 맨오른쪽
+
+                    if(!rsList.contains(el0)){
+                        int pos = rsList.indexOf(el1);
+                        rsList.set(pos, el0);
+
+                    }else if(!rsList.contains(el1)){
+                        int pos = rsList.indexOf(el2);
+                        rsList.set(pos, el1);
+
+                    }else if(!rsList.contains(el2)){
+                        int pos = rsList.indexOf(el1);
+                        rsList.set(pos+1, el2);
+                    }
 
                     validList.remove(strings);
 
 
                 }else if (valCnt == 1) {
+                    // 일치하는거 기준
+                    // 맨왼쪽일때
+                    // 맨오른쪽
+
+
+
+
+
                     validList.remove(strings);
 
 
