@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,14 +48,24 @@ class SecretDetective {
 
             System.out.println(debug);
 
-//            validList.add(shortWord);
+            validList.add(shortWord);
 
 
             for (int j = 0; j < triplet.length; j++) {
                 char c = triplet[j];
 
 //                rsMap.put((int) c,String.valueOf(c));
-                rsList.add(String.valueOf(c));
+//                rsList.add(String.valueOf(c));
+            }
+
+            if(i == 0) {
+                for (int j = 0; j < triplet.length; j++) {
+                    char c = triplet[j];
+
+//                rsMap.put((int) c,String.valueOf(c));
+                    rsList.add(String.valueOf(c));
+
+                }
             }
 
         }
@@ -62,8 +74,11 @@ class SecretDetective {
 //        for (int i = 0; i < validList.size(); i++) {
 
 
-        while (validList.size() != 0) {
 
+        modList = new ArrayList(validList);
+        while (modList.size() != 0) {
+
+            validList = new ArrayList<>(modList);
 
             for (int i = 0; i < validList.size(); i++) {
                 List<String> strings = validList.get(i);
@@ -82,10 +97,51 @@ class SecretDetective {
                 String el1 = strings.get(1);
                 String el2 = strings.get(2);
 
+                int posEl0 = rsList.indexOf(el0);
+                int posEl1 = rsList.indexOf(el1);
+                int posEl2 = rsList.indexOf(el2);
+
                 if (valCnt == 3) {
                     if (rsList.indexOf(el2) > rsList.indexOf(el1) && rsList.indexOf(el1) > rsList.indexOf(el0)) {
-                        validList.remove(strings);
+                        modList.remove(strings);
+                    }else if(posEl0 < posEl1 && posEl0 < posEl2){
+                        // 맨왼쪽 맞는경우
+                        //switch
+                        rsList.set(posEl0, el1);
+                        rsList.remove(el2);
+                        rsList.set(posEl0+1, el2);
+
+
+
+                    }else if(posEl2 > posEl1 && posEl2 > posEl1){
+                        // 맨오른쪽만 맞는경우
+
+                        rsList.set(posEl1, el0);
+                        rsList.remove(el1);
+                        rsList.set(posEl1+1, el1);
+                    }else if(!(posEl2 > posEl1 && posEl1 > posEl0)){
+
+                        Integer min = Collections.min(Arrays.asList(posEl0, posEl1, posEl2));
+                        Integer max = Collections.min(Arrays.asList(posEl0, posEl1, posEl2));
+                        List<Integer> integers = Arrays.asList(posEl0, posEl1, posEl2);
+                        integers.remove(min);
+                        integers.remove(max);
+                        integers.get(0);
+
+                        System.err.println("all error:" + strings);
+                        rsList.set(min, el0);
+                        rsList.set(integers.get(0), el1);
+                        rsList.set(max, el2);
+
+                    }else{
+                        System.err.println("etc1");
                     }
+
+//                    else if(rsList.indexOf(el2) < rsList.indexOf(el1) && rsList.indexOf(el1) > rsList.indexOf(el0)) {
+//                        // 맨왼쪽이 틀린경우
+//                        rsList.set(posEl1, el0);
+//
+//                    }
 
 
                 }else if (valCnt == 2) {
@@ -94,21 +150,40 @@ class SecretDetective {
                     // 맨왼쪽
                     // 중간
                     // 맨오른쪽
-
                     if(!rsList.contains(el0)){
                         int pos = rsList.indexOf(el1);
-                        rsList.set(pos, el0);
+                        rsList.add(pos, el0);
+
+                        if(posEl1 > posEl2){
+                            rsList.set(posEl1, el2);
+                            rsList.set(posEl2, el1);
+                        }
+
 
                     }else if(!rsList.contains(el1)){
                         int pos = rsList.indexOf(el2);
-                        rsList.set(pos, el1);
+                        rsList.add(pos, el1);
+
+                        if(posEl0 > posEl2){
+                            rsList.set(posEl0, el2);
+                            rsList.set(posEl2, el0);
+                        }
+
 
                     }else if(!rsList.contains(el2)){
                         int pos = rsList.indexOf(el1);
-                        rsList.set(pos+1, el2);
+                        rsList.add(pos+1, el2);
+
+                        if(posEl0 > posEl1){
+                            rsList.set(posEl0, el1);
+                            rsList.set(posEl1, el0);
+
+                        }
+                    }else{
+                        System.err.println("etc2");
                     }
 
-                    validList.remove(strings);
+                    modList.remove(strings);
 
 
                 }else if (valCnt == 1) {
@@ -118,21 +193,23 @@ class SecretDetective {
 
                     if(rsList.contains(el0)){
                         int pos = rsList.indexOf(el0);
-                        rsList.set(pos+1, el2);
-                        rsList.set(pos+1, el1);
+
+                        rsList.add(pos + 1, el2);
+                        rsList.add(pos + 1, el1);
+
 
                     }else if(rsList.contains(el1)){
                         int pos = rsList.indexOf(el1);
-                        rsList.set(pos+1, el2);
-                        rsList.set(pos, el0);
+                        rsList.add(pos+1, el2);
+                        rsList.add(pos, el0);
 
                     }else if(rsList.contains(el2)){
                         int pos = rsList.indexOf(el2);
-                        rsList.set(pos, el1);
-                        rsList.set(pos, el0);
+                        rsList.add(pos, el1);
+                        rsList.add(pos, el0);
                     }
 
-                    validList.remove(strings);
+                    modList.remove(strings);
 
 
                 }else if (valCnt == 0) {
@@ -140,6 +217,7 @@ class SecretDetective {
                 }
 
 
+                System.out.println(rsList);
             }
 
 
@@ -178,7 +256,6 @@ public class SecretRecoveryTest {
         };
         assertEquals("whatisup", detective.recoverSecret(triplets));
 */
-/*
 
         char[][] triplets = {
             {'t','s','f'},
@@ -201,10 +278,9 @@ public class SecretRecoveryTest {
         };
         assertEquals("mathisfun", detective.recoverSecret(triplets));
 
-*/
 
 
-
+/*
         char[][] triplets = {
             {'g','a','s'},
             {'o','g','s'},
@@ -219,7 +295,7 @@ public class SecretRecoveryTest {
             {'o','a','s'},
 
         };
-        assertEquals("congrats", detective.recoverSecret(triplets));
+        assertEquals("congrats", detective.recoverSecret(triplets));*/
 
     }
 }
