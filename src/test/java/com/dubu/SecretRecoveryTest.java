@@ -160,6 +160,7 @@ class SecretDetective {
 
                         // 맨왼쪽 맞는경우
                         //switch
+
                         rsList.remove(el1);
                         rsList.set(idxList.get(1), el1);
                         rsList.add(idxList.get(1)+1, el2);
@@ -167,9 +168,6 @@ class SecretDetective {
                     }else if(posEl2 > posEl1 && posEl2 > posEl1){
                         // 맨오른쪽만 맞는경우
 
-//                        rsList.set(posEl1, el0);
-//                        rsList.remove(el1);
-//                        rsList.set(posEl1+1, el1);
                         rsList.remove(el0);
                         rsList.set(idxList.get(0), el0);
                         rsList.add(idxList.get(0)+1, el1);
@@ -312,8 +310,9 @@ public class SecretRecoveryTest {
 //            {'w','h','s'}
 //        };
 //        assertEquals("whatisup", detective.recoverSecret(triplets));
-//
 
+
+/*
 
         char[][] triplets = {
             {'t','s','f'},
@@ -336,33 +335,32 @@ public class SecretRecoveryTest {
         };
         assertEquals("mathisfun", detective.recoverSecret(triplets));
 
-
-
-
-
-/*
-
-        char[][] triplets = {
-            {'g','a','s'},
-            {'o','g','s'},
-            {'c','n','t'},
-            {'c','o','n'},
-            {'a','t','s'},
-            {'g','r','t'},
-            {'r','t','s'},
-            {'c','r','a'},
-            {'g','a','t'},
-            {'n','g','s'},
-            {'o','a','s'},
-
-        };
-        assertEquals("congrats", detective.recoverSecret(triplets));
-
 */
 
 
 
-        char[][] Xtriplets = {
+
+//
+//        char[][] triplets = {
+//            {'g','a','s'},
+//            {'o','g','s'},
+//            {'c','n','t'},
+//            {'c','o','n'},
+//            {'a','t','s'},
+//            {'g','r','t'},
+//            {'r','t','s'},
+//            {'c','r','a'},
+//            {'g','a','t'},
+//            {'n','g','s'},
+//            {'o','a','s'},
+//
+//        };
+//        assertEquals("congrats", detective.recoverSecret(triplets));
+//
+
+
+
+        char[][] triplets = {
             {'o','x','y'},
             {'h','r','u'},
             {'b','x','z'},
@@ -839,7 +837,7 @@ public class SecretRecoveryTest {
             {'s','v','x'},
 
         };
-        //assertEquals("abcdefghijklmnopqrstuvwxyz", detective.recoverSecret(triplets));
+        assertEquals("abcdefghijklmnopqrstuvwxyz", detective.recoverSecret(triplets));
 
 
 
