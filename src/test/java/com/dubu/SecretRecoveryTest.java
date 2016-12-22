@@ -126,7 +126,7 @@ class SecretDetective {
 //                        rsList.set(posEl1+1, el1);
                         rsList.remove(el0);
                         rsList.set(idxList.get(0), el0);
-                        rsList.set(idxList.get(0)+1, el1);
+                        rsList.add(idxList.get(0)+1, el1);
 
 
                     }else if(!(posEl2 > posEl1 && posEl1 > posEl0)){
@@ -137,7 +137,7 @@ class SecretDetective {
                         rsList.set(idxList.get(2), el2);
 
                     }else{
-//                        System.err.println("etc1");
+                        System.err.println("etc1");
                     }
 
 //                    else if(rsList.indexOf(el2) < rsList.indexOf(el1) && rsList.indexOf(el1) > rsList.indexOf(el0)) {
