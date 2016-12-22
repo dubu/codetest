@@ -78,8 +78,13 @@ class SecretDetective {
                     }
 
                 }
+
+                String el0 = strings.get(0);
+                String el1 = strings.get(1);
+                String el2 = strings.get(2);
+
                 if (valCnt == 3) {
-                    if (rsList.indexOf(strings.get(2)) > rsList.indexOf(strings.get(1)) && rsList.indexOf(strings.get(1)) > rsList.indexOf(strings.get(0))) {
+                    if (rsList.indexOf(el2) > rsList.indexOf(el1) && rsList.indexOf(el1) > rsList.indexOf(el0)) {
                         validList.remove(strings);
                     }
 
@@ -94,10 +99,10 @@ class SecretDetective {
                     validList.remove(strings);
 
 
-                }else{
+                }else if (valCnt == 0) {
 
 
-                    // continue
+                    // pass
                 }
 
 
