@@ -11,33 +11,31 @@ import org.junit.Test;
 class Magnets {
 
     public static double doubles(int maxk, int maxn) {
-        // your code
 
         double sum = 0;
         for (int i = 1; i <= maxk; i++) {
 
-            double rs = frac(1, i, maxn);
-            sum = sum + rs;
+            double nSum = 0;
+            for (int j = 1; j <= maxn; j++) {
+
+                double rs = frac(j, i);
+                nSum =  nSum +rs;
+            }
+
+            sum = sum + nSum;
 
         }
 
         return sum;
     }
 
-    private static double frac(double x, int maxk, int maxn) {
+    private static double frac(double x, int maxk) {
 
-        if(x == maxn){
-            return 1 / (maxk * Math.pow(maxn + 1, 2 * maxk));
-
-        }else{
-            double value = 1 / (maxk * Math.pow(x + 1, 2 * maxk));
-            return  value +frac(x +1,maxk,maxn);
-        }
+        return 1 / (maxk * Math.pow(x + 1, 2 * maxk));
 
     }
+
 }
-
-
 
 public class MagnetsTest {
 
