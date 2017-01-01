@@ -7,11 +7,11 @@ package com.dubu;
  */
 
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
 
 class Dictionary {
     private final String[] words;
