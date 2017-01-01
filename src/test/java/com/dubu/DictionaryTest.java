@@ -63,28 +63,33 @@ public class DictionaryTest {
     @Test
     public void testRegx() throws Exception {
 //        String str = "cherry";
-        String[] strings = {"cherry", "pineapple", "melon", "strawberry", "raspberry"};
+        String[] strings = {"codewars", "wars"};
 
-        int storeInt = Integer.MAX_VALUE;
+        int storeInt =  0;
         String storeStr = "";
         for (int i = 0; i < strings.length; i++) {
             String str = strings[i];
 
-            Pattern pattern = Pattern.compile("[^berry]*([berry]*)[^berry]*");
+            String to = "coddwars";
+            String formatStr = String.format("[^%s]*([%s]*)[^%s]*",to,to,to);
+            Pattern pattern = Pattern.compile(formatStr);
             Matcher matcher = pattern.matcher(str);
 
+            int matchCnt  = 0 ;
             while (matcher.find() && matcher.group(1).length() > 0) {
 //            System.out.println(matcher.group());
 //            System.out.println(matcher.group(0));
                 if ((matcher.groupCount() > 0)) {
-                    int diff = str.length() - matcher.group(1).length();
-                    if (diff < storeInt) {
-                        storeInt = diff;
-                        storeStr = str;
-                    }
-                    System.err.println(String.format("%s %s %s %s ", str, matcher.group(1), matcher.group(1).length(), diff));
+//                    int diff = str.length() - matcher.group(1).length();
+
+                    matchCnt =  matchCnt + matcher.group(1).length();
                 }
 
+            }
+            if (matchCnt > storeInt) {
+                storeInt = matchCnt;
+                storeStr = str;
+                    System.err.println(String.format("%s %s %s %s ", str, matcher.group(1), matcher.group(1).length(), storeStr));
             }
 
         }
