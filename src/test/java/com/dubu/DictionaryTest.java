@@ -2,11 +2,10 @@ package com.dubu;
 
 /**
  * Created by rigel on 12/13/16.
- *
+ * <p>
  * https://www.codewars.com/kata/did-you-mean-dot-dot-dot/train/java
- *
- *
  */
+
 import org.junit.Test;
 
 import java.util.regex.Matcher;
@@ -23,15 +22,39 @@ class Dictionary {
 
     public String findMostSimilar(String to) {
 
-        // exatly same
+//        String str = "cherry";
+//        String[] strings = {"cherry", "pineapple", "melon", "strawberry", "raspberry"};
+        String[] strings = words;
 
+        int storeInt = Integer.MAX_VALUE;
+        String storeStr = "";
+        for (int i = 0; i < strings.length; i++) {
+            String str = strings[i];
 
-        // count word
+//            Pattern pattern = Pattern.compile("[^berry]*([berry]*)[^berry]*");
 
+            String formatStr = String.format("[^%s]*([%s]*)[^%s]*",to,to,to);
+            Pattern pattern = Pattern.compile(formatStr);
+            Matcher matcher = pattern.matcher(str);
 
-        // positon
+            while (matcher.find() && matcher.group(1).length() > 0) {
+//            System.out.println(matcher.group());
+//            System.out.println(matcher.group(0));
+                if ((matcher.groupCount() > 0)) {
+                    int diff = str.length() - matcher.group(1).length();
+                    if (diff < storeInt) {
+                        storeInt = diff;
+                        storeStr = str;
+                    }
+                    System.err.println(String.format("%s %s %s %s ", str, matcher.group(1), matcher.group(1).length(), diff));
+                }
 
-        return null;
+            }
+
+        }
+//        System.out.println(storeStr);
+
+        return storeStr;
     }
 }
 
@@ -42,22 +65,30 @@ public class DictionaryTest {
 //        String str = "cherry";
         String[] strings = {"cherry", "pineapple", "melon", "strawberry", "raspberry"};
 
+        int storeInt = Integer.MAX_VALUE;
+        String storeStr = "";
         for (int i = 0; i < strings.length; i++) {
             String str = strings[i];
 
             Pattern pattern = Pattern.compile("[^berry]*([berry]*)[^berry]*");
             Matcher matcher = pattern.matcher(str);
 
-            while(matcher.find() && matcher.group(1).length() > 0){
+            while (matcher.find() && matcher.group(1).length() > 0) {
 //            System.out.println(matcher.group());
 //            System.out.println(matcher.group(0));
                 if ((matcher.groupCount() > 0)) {
-
-                    System.err.println(String.format("%s %s %s %s ",str, matcher.group(1) ,matcher.group(1).length()  ,str.length()- matcher.group(1).length()));
+                    int diff = str.length() - matcher.group(1).length();
+                    if (diff < storeInt) {
+                        storeInt = diff;
+                        storeStr = str;
+                    }
+                    System.err.println(String.format("%s %s %s %s ", str, matcher.group(1), matcher.group(1).length(), diff));
                 }
 
             }
+
         }
+        System.out.println(storeStr);
 
     }
 
