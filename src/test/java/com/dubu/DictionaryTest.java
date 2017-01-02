@@ -2,15 +2,20 @@ package com.dubu;
 
 /**
  * Created by rigel on 12/13/16.
- * <p>
+ * <p/>
  * https://www.codewars.com/kata/did-you-mean-dot-dot-dot/train/java
  */
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 class Dictionary {
@@ -20,47 +25,61 @@ class Dictionary {
         this.words = words;
     }
 
-    public String findMostSimilar(String to) {
+    public String findMostSimilar(String from) {
 
 //        String str = "cherry";
 //        String[] strings = {"cherry", "pineapple", "melon", "strawberry", "raspberry"};
         String[] strings = words;
 
-        int storeInt =  Integer.MAX_VALUE;
+        int storeInt = Integer.MAX_VALUE;
         String storeStr = "";
         for (int i = 0; i < strings.length; i++) {
-            String str = strings[i];
+            String to = strings[i];
 
-        //    String to = "coddwars";
-            String formatStr = String.format("[^%s]*([%s]*)[^%s]*",to,to,to);
+            //    String from = "coddwars";
+            String formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
             Pattern pattern = Pattern.compile(formatStr);
-            Matcher matcher = pattern.matcher(str);
+            Matcher matcher = pattern.matcher(to);
 
-            int matchCnt  = 0 ;
+            int matchCnt = 0;
+//            List<String> validStringsList = Arrays.asList(to.split(""));
+            List<String> validStringsList = new LinkedList<String>(Arrays.asList(to.split("")));
             while (matcher.find() && matcher.group(1).length() > 0) {
 //            System.out.println(matcher.group());
 //            System.out.println(matcher.group(0));
                 if ((matcher.groupCount() > 0)) {
-//                    int diff = str.length() - matcher.group(1).length();
+//                    int diff = to.length() - matcher.group(1).length();
 
-                    matchCnt =  matchCnt + matcher.group(1).length();
-                    System.err.println(String.format("%s %s %s %s ", str, matcher.group(1), matcher.group(1).length(), storeStr));
+                    String groupOne = matcher.group(1);
+                    for (int j = 0; j < groupOne.toCharArray().length; j++) {
+                        char c = groupOne.toCharArray()[j];
+                        validStringsList.remove(String.valueOf(c));
+                    }
+                    matchCnt = matchCnt + matcher.group(1).length();
+//                    System.err.println(String.format("%s %s %s %s ", to, matcher.group(1), matcher.group(1).length(), storeStr));
+                    System.err.println(String.format("### %s %s ### ", to, matcher.group(1), matcher.group(1).length()));
                 }
 
+                String listString = validStringsList.stream().map(Object::toString).collect(Collectors.joining());
+                formatStr = String.format("[^%s]*([%s]*)[^%s]*", listString, listString, listString);
+                pattern = Pattern.compile(formatStr);
+                matcher = pattern.matcher(to);
+
             }
+            System.err.println(String.format("%s %s %s %s %s", from, to, validStringsList.size(), matchCnt, storeStr));
 //            if (matchCnt > storeInt) {
 //                storeInt = matchCnt;
-//                storeStr = str;
-//            } else if (matchCnt == storeInt && str.length() < storeStr.length()) {
+//                storeStr = to;
+//            } else if (matchCnt == storeInt && to.length() < storeStr.length()) {
 //                storeInt = matchCnt;
-//                storeStr = str;
+//                storeStr = to;
 //            }
-            if(to.length() >= matchCnt  && to.length() - matchCnt <= storeInt ){
+            if (to.length() >= matchCnt && to.length() - matchCnt + from.length() - matchCnt <= storeInt) {
                 storeInt = to.length() - matchCnt;
-                storeStr = str;
-            }else if(to.length() >= matchCnt  && to.length() - matchCnt == storeInt && storeStr.length() > str.length()){
+                storeStr = to;
+            } else if (from.length() >= matchCnt && to.length() - matchCnt == storeInt && storeStr.length() > to.length()) {
                 storeInt = to.length() - matchCnt;
-                storeStr = str;
+                storeStr = to;
             }
 
         }
@@ -73,47 +92,10 @@ class Dictionary {
 public class DictionaryTest {
 
     @Test
-    public void testRegx() throws Exception {
-//        String str = "cherry";
-        String[] strings = {"codewars", "wars"};
-
-        int storeInt =  0;
-        String storeStr = "";
-        for (int i = 0; i < strings.length; i++) {
-            String str = strings[i];
-
-            String to = "coddwars";
-            String formatStr = String.format("[^%s]*([%s]*)[^%s]*",to,to,to);
-            Pattern pattern = Pattern.compile(formatStr);
-            Matcher matcher = pattern.matcher(str);
-
-            int matchCnt  = 0 ;
-            while (matcher.find() && matcher.group(1).length() > 0) {
-//            System.out.println(matcher.group());
-//            System.out.println(matcher.group(0));
-                if ((matcher.groupCount() > 0)) {
-//                    int diff = str.length() - matcher.group(1).length();
-
-                    matchCnt =  matchCnt + matcher.group(1).length();
-                }
-
-            }
-            if (matchCnt > storeInt) {
-                storeInt = matchCnt;
-                storeStr = str;
-                    System.err.println(String.format("%s %s %s %s ", str, matcher.group(1), matcher.group(1).length(), storeStr));
-            }
-
-        }
-        System.out.println(storeStr);
-
-    }
-
-    @Test
     public void testBerries() {
         Dictionary dictionary = new Dictionary(new String[]{"cherry", "pineapple", "melon", "strawberry", "raspberry"});
-        assertEquals("strawberry", dictionary.findMostSimilar("strawbery"));
-//        assertEquals("cherry", dictionary.findMostSimilar("berry"));
+//        assertEquals("strawberry", dictionary.findMostSimilar("strawbery"));
+        assertEquals("cherry", dictionary.findMostSimilar("berry"));
     }
 
     @Test
