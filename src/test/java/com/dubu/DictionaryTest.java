@@ -151,9 +151,41 @@ public class DictionaryTest {
         strings.remove(String.valueOf("a"));
         System.out.println(strings);
 
-
     }
 
+    @Test
+    public void testSortOrder() throws Exception {
 
+        String a = "abcde";
+        String b = "cabed";
+
+        // a 기분으로 b 정렬
+
+//        String[] strList = b.split("");
+
+//        List<String> copyFromList = new LinkedList<String>(Arrays.asList(from.split("")));
+        LinkedList<String> aList = new LinkedList<>(Arrays.asList(a.split("")));
+        LinkedList<String> bList = new LinkedList<>(Arrays.asList(b.split("")));
+        LinkedList<String> bListCopy = new LinkedList<>(bList);
+
+        int moveCount = 0;
+        for (int i = 0; i < bList.size(); i++) {
+            String s = bList.get(i);
+
+            int aPos = aList.indexOf(s);
+            int bPos = bListCopy.indexOf(s);
+            if (aPos -1 > 0) {
+                String leftStr = aList.get(aPos -1);
+                int leftPost = bListCopy.indexOf(leftStr);
+                bListCopy.add(leftPost+1,s);
+                moveCount++;
+                bListCopy.remove(bPos);
+            }
+        }
+        System.out.println(bListCopy.stream().map(Object::toString).collect(Collectors.joining()));
+        System.out.println(moveCount);
+
+
+    }
 }
 
