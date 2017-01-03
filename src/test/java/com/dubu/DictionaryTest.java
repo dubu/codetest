@@ -7,7 +7,6 @@ package com.dubu;
  */
 
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
@@ -15,10 +14,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 
 
 class Dictionary {
@@ -77,43 +76,36 @@ class Dictionary {
                         copyToList.remove(String.valueOf(c));
                     }
                     matchCnt = matchCnt + matcher.group(1).length();
-//                    System.err.println(String.format("%s %s %s %s ", to, matcher.group(1), matcher.group(1).length(), storeStr));
                     System.err.println(String.format("### %s %s ### ", to, matcher.group(1), matcher.group(1).length()));
                 }
 
-                String listString = copyFromList.stream().map(Object::toString).collect(Collectors.joining());
+                String copyFromListString = copyFromList.stream().map(Object::toString).collect(Collectors.joining());
+                String copyToListString = copyToList.stream().map(Object::toString).collect(Collectors.joining());
 
-                if(listString.length() == 0){
+                if(copyFromListString.length() == 0){
                     break;
                 }
-                formatStr = String.format("[^%s]*([%s]*)[^%s]*", listString, listString, listString);
+                formatStr = String.format("[^%s]*([%s]*)[^%s]*", copyFromListString, copyFromListString, copyFromListString);
                 pattern = Pattern.compile(formatStr);
-                matcher = pattern.matcher(to);
+                matcher = pattern.matcher(copyToListString);
 
             }
-            System.err.println(String.format("%s %s %s %s %s", from, to, copyToList.size(), matchCnt, storeStr));
-//            if (matchCnt > storeInt) {
-//                storeInt = matchCnt;
-//                storeStr = to;
-//            } else if (matchCnt == storeInt && to.length() < storeStr.length()) {
-//                storeInt = matchCnt;
-//                storeStr = to;
-//            }
-
-
-
-//            if (to.length() >= matchCnt && to.length() - matchCnt + from.length() - matchCnt <= storeInt) {
-//                storeInt = to.length() - matchCnt;
-//                storeStr = to;
-//            } else if (from.length() >= matchCnt && to.length() - matchCnt == storeInt && storeStr.length() > to.length()) {
-//                storeInt = to.length() - matchCnt;
-//                storeStr = to;
-//            }
 
             int moveCnt = copyToList.size()+ copyFromList.size();
+
+            // 중복카운트 제거
+            // 교화 카운트 추가
+
+
+//            int moveCnt = copyFromList.size();
+//            if(copyToList.size() > copyFromList.size()){
+//                moveCnt = copyToList.size();
+//            }
+
             if(moveCnt < storeInt){
                 storeInt = moveCnt;
                 storeStr = to;
+                System.err.println(String.format("### %s %s ### ",storeStr,storeInt));
             }
 
         }
@@ -145,10 +137,14 @@ public class DictionaryTest {
         assertEquals("codewars", dictionary.findMostSimilar("coddwars"));
     }
 
+    @Test
+    public void testpassMany() {
+        Dictionary dictionary = new Dictionary(new String[]{"zqdrhpviqslik", "karpscdigdvucfr"});
+        assertEquals("zqdrhpviqslik", dictionary.findMostSimilar("rkacypviuburk"));
+    }
 
     @Test
     public void testArrayList() throws Exception {
-
 
 //        List<String> strings = Arrays.asList("a", "a", "c", "d");
         LinkedList<String> strings = new LinkedList<>(Arrays.asList("a", "a", "c", "d"));
