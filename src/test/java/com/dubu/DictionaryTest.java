@@ -59,8 +59,7 @@ class Dictionary {
             List<String> copyToList = new LinkedList<String>(Arrays.asList(to.split("")));
 
 
-
-
+            StringBuilder sb =  new StringBuilder();
             while (matcher.find() && matcher.group(1).length() > 0) {
 //            System.out.println(matcher.group());
 //            System.out.println(matcher.group(0));
@@ -75,8 +74,21 @@ class Dictionary {
                         mySet.remove(String.valueOf(c));
                         copyToList.remove(String.valueOf(c));
                     }
-                    matchCnt = matchCnt + matcher.group(1).length();
-                    System.err.println(String.format("### %s %s ### ", to, matcher.group(1), matcher.group(1).length()));
+                    String matchStr = matcher.group(1);
+                    matchCnt = matchCnt + matchStr.length();
+
+
+                    if(sb.length() > matchStr.length()){
+                       if(sb.substring(sb.length()-matchStr.length(), sb.length()).toString().equals(matchStr)){
+                           // pass
+                       }else{
+                          sb.append(matchStr);
+                       }
+                    }else{
+
+                        sb.append(matchStr);
+                    }
+                    System.err.println(String.format("### %s %s ### ", to, matcher.group(1), matchStr.length()));
                 }
 
                 String copyFromListString = copyFromList.stream().map(Object::toString).collect(Collectors.joining());
@@ -90,6 +102,8 @@ class Dictionary {
                 matcher = pattern.matcher(copyToListString);
 
             }
+
+            System.out.println("match string : "+ sb.toString());
 
             int moveCnt = copyToList.size()+ copyFromList.size();
 
@@ -150,6 +164,37 @@ public class DictionaryTest {
         LinkedList<String> strings = new LinkedList<>(Arrays.asList("a", "a", "c", "d"));
         strings.remove(String.valueOf("a"));
         System.out.println(strings);
+
+    }
+
+
+    @Test
+    public void testRegxPattern() throws Exception {
+
+        String str = "karpcivur";
+        String formatStr = String.format("[^%s]*([%s]*)[^%s]*", str, str, str);
+        Pattern pattern = Pattern.compile(formatStr);
+        Matcher matcher = pattern.matcher("rkacypviuburk");
+
+        StringBuilder sb = new StringBuilder();
+        while(matcher.find()){
+//            System.out.println(matcher.group(1));
+
+
+            String matchStr =matcher.group(1);
+            if(sb.length() > matchStr.length()){
+                if(sb.substring(sb.length()-matchStr.length(), sb.length()).toString().equals(matchStr)){
+                    // pass
+                }else{
+                    sb.append(matchStr);
+                }
+            }else{
+
+                sb.append(matchStr);
+            }
+        }
+        System.out.println(sb.toString());
+
 
     }
 
