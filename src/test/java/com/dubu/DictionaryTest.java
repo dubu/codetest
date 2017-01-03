@@ -158,6 +158,11 @@ public class DictionaryTest {
 
         String a = "abcde";
         String b = "cabed";
+        assertEquals(3, getMoveCount(a,b) );
+
+    }
+
+    private int getMoveCount(String a, String b) {
 
         // a 기분으로 b 정렬
 
@@ -184,8 +189,7 @@ public class DictionaryTest {
         }
         System.out.println(bListCopy.stream().map(Object::toString).collect(Collectors.joining()));
         System.out.println(moveCount);
-
-
+        return moveCount;
     }
 }
 
