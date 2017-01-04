@@ -171,13 +171,21 @@ public class DictionaryTest {
     @Test
     public void testRegxPattern() throws Exception {
 
-        String str = "karpcivur";
-        String formatStr = String.format("[^%s]*([%s]*)[^%s]*", str, str, str);
+        String from = "karpcivur";
+        String to = "rkacypviuburk";
+
+        StringBuilder toSb = new StringBuilder();
+        toSb.append(to);
+
+        StringBuilder fromSb = new StringBuilder();
+        toSb.append(from);
+
+        String formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
         Pattern pattern = Pattern.compile(formatStr);
-        Matcher matcher = pattern.matcher("rkacypviuburk");
+        Matcher matcher = pattern.matcher(to);
 
         StringBuilder sb = new StringBuilder();
-        while(matcher.find()){
+        while(matcher.find()  ){
 //            System.out.println(matcher.group(1));
 
 
@@ -187,12 +195,39 @@ public class DictionaryTest {
                     // pass
                 }else{
                     sb.append(matchStr);
+                    int toPos = toSb.indexOf(matchStr);
+                    int fromPos = fromSb.indexOf(matchStr);
+                    if(toPos > -1){
+                        toSb.delete(toPos, toPos+matchStr.length());
+                    }
+                    if(fromPos > -1){
+                        fromSb.delete(fromPos, fromPos+matchStr.length());
+                    }
                 }
             }else{
-
                 sb.append(matchStr);
+                int toPos = toSb.indexOf(matchStr);
+                int fromPos = fromSb.indexOf(matchStr);
+                if(toPos > -1){
+                    toSb.delete(toPos, toPos+matchStr.length());
+                }
+                if(fromPos > -1){
+                    fromSb.delete(fromPos, fromPos+matchStr.length());
+                }
             }
+
+
+            if(fromSb.length() == 0){
+                break;
+            }
+
+            formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
+            pattern = Pattern.compile(formatStr);
+            matcher = pattern.matcher(toSb.toString());
         }
+
+
+
         System.out.println(sb.toString());
 
 
