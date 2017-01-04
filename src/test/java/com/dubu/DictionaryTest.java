@@ -27,6 +27,11 @@ class Dictionary {
         this.words = words;
     }
 
+    public Dictionary() {
+        this.words = null;
+
+    }
+
     public String findMostSimilar(String from) {
 
 
@@ -130,59 +135,8 @@ class Dictionary {
 
         return storeStr;
     }
-}
 
-public class DictionaryTest {
-
-    @Test
-    public void testBerries() {
-        Dictionary dictionary = new Dictionary(new String[]{"cherry", "pineapple", "melon", "strawberry", "raspberry"});
-        assertEquals("strawberry", dictionary.findMostSimilar("strawbery"));
-        assertEquals("cherry", dictionary.findMostSimilar("berry"));
-    }
-
-    @Test
-    public void testLanguages() {
-        Dictionary dictionary = new Dictionary(new String[]{"javascript", "java", "ruby", "php", "python", "coffeescript"});
-        assertEquals("java", dictionary.findMostSimilar("heaven"));
-        assertEquals("javascript", dictionary.findMostSimilar("javascript"));
-    }
-
-    @Test
-    public void testpass() {
-        Dictionary dictionary = new Dictionary(new String[]{"codewars", "wars"});
-        assertEquals("codewars", dictionary.findMostSimilar("coddwars"));
-    }
-
-    @Test
-    public void testpassMany() {
-        Dictionary dictionary = new Dictionary(new String[]{"zqdrhpviqslik", "karpscdigdvucfr"});
-        assertEquals("zqdrhpviqslik", dictionary.findMostSimilar("rkacypviuburk"));
-    }
-
-    @Test
-    public void testArrayList() throws Exception {
-
-//        List<String> strings = Arrays.asList("a", "a", "c", "d");
-        LinkedList<String> strings = new LinkedList<>(Arrays.asList("a", "a", "c", "d"));
-        strings.remove(String.valueOf("a"));
-        System.out.println(strings);
-
-    }
-
-
-    @Test
-    public void testRegxPattern() throws Exception {
-
-        String regxStr = "karpcivur";
-        String str = "rkacypviuburk";
-
-        assertEquals("rkacpviur",reverseRegxStr(regxStr, str));
-
-
-    }
-
-    private String reverseRegxStr(String from, String to) {
+    public String reverseRegxStr(String from, String to) {
 
         StringBuilder toSb = new StringBuilder();
         toSb.append(to);
@@ -247,16 +201,7 @@ public class DictionaryTest {
         return sb.toString();
     }
 
-    @Test
-    public void testSortOrder() throws Exception {
-
-        String a = "abcde";
-        String b = "cabed";
-        assertEquals(3, getMoveCount(a,b) );
-
-    }
-
-    private int getMoveCount(String a, String b) {
+    public int getMoveCount(String a, String b) {
 
         // a 기분으로 b 정렬
 
@@ -284,6 +229,69 @@ public class DictionaryTest {
         System.out.println(bListCopy.stream().map(Object::toString).collect(Collectors.joining()));
         System.out.println(moveCount);
         return moveCount;
+    }
+}
+
+public class DictionaryTest {
+
+    @Test
+    public void testBerries() {
+        Dictionary dictionary = new Dictionary(new String[]{"cherry", "pineapple", "melon", "strawberry", "raspberry"});
+        assertEquals("strawberry", dictionary.findMostSimilar("strawbery"));
+        assertEquals("cherry", dictionary.findMostSimilar("berry"));
+    }
+
+    @Test
+    public void testLanguages() {
+        Dictionary dictionary = new Dictionary(new String[]{"javascript", "java", "ruby", "php", "python", "coffeescript"});
+        assertEquals("java", dictionary.findMostSimilar("heaven"));
+        assertEquals("javascript", dictionary.findMostSimilar("javascript"));
+    }
+
+    @Test
+    public void testpass() {
+        Dictionary dictionary = new Dictionary(new String[]{"codewars", "wars"});
+        assertEquals("codewars", dictionary.findMostSimilar("coddwars"));
+    }
+
+    @Test
+    public void testpassMany() {
+        Dictionary dictionary = new Dictionary(new String[]{"zqdrhpviqslik", "karpscdigdvucfr"});
+        assertEquals("zqdrhpviqslik", dictionary.findMostSimilar("rkacypviuburk"));
+    }
+
+    @Test
+    public void testArrayList() throws Exception {
+
+//        List<String> strings = Arrays.asList("a", "a", "c", "d");
+        LinkedList<String> strings = new LinkedList<>(Arrays.asList("a", "a", "c", "d"));
+        strings.remove(String.valueOf("a"));
+        System.out.println(strings);
+
+    }
+
+
+    @Test
+    public void testRegxPattern() throws Exception {
+        String regxStr = "karpcivur";
+        String str = "rkacypviuburk";
+
+        Dictionary dictionary = new Dictionary();
+        assertEquals("rkacpviur",dictionary.reverseRegxStr(regxStr, str));
+
+
+    }
+
+
+
+    @Test
+    public void testSortOrder() throws Exception {
+
+        String a = "abcde";
+        String b = "cabed";
+        Dictionary dictionary = new Dictionary();
+        assertEquals(3, dictionary.getMoveCount(a,b) );
+
     }
 }
 
