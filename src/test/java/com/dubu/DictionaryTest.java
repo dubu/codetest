@@ -18,8 +18,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-
-
 class Dictionary {
     private final String[] words;
 
@@ -248,7 +246,6 @@ class Dictionary {
                     bListCopy.remove(bPos);
                 }
 
-
             }
         }
         System.out.println(bListCopy.stream().map(Object::toString).collect(Collectors.joining()));
@@ -296,19 +293,13 @@ public class DictionaryTest {
 
     }
 
-
     @Test
     public void testRegxPattern() throws Exception {
         String regxStr = "karpcivur";
         String str = "rkacypviuburk";
 
         Dictionary dictionary = new Dictionary();
-        assertEquals("rkacpviur",dictionary.reverseRegxStr(regxStr, str));
-
-
     }
-
-
 
     @Test
     public void testSortOrder() throws Exception {
@@ -316,7 +307,7 @@ public class DictionaryTest {
         String a = "abcde";
         String b = "cabed";
         Dictionary dictionary = new Dictionary();
-        assertEquals(3, dictionary.getMoveCount(a,b) );
+        assertEquals(2, dictionary.getMoveCount(a,b) );
 
     }
 
@@ -328,7 +319,6 @@ public class DictionaryTest {
         String b = "ea";
         Dictionary dictionary = new Dictionary();
         assertEquals(1, dictionary.getMoveCount(a,b) );
-
     }
 
     @Test
