@@ -115,11 +115,17 @@ class Dictionary {
             // 중복카운트 제거
             // 교화 카운트 추가
 
+            int moveCnt = 0 ;
+            int cnt = 0;
+            if(sb.toString().length() > 0){
+                moveCnt = getMoveCount(reverseRegxStr(sb.toString(), from), sb.toString());
+                int fAddCnt = to.indexOf(sb.substring(0, 1));
+                int eAddCnt = new StringBuilder(to).reverse().indexOf(sb.substring(sb.length() - 1, sb.length()));
+                cnt = moveCnt +fAddCnt +eAddCnt;
+            }else{
+                cnt = to.toString().length();
 
-            int moveCnt = getMoveCount(reverseRegxStr(sb.toString(), from), sb.toString());
-            int fAddCnt = to.indexOf(sb.substring(0, 1));
-            int eAddCnt = new StringBuilder(to).reverse().indexOf(sb.substring(sb.length() - 1, sb.length()));
-            int cnt = moveCnt +fAddCnt +eAddCnt;
+            }
 
 
             System.err.println(String.format("!! ckeck : %s %s ### ",to,cnt));
@@ -255,10 +261,10 @@ public class DictionaryTest {
 
     @Test
     public void testBerries() {
-//        Dictionary dictionary = new Dictionary(new String[]{"cherry", "pineapple", "melon", "strawberry", "raspberry"});
-        Dictionary dictionary = new Dictionary(new String[]{"strawberry"});
+        Dictionary dictionary = new Dictionary(new String[]{"cherry", "pineapple", "melon", "strawberry", "raspberry"});
+//        Dictionary dictionary = new Dictionary(new String[]{"strawberry"});
         assertEquals("strawberry", dictionary.findMostSimilar("strawbery"));
-//        assertEquals("cherry", dictionary.findMostSimilar("berry"));
+        assertEquals("cherry", dictionary.findMostSimilar("berry"));
     }
 
     @Test
