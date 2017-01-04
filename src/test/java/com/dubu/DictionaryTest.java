@@ -93,7 +93,7 @@ class Dictionary {
 
                         sb.append(matchStr);
                     }
-                    System.err.println(String.format("### %s %s ### ", to, matcher.group(1), matchStr.length()));
+//                    System.err.println(String.format("### %s %s ### ", to, matcher.group(1), matchStr.length()));
                 }
 
                 String copyFromListString = copyFromList.stream().map(Object::toString).collect(Collectors.joining());
@@ -116,14 +116,13 @@ class Dictionary {
             // 교화 카운트 추가
 
 
-            int moveCount = getMoveCount(reverseRegxStr(sb.toString(), from), sb.toString());
+            int moveCnt = getMoveCount(reverseRegxStr(sb.toString(), from), sb.toString());
             int fAddCnt = to.indexOf(sb.substring(0, 1));
             int eAddCnt = new StringBuilder(to).reverse().indexOf(sb.substring(sb.length() - 1, sb.length()));
+            int cnt = moveCnt +fAddCnt +eAddCnt;
 
 
-            int moveCnt = moveCount +fAddCnt +eAddCnt;
-
-
+            System.err.println(String.format("!! ckeck : %s %s ### ",to,cnt));
 
 
 //            int moveCnt = copyFromList.size();
@@ -131,10 +130,10 @@ class Dictionary {
 //                moveCnt = copyToList.size();
 //            }
 
-            if(moveCnt < storeInt){
-                storeInt = moveCnt;
+            if( cnt < storeInt){
+                storeInt = cnt;
                 storeStr = to;
-                System.err.println(String.format("### %s %s ### ",storeStr,storeInt));
+                System.err.println(String.format("!! change : %s %s ### ",storeStr,storeInt));
             }
 
         }
@@ -210,6 +209,11 @@ class Dictionary {
 
     public int getMoveCount(String a, String b) {
 
+
+        if(a.endsWith(b)){
+            return  0;
+        }
+
         // a 기분으로 b 정렬
 
 //        String[] strList = b.split("");
@@ -227,10 +231,18 @@ class Dictionary {
             int bPos = bListCopy.indexOf(s);
             if (aPos -1 > -1) {
                 String leftStr = aList.get(aPos -1);
-                int leftPost = bListCopy.indexOf(leftStr);
-                bListCopy.add(leftPost+1,s);
-                moveCount++;
-                bListCopy.remove(bPos);
+                int leftPos = bListCopy.indexOf(leftStr);
+
+                if (aPos -1  == leftPos) {
+                    System.out.println(" == ");
+                }else{
+
+                    bListCopy.add(leftPos+1,s);
+                    moveCount++;
+                    bListCopy.remove(bPos);
+                }
+
+
             }
         }
         System.out.println(bListCopy.stream().map(Object::toString).collect(Collectors.joining()));
@@ -243,7 +255,8 @@ public class DictionaryTest {
 
     @Test
     public void testBerries() {
-        Dictionary dictionary = new Dictionary(new String[]{"cherry", "pineapple", "melon", "strawberry", "raspberry"});
+//        Dictionary dictionary = new Dictionary(new String[]{"cherry", "pineapple", "melon", "strawberry", "raspberry"});
+        Dictionary dictionary = new Dictionary(new String[]{"strawberry"});
         assertEquals("strawberry", dictionary.findMostSimilar("strawbery"));
 //        assertEquals("cherry", dictionary.findMostSimilar("berry"));
     }
@@ -309,6 +322,16 @@ public class DictionaryTest {
         String b = "ea";
         Dictionary dictionary = new Dictionary();
         assertEquals(1, dictionary.getMoveCount(a,b) );
+
+    }
+
+    @Test
+    public void testSortOrder3() throws Exception {
+
+        String a = "strawbery";
+        String b = "strawbery";
+        Dictionary dictionary = new Dictionary();
+        assertEquals(0, dictionary.getMoveCount(a,b) );
 
     }
 }
