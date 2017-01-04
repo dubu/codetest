@@ -111,6 +111,9 @@ class Dictionary {
             // 교화 카운트 추가
 
 
+
+
+
 //            int moveCnt = copyFromList.size();
 //            if(copyToList.size() > copyFromList.size()){
 //                moveCnt = copyToList.size();
@@ -171,14 +174,21 @@ public class DictionaryTest {
     @Test
     public void testRegxPattern() throws Exception {
 
-        String from = "karpcivur";
-        String to = "rkacypviuburk";
+        String regxStr = "karpcivur";
+        String str = "rkacypviuburk";
+
+        assertEquals("rkacpviur",reverseRegxStr(regxStr, str));
+
+
+    }
+
+    private String reverseRegxStr(String from, String to) {
 
         StringBuilder toSb = new StringBuilder();
         toSb.append(to);
 
         StringBuilder fromSb = new StringBuilder();
-        toSb.append(from);
+        fromSb.append(from);
 
         String formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
         Pattern pattern = Pattern.compile(formatStr);
@@ -196,23 +206,28 @@ public class DictionaryTest {
                 }else{
                     sb.append(matchStr);
                     int toPos = toSb.indexOf(matchStr);
-                    int fromPos = fromSb.indexOf(matchStr);
                     if(toPos > -1){
                         toSb.delete(toPos, toPos+matchStr.length());
                     }
-                    if(fromPos > -1){
-                        fromSb.delete(fromPos, fromPos+matchStr.length());
+                    for (char c : matchStr.toCharArray()) {
+                        int pos = fromSb.indexOf(String.valueOf(c));
+                        if(pos > -1){
+                            fromSb.deleteCharAt(pos);
+                        }
                     }
+
                 }
             }else{
                 sb.append(matchStr);
                 int toPos = toSb.indexOf(matchStr);
-                int fromPos = fromSb.indexOf(matchStr);
                 if(toPos > -1){
                     toSb.delete(toPos, toPos+matchStr.length());
                 }
-                if(fromPos > -1){
-                    fromSb.delete(fromPos, fromPos+matchStr.length());
+                for (char c : matchStr.toCharArray()) {
+                    int pos = fromSb.indexOf(String.valueOf(c));
+                    if(pos > -1){
+                        fromSb.deleteCharAt(pos);
+                    }
                 }
             }
 
@@ -221,16 +236,15 @@ public class DictionaryTest {
                 break;
             }
 
-            formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
+            formatStr = String.format("[^%s]*([%s]*)[^%s]*", fromSb.toString(), fromSb.toString(), fromSb.toString());
             pattern = Pattern.compile(formatStr);
             matcher = pattern.matcher(toSb.toString());
         }
 
 
-
         System.out.println(sb.toString());
 
-
+        return sb.toString();
     }
 
     @Test
