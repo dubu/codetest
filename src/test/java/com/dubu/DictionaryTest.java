@@ -7,7 +7,6 @@ package com.dubu;
  */
 
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -17,6 +16,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertEquals;
+
+
 
 class Dictionary {
     private final String[] words;
@@ -146,17 +149,17 @@ class Dictionary {
         return storeStr;
     }
 
-    public String reverseRegxStr(String from, String to) {
+    public String reverseRegxStr(String regStr, String str) {
 
         StringBuilder toSb = new StringBuilder();
-        toSb.append(to);
+        toSb.append(str);
 
         StringBuilder fromSb = new StringBuilder();
-        fromSb.append(from);
+        fromSb.append(regStr);
 
-        String formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
+        String formatStr = String.format("[^%s]*([%s]*)[^%s]*", regStr, regStr, regStr);
         Pattern pattern = Pattern.compile(formatStr);
-        Matcher matcher = pattern.matcher(to);
+        Matcher matcher = pattern.matcher(str);
 
         StringBuilder sb = new StringBuilder();
         while(matcher.find() && matcher.group(1).length() > 0 ){
@@ -206,6 +209,13 @@ class Dictionary {
         }
 
 
+        //sorry ;;
+        if (sb.toString().length() != regStr.length()) {
+            LinkedList<String> matchList = new LinkedList<>(Arrays.asList(sb.toString().split("")));
+            List<String> deduped = matchList.stream().distinct().collect(Collectors.toList());
+            return  String.join("", deduped);
+        }
+
         System.out.println(sb.toString());
 
         return sb.toString();
@@ -245,6 +255,7 @@ class Dictionary {
                     moveCount++;
                     bListCopy.remove(bPos);
                 }
+
 
             }
         }
@@ -293,13 +304,28 @@ public class DictionaryTest {
 
     }
 
+
     @Test
     public void testRegxPattern() throws Exception {
         String regxStr = "karpcivur";
         String str = "rkacypviuburk";
 
         Dictionary dictionary = new Dictionary();
+        assertEquals("rkacpviur",dictionary.reverseRegxStr(regxStr, str));
+
+
     }
+
+    @Test
+    public void testRegxPattern2() throws Exception {
+        String regxStr = "codwars";
+        String str = "coddwars";
+
+        Dictionary dictionary = new Dictionary();
+        assertEquals("codwars",dictionary.reverseRegxStr(regxStr, str));
+
+    }
+
 
     @Test
     public void testSortOrder() throws Exception {
@@ -319,6 +345,7 @@ public class DictionaryTest {
         String b = "ea";
         Dictionary dictionary = new Dictionary();
         assertEquals(1, dictionary.getMoveCount(a,b) );
+
     }
 
     @Test
@@ -328,6 +355,16 @@ public class DictionaryTest {
         String b = "strawbery";
         Dictionary dictionary = new Dictionary();
         assertEquals(0, dictionary.getMoveCount(a,b) );
+
+    }
+
+    @Test
+    public void testSortOrder4() throws Exception {
+
+        String a = "karpcivur";
+        String b = "karpscdigdvucfr";
+        Dictionary dictionary = new Dictionary();
+        assertEquals(6, dictionary.getMoveCount(a,b) );
 
     }
 }
