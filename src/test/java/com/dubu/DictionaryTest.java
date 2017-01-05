@@ -116,13 +116,24 @@ class Dictionary {
             // 중복카운트 제거
             // 교화 카운트 추가
 
-            int moveCnt = 0 ;
+            int switchCnt = 0 ;
             int cnt = 0;
             if(sb.toString().length() > 0){
-                moveCnt = getMoveCount(reverseRegxStr(sb.toString(), from), sb.toString());
-                int fAddCnt = to.indexOf(sb.substring(0, 1));
-                int eAddCnt = new StringBuilder(to).reverse().indexOf(sb.substring(sb.length() - 1, sb.length()));
-                cnt = moveCnt +fAddCnt +eAddCnt;
+                switchCnt = switchCnt(reverseRegxStr(sb.toString(), from), sb.toString());
+
+//                int fAddCnt = to.indexOf(sb.substring(0, 1));
+//                int eAddCnt = new StringBuilder(to).reverse().indexOf(sb.substring(sb.length() - 1, sb.length()));
+//                cnt = switchCnt +fAddCnt +eAddCnt;
+
+                int moveCnt = moveCnt(sb.toString(),to.toString());
+                cnt = switchCnt + moveCnt;
+
+
+                if (to.toString().length() > sb.toString().length()) {
+                    // inter add or delete count
+                    cnt = cnt + to.toString().length() - sb.toString().length();
+
+                }
             }else{
                 cnt = to.toString().length();
 
@@ -147,6 +158,63 @@ class Dictionary {
         System.out.println(storeStr);
 
         return storeStr;
+    }
+
+    public int moveCnt(String regxStr, String str) {
+/*
+
+
+
+        from "rkacypviuburk" to "xffrkbdyjveb":
+
+             rkacypviuburk
+            xrkacypviuburk // 1
+           xfrkacypviuburk // 2
+          xffrkacypviuburk // 3
+        xffrkb cypviuburk // 4
+        xffrkb dypviuburk // 5
+        xffrkb dyjviuburk // 6
+        xffrkb dyjveuburk // 7
+        xffrkb dyjveburk // 8
+        xffrkb dyjvebrk // 9
+        xffrkb dyjvebk // 10
+        xffrkb dyjveb // 11
+
+           rkacypviub urk
+           rk  y v  b
+
+
+
+
+
+        */
+        int cnt = 0;
+        List<String> strings = Arrays.asList(regxStr.split("");
+        for (int i = 0; i < strings.size(); i++) {
+            String c = strings.get(i);
+
+           if(i == 0 ){
+               // init
+               int aPos = regxStr.indexOf(String.valueOf(c));
+               int bPos = str.indexOf(String.valueOf(c));
+               cnt = cnt +Math.abs(aPos-bPos);
+           }else if(i ==  strings.size()-1){
+               // last
+               int aPos = regxStr.indexOf(String.valueOf(c));
+               int bPos = str.indexOf(String.valueOf(c));
+               cnt = cnt +Math.abs(aPos-bPos);
+
+           }
+
+
+            //// TODO: 1/5/17
+            // 중간
+        }
+
+
+
+
+        return 0;
     }
 
     public String reverseRegxStr(String regStr, String str) {
@@ -221,10 +289,10 @@ class Dictionary {
         return sb.toString();
     }
 
-    public int getMoveCount(String a, String b) {
+    public int switchCnt(String a, String b) {
 
 
-        if(a.endsWith(b)){
+        if(a.equals(b)){
             return  0;
         }
 
@@ -333,7 +401,7 @@ public class DictionaryTest {
         String a = "abcde";
         String b = "cabed";
         Dictionary dictionary = new Dictionary();
-        assertEquals(2, dictionary.getMoveCount(a,b) );
+        assertEquals(2, dictionary.switchCnt(a,b) );
 
     }
 
@@ -344,7 +412,7 @@ public class DictionaryTest {
         String a = "ae";
         String b = "ea";
         Dictionary dictionary = new Dictionary();
-        assertEquals(1, dictionary.getMoveCount(a,b) );
+        assertEquals(1, dictionary.switchCnt(a,b) );
 
     }
 
@@ -354,17 +422,33 @@ public class DictionaryTest {
         String a = "strawbery";
         String b = "strawbery";
         Dictionary dictionary = new Dictionary();
-        assertEquals(0, dictionary.getMoveCount(a,b) );
+        assertEquals(0, dictionary.switchCnt(a,b) );
 
     }
 
     @Test
     public void testSortOrder4() throws Exception {
 
+//        karp c i  vu  r     6
+//        karpscdigdvucfr
+
         String a = "karpcivur";
         String b = "karpscdigdvucfr";
         Dictionary dictionary = new Dictionary();
-        assertEquals(6, dictionary.getMoveCount(a,b) );
+//        assertEquals(6, dictionary.switchCnt(a,b) );
+
+    }
+
+    @Test
+    public void testPass2() throws Exception {
+
+//        karp c i  vu  r     6
+//        karpscdigdvucfr
+
+        String a = "rpvik";
+        String b = "zqdrhpviqslik";
+        Dictionary dictionary = new Dictionary();
+        assertEquals(9, dictionary.moveCnt(a,b) );
 
     }
 }
