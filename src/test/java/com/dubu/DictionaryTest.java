@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -110,13 +111,41 @@ class Dictionary {
 
     public int moveCnt(String from, String to) {
 
-        String regxStr = getString(from, to);
-
-
-
-
-
         int cnt = 0;
+        String regxStr = getString(from, to);
+        StringBuilder regxSb = new StringBuilder(regxStr);
+        StringBuilder fromSb= new StringBuilder(from);
+        StringBuilder toSb= new StringBuilder(to);
+
+        String e1 = regxStr.substring(0, 1);
+        int sPos = from.indexOf(e1);
+        int tPos = to.indexOf(e1);
+//        int n = Math.abs(sPos - tPos);
+        int n = (sPos > tPos)?sPos:tPos;
+        regxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
+
+        int rPos = regxSb.indexOf(e1);
+        toSb.insert(0, Stream.generate(() -> " ").limit(rPos-tPos).collect(Collectors.joining("")));
+
+        String[] split = toSb.toString().split("");
+        for (int i = 0; i < split.length; i++) {
+            String t = split[i];
+            String r = regxSb.toString().split("")[i];
+
+           if(t.equals(" ") || r.equals(" ")){
+               cnt = ++cnt;
+            }
+           else if(t.equals(r)){
+               // pass
+           }
+           else{
+
+               cnt = ++cnt;
+            }
+
+        }
+
+        System.out.println(String.format(" %s %s %s", from, to, cnt));
         return cnt;
     }
 }
@@ -211,7 +240,7 @@ public class DictionaryTest {
         Dictionary dictionary = new Dictionary();
         String from = "strawbery";
         String[] strings = {"cherry", "pineapple", "melon", "strawberry", "raspberry"};
-        Integer[] cntList = {4,5,6,7,8};
+        Integer[] cntList = {6,5,6,7,8};
         for (int i = 0; i < strings.length; i++) {
             String string = strings[i];
             assertEquals(cntList[i].intValue(), dictionary.moveCnt(from,string) );
