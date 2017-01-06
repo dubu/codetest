@@ -40,60 +40,11 @@ class Dictionary {
         int storeInt = Integer.MAX_VALUE;
         String storeStr = "";
         for (int i = 0; i < strings.length; i++) {
+
             String to = strings[i];
-            String formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
-            Pattern pattern = Pattern.compile(formatStr);
-            Matcher matcher = pattern.matcher(to);
-
-            int matchCnt = 0;
-            List<String> copyFromList = new LinkedList<String>(Arrays.asList(from.split("")));
-            List<String> copyToList = new LinkedList<String>(Arrays.asList(to.split("")));
-
-            StringBuilder sb = new StringBuilder();
-            while (matcher.find() && matcher.group(1).length() > 0) {
-                if ((matcher.groupCount() > 0)) {
-
-                    String groupOne = matcher.group(1);
-                    Set<String> mySet = new HashSet(Arrays.asList(groupOne.split("")));
-                    for (int j = 0; j < mySet.size(); j++) {
-                        char c = groupOne.toCharArray()[j];
-                        copyFromList.remove(String.valueOf(c));
-                        mySet.remove(String.valueOf(c));
-                        copyToList.remove(String.valueOf(c));
-                    }
-                    String matchStr = matcher.group(1);
-                    matchCnt = matchCnt + matchStr.length();
-
-                    if (sb.length() > matchStr.length()) {
-                        if (sb.substring(sb.length() - matchStr.length(), sb.length()).toString().equals(matchStr)) {
-                            // pass
-                        } else {
-                            sb.append(matchStr);
-                        }
-                    } else {
-
-                        sb.append(matchStr);
-                    }
-//                    System.err.println(String.format("### %s %s ### ", to, matcher.group(1), matchStr.length()));
-                }
-
-                String copyFromListString = copyFromList.stream().map(Object::toString).collect(Collectors.joining());
-                String copyToListString = copyToList.stream().map(Object::toString).collect(Collectors.joining());
-
-                if (copyFromListString.length() == 0) {
-                    break;
-                }
-                formatStr = String.format("[^%s]*([%s]*)[^%s]*", copyFromListString, copyFromListString, copyFromListString);
-                pattern = Pattern.compile(formatStr);
-                matcher = pattern.matcher(copyToListString);
-
-            }
-
-            System.out.println("match string : " + sb.toString());
 
 //            int moveCnt = copyToList.size()+ copyFromList.size();
-
-            int cnt = Integer.MAX_VALUE;
+            int cnt = moveCnt(from,to);
             if (cnt < storeInt) {
                 storeInt = cnt;
                 storeStr = to;
@@ -106,7 +57,64 @@ class Dictionary {
         return storeStr;
     }
 
-    public int moveCnt(String regxStr, String str) {
+    private String getString(String from, String to) {
+        StringBuilder sb = new StringBuilder();
+        String formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
+        Pattern pattern = Pattern.compile(formatStr);
+        Matcher matcher = pattern.matcher(to);
+
+        int matchCnt = 0;
+        List<String> copyFromList = new LinkedList<String>(Arrays.asList(from.split("")));
+        List<String> copyToList = new LinkedList<String>(Arrays.asList(to.split("")));
+
+        while (matcher.find() && matcher.group(1).length() > 0) {
+            if ((matcher.groupCount() > 0)) {
+
+                String groupOne = matcher.group(1);
+                Set<String> mySet = new HashSet(Arrays.asList(groupOne.split("")));
+                for (int j = 0; j < mySet.size(); j++) {
+                    char c = groupOne.toCharArray()[j];
+                    copyFromList.remove(String.valueOf(c));
+                    mySet.remove(String.valueOf(c));
+                    copyToList.remove(String.valueOf(c));
+                }
+                String matchStr = matcher.group(1);
+                matchCnt = matchCnt + matchStr.length();
+
+                if (sb.length() > matchStr.length()) {
+                    if (sb.substring(sb.length() - matchStr.length(), sb.length()).toString().equals(matchStr)) {
+                        // pass
+                    } else {
+                        sb.append(matchStr);
+                    }
+                } else {
+
+                    sb.append(matchStr);
+                }
+//                    System.err.println(String.format("### %s %s ### ", to, matcher.group(1), matchStr.length()));
+            }
+
+            String copyFromListString = copyFromList.stream().map(Object::toString).collect(Collectors.joining());
+            String copyToListString = copyToList.stream().map(Object::toString).collect(Collectors.joining());
+
+            if (copyFromListString.length() == 0) {
+                break;
+            }
+            formatStr = String.format("[^%s]*([%s]*)[^%s]*", copyFromListString, copyFromListString, copyFromListString);
+            pattern = Pattern.compile(formatStr);
+            matcher = pattern.matcher(copyToListString);
+
+        }
+        return sb.toString();
+    }
+
+    public int moveCnt(String from, String to) {
+
+        String regxStr = getString(from, to);
+
+
+
+
 
         int cnt = 0;
         return cnt;
@@ -115,6 +123,24 @@ class Dictionary {
 
 
 public class DictionaryTest {
+
+
+    @Test
+    public void testStrigBuild() throws Exception {
+
+
+        StringBuilder sb  = new StringBuilder("abcdef");
+        //add
+//        sb.append("xxyyzz",2,3);
+
+
+        sb.insert(2,"AA");
+        System.out.println(sb.toString());
+
+
+
+
+    }
 
     @Test
     public void testBerries() {
