@@ -8,6 +8,7 @@ package com.dubu;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -189,6 +190,7 @@ class Dictionary {
 
         */
         int cnt = 0;
+/*
         List<String> strings = Arrays.asList(regxStr.split(""));
         for (int i = 0; i < strings.size(); i++) {
             String c = strings.get(i);
@@ -212,8 +214,30 @@ class Dictionary {
             // 중간
         }
 
+        */
 
 
+        int idx = 0;
+        List<String> strings = Arrays.asList(str.split(""));
+//        ArrayList stringsCopy = new ArrayList(strings);
+
+        LinkedList<String> regxList = new LinkedList<>(Arrays.asList(regxStr.split("")));
+
+
+        for (int i = 0; i < strings.size(); i++) {
+
+//            String regxS = String.valueOf(regxStr.charAt(idx));
+            String s = strings.get(i);
+            if(regxList.get(i).equals(s)  ){
+//                idx = ++idx;
+            }else{
+                cnt = ++cnt;
+//                regxList.add(i,s);
+                regxList.set(i,s);
+                System.out.println(regxList.stream().map(Object::toString).collect(Collectors.joining()));
+            }
+
+        }
 
         return cnt;
     }
@@ -450,6 +474,20 @@ public class DictionaryTest {
         String b = "zqdrhpviqslik";
         Dictionary dictionary = new Dictionary();
         assertEquals(9, dictionary.moveCnt(a,b) );
+
+    }
+
+    @Test
+    public void testCnt() throws Exception {
+
+        Dictionary dictionary = new Dictionary();
+        String from = "strawbery";
+        String[] strings = {"cherry", "pineapple", "melon", "strawberry", "raspberry"};
+        Integer[] cntList = {4,5,6,7,8};
+        for (int i = 0; i < strings.length; i++) {
+            String string = strings[i];
+            assertEquals(cntList[i].intValue(), dictionary.moveCnt(from,string) );
+        }
 
     }
 }
