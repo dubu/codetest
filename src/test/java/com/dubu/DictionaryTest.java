@@ -242,6 +242,7 @@ public class DictionaryTest {
         String[] strings = {"cherry", "pineapple", "melon", "strawberry", "raspberry"};
         Integer[] cntList = {6,5,6,7,8};
         for (int i = 0; i < strings.length; i++) {
+            System.out.println(i);
             String string = strings[i];
             assertEquals(cntList[i].intValue(), dictionary.moveCnt(from,string) );
         }
