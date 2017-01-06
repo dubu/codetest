@@ -189,7 +189,7 @@ class Dictionary {
 
         */
         int cnt = 0;
-        List<String> strings = Arrays.asList(regxStr.split("");
+        List<String> strings = Arrays.asList(regxStr.split(""));
         for (int i = 0; i < strings.size(); i++) {
             String c = strings.get(i);
 
@@ -202,10 +202,11 @@ class Dictionary {
                // last
                int aPos = regxStr.indexOf(String.valueOf(c));
                int bPos = str.indexOf(String.valueOf(c));
-               cnt = cnt +Math.abs(aPos-bPos);
+               int aPosTail = regxStr.length() - aPos;
+               int bPosTail = str.length() - bPos;
+               cnt = cnt +Math.abs(aPosTail-bPosTail);
 
            }
-
 
             //// TODO: 1/5/17
             // 중간
@@ -214,7 +215,7 @@ class Dictionary {
 
 
 
-        return 0;
+        return cnt;
     }
 
     public String reverseRegxStr(String regStr, String str) {
