@@ -129,8 +129,14 @@ class Dictionary {
 
         String[] split = toSb.toString().split("");
         for (int i = 0; i < split.length; i++) {
+
             String t = split[i];
-            String r = regxSb.toString().split("")[i];
+            String r ;
+            if (i >= regxSb.length()) {
+                r = " ";
+            } else {
+                r = regxSb.toString().split("")[i];
+            }
 
            if(t.equals(" ") || r.equals(" ")){
                cnt = ++cnt;
@@ -238,14 +244,11 @@ public class DictionaryTest {
     public void testCnt() throws Exception {
 
         Dictionary dictionary = new Dictionary();
-        String from = "strawbery";
-        String[] strings = {"cherry", "pineapple", "melon", "strawberry", "raspberry"};
-        Integer[] cntList = {6,5,6,7,8};
-        for (int i = 0; i < strings.length; i++) {
-            System.out.println(i);
-            String string = strings[i];
-            assertEquals(cntList[i].intValue(), dictionary.moveCnt(from,string) );
-        }
+        assertEquals(6, dictionary.moveCnt("strawbery","cherry") );
+        assertEquals(6, dictionary.moveCnt("strawbery","pineapple") );
+        assertEquals(6, dictionary.moveCnt("strawbery","melon") );
+        assertEquals(6, dictionary.moveCnt("strawbery","strawberry") );
+        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
 
     }
 }
