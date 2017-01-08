@@ -121,6 +121,16 @@ class Dictionary {
         int sPos = from.indexOf(e1);
         int tPos = to.indexOf(e1);
 //        int n = Math.abs(sPos - tPos);
+
+        int fromIdx = 0 ;
+        for (String s : regxStr.split("")) {
+           int pos = toSb.indexOf(s,fromIdx);
+            if(fromIdx > 0){
+                regxSb.insert(fromIdx, Stream.generate(() -> " ").limit(pos-fromIdx).collect(Collectors.joining("")));
+            }
+            fromIdx = pos;
+        }
+
         int n = (sPos > tPos)?sPos:tPos;
         regxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
 
@@ -151,7 +161,7 @@ class Dictionary {
 
         }
 
-        System.out.println(String.format(" %s %s %s", from, to, cnt));
+        System.out.println(String.format(" %s %s %s %s", from, to, regxSb, cnt));
         return cnt;
     }
 }
@@ -244,11 +254,12 @@ public class DictionaryTest {
     public void testCnt() throws Exception {
 
         Dictionary dictionary = new Dictionary();
-        assertEquals(6, dictionary.moveCnt("strawbery","cherry") );
+//        assertEquals(6, dictionary.moveCnt("strawbery","cherry") );
         assertEquals(6, dictionary.moveCnt("strawbery","pineapple") );
-        assertEquals(6, dictionary.moveCnt("strawbery","melon") );
-        assertEquals(6, dictionary.moveCnt("strawbery","strawberry") );
-        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
+        assertEquals(8, dictionary.moveCnt("ia","pineapple") );
+        assertEquals(9, dictionary.moveCnt("strawbery","melon") );
+//        assertEquals(6, dictionary.moveCnt("strawbery","strawberry") );
+//        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
 
     }
 }
