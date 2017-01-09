@@ -135,8 +135,12 @@ class Dictionary {
         StringBuilder toSb= new StringBuilder(to);
 
         String e1 = regxStr.substring(0, 1);
+        String e9 = regxStr.substring(regxStr.length()-1, regxStr.length());
+
         int sPos = from.indexOf(e1);
         int tPos = to.indexOf(e1);
+
+
 //        int n = Math.abs(sPos - tPos);
 
         // add head blink
@@ -145,16 +149,15 @@ class Dictionary {
             toSb.insert(0, Stream.generate(() -> " ").limit(rPos-tPos).collect(Collectors.joining("")));
         }
 
+        // add head
         int n = (sPos > tPos)?sPos:tPos;
         toRegxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
-
-//        fromRegxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
-
+        fromRegxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
 
         int fromIdx = 0 ;
         for (String s : regxStr.split("")) {
             int pos = toSb.indexOf(s,fromIdx);
-            if(fromIdx > 0){
+            if(pos-fromIdx-1 > 0){
                 toRegxSb.insert(fromIdx+1, Stream.generate(() -> " ").limit(pos-fromIdx-1).collect(Collectors.joining("")));
             }
             fromIdx = pos;
@@ -164,10 +167,22 @@ class Dictionary {
         fromIdx = 0 ;
         for (String s : regxStr.split("")) {
             int pos = fromSb.indexOf(s,fromIdx);
-            if(pos > 0){
+            if(pos-fromIdx-1 > 0){
                 fromRegxSb.insert(fromIdx+1, Stream.generate(() -> " ").limit(pos-fromIdx-1).collect(Collectors.joining("")));
             }
             fromIdx = pos;
+        }
+
+        // add tail
+        int sEndPos = fromRegxSb.lastIndexOf(e9);
+        int tEndPos = toRegxSb.lastIndexOf(e9);
+        int fromTail =  from.length()-sEndPos-1;
+        int toTail =  to.length()-tEndPos-1;
+        int t = ( fromTail> toTail)?fromTail:toTail;
+        if(t>0){
+
+            fromRegxSb.insert(sEndPos+1, Stream.generate(() -> " ").limit(t).collect(Collectors.joining("")));
+            toRegxSb.insert(tEndPos+1, Stream.generate(() -> " ").limit(t).collect(Collectors.joining("")));
         }
 
         cnt = suggestCnt(fromRegxSb.toString(), toRegxSb.toString());
@@ -213,7 +228,13 @@ class Dictionary {
             if(fromPos == toPos ){
                 // pass
 
-                cnt = cnt + toPos - idx -1 ;
+                if(idx ==0){
+
+                    cnt = cnt + toPos - idx  ;
+                }else{
+
+                    cnt = cnt + toPos - idx -1 ;
+                }
 
             }else if(switchCount < addAndSubCount){
                 cnt = cnt + switchCount;
@@ -223,6 +244,15 @@ class Dictionary {
 
             }
             idx = toPos;
+        }
+
+        // end
+        String lstStr = regxStr.substring(regxStr.length() - 1, regxStr.length());
+        int lstIdx = to.lastIndexOf(lstStr);
+
+
+        if(to.length() > lstIdx){
+            cnt = cnt + to.length() - lstIdx -1;
         }
 
 
@@ -327,36 +357,39 @@ public class DictionaryTest {
 
     @Test
     public void testGetString3() throws Exception {
-
         Dictionary dictionary = new Dictionary();
-        assertEquals("codwars",dictionary.getString("coddwars","codewars"));
-
+//        assertEquals("codwars",dictionary.getString("coddwars","codewars"));
+        assertEquals("erry",dictionary.getString("berry","cherry"));
     }
     @Test
     public void testCnt() throws Exception {
 
         Dictionary dictionary = new Dictionary();
 //        assertEquals(6, dictionary.moveCnt("strawbery","cherry") );
-        assertEquals(6, dictionary.moveCnt("strawbery","pineapple") );
-        assertEquals(8, dictionary.moveCnt("ia","pineapple") );
-        assertEquals(9, dictionary.moveCnt("strawbery","melon") );
+//        assertEquals(6, dictionary.moveCnt("strawbery","pineapple") );
+//        assertEquals(8, dictionary.moveCnt("ia","pineapple") );
+//        assertEquals(9, dictionary.moveCnt("strawbery","melon") );
 //        assertEquals(6, dictionary.moveCnt("strawbery","strawberry") );
 //        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
+        assertEquals(3, dictionary.moveCnt("berry","cherry") );
+        assertEquals(4, dictionary.moveCnt("berry","melon") );
 
     }
 
     @Test
     public void testAddSubSwitch() throws Exception {
-
         String a = "r    pvi    k";
         String b = "   r pvi    k";
-
-
         Dictionary dictionary = new Dictionary();
-        assertEquals(8, dictionary.suggestCnt(a,b));
+        assertEquals(9, dictionary.suggestCnt(a,b));
+    }
 
-
-
+    @Test
+    public void testAddSubSwitch2() throws Exception {
+        String a = "  er y";
+        String b = "  er y";
+        Dictionary dictionary = new Dictionary();
+        assertEquals(3, dictionary.suggestCnt(a,b));
     }
 }
 
