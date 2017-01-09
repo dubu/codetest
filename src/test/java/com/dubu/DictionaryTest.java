@@ -134,13 +134,14 @@ class Dictionary {
 
         int fromIdx = 0 ;
         for (String s : regxStr.split("")) {
-           int pos = toSb.indexOf(s,fromIdx);
+            int pos = toSb.indexOf(s,fromIdx);
             if(fromIdx > 0){
                 regxSb.insert(fromIdx+1, Stream.generate(() -> " ").limit(pos-fromIdx-1).collect(Collectors.joining("")));
             }
             fromIdx = pos;
         }
 
+        String regxDiffStr = regxSb.substring(tPos);
 
 
         String[] split = toSb.toString().split("");
@@ -158,7 +159,13 @@ class Dictionary {
                cnt = ++cnt;
             }
            else if(t.equals(r)){
-               // pass
+
+               if(fromSb.length()>i && fromSb.substring(i,i+1).equals(toSb.substring(i,i+1))){
+                   // pass
+               }else{
+
+                   cnt = ++cnt;
+               }
            }
            else{
 
@@ -169,6 +176,39 @@ class Dictionary {
 
         System.out.println(String.format(" %s %s %s %s", from, to, regxSb, cnt));
         return cnt;
+    }
+
+    public int suggestCnt(String from, String to) {
+
+
+        int cnt = 0;
+        String regxStr = getString(from, to);
+        regxStr = "rpvik";
+
+        int idx = 0;
+        for (char c : regxStr.toCharArray()) {
+            int  fromPos = from.indexOf(c,idx);
+            int  toPos = to.indexOf(c,idx);
+            int switchCount =  toPos +1;
+            int addAndSubCount = 2 * Math.abs(toPos - fromPos);
+            if(fromPos == toPos ){
+                // pass
+
+                cnt = cnt + toPos - idx -1 ;
+
+            }else if(switchCount < addAndSubCount){
+                cnt = cnt + switchCount;
+
+            }else{
+                cnt = cnt + addAndSubCount;
+
+            }
+            idx = toPos;
+        }
+
+
+        return cnt;
+
     }
 }
 
@@ -257,7 +297,6 @@ public class DictionaryTest {
 
     }
 
-
     @Test
     public void testGetString2() throws Exception {
 
@@ -277,6 +316,20 @@ public class DictionaryTest {
         assertEquals(9, dictionary.moveCnt("strawbery","melon") );
 //        assertEquals(6, dictionary.moveCnt("strawbery","strawberry") );
 //        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
+
+    }
+
+    @Test
+    public void testAddSubSwitch() throws Exception {
+
+        String a = "r    pvi    k";
+        String b = "   r pvi    k";
+
+
+        Dictionary dictionary = new Dictionary();
+        assertEquals(9, dictionary.suggestCnt(a,b));
+
+
 
     }
 }
