@@ -58,7 +58,7 @@ class Dictionary {
         return storeStr;
     }
 
-    private String getString(String from, String to) {
+    public String getString(String from, String to) {
         StringBuilder sb = new StringBuilder();
         String formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
         Pattern pattern = Pattern.compile(formatStr);
@@ -73,13 +73,14 @@ class Dictionary {
 
                 String groupOne = matcher.group(1);
                 Set<String> mySet = new HashSet(Arrays.asList(groupOne.split("")));
+                String matchStr = mySet.stream().map(Object::toString).collect(Collectors.joining());
                 for (int j = 0; j < mySet.size(); j++) {
                     char c = groupOne.toCharArray()[j];
                     copyFromList.remove(String.valueOf(c));
                     mySet.remove(String.valueOf(c));
                     copyToList.remove(String.valueOf(c));
                 }
-                String matchStr = matcher.group(1);
+//                String matchStr = matcher.group(1);
                 matchCnt = matchCnt + matchStr.length();
 
                 if (sb.length() > matchStr.length()) {
@@ -197,7 +198,8 @@ public class DictionaryTest {
 
     @Test
     public void testLanguages() {
-        Dictionary dictionary = new Dictionary(new String[]{"javascript", "java", "ruby", "php", "python", "coffeescript"});
+//        Dictionary dictionary = new Dictionary(new String[]{"javascript", "java", "ruby", "php", "python", "coffeescript"});
+        Dictionary dictionary = new Dictionary(new String[]{"javascript"});
         assertEquals("java", dictionary.findMostSimilar("heaven"));
         assertEquals("javascript", dictionary.findMostSimilar("javascript"));
     }
@@ -247,6 +249,16 @@ public class DictionaryTest {
         String b = "zqdrhpviqslik";
         Dictionary dictionary = new Dictionary();
         assertEquals(9, dictionary.moveCnt(a,b) );
+
+    }
+
+
+    @Test
+    public void testGetString2() throws Exception {
+
+        Dictionary dictionary = new Dictionary();
+        dictionary.getString("heaven","javascript");
+        assertEquals("av",dictionary.getString("heaven","javascript"));
 
     }
 
