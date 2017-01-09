@@ -123,20 +123,25 @@ class Dictionary {
         int tPos = to.indexOf(e1);
 //        int n = Math.abs(sPos - tPos);
 
-        int fromIdx = 0 ;
-        for (String s : regxStr.split("")) {
-           int pos = toSb.indexOf(s,fromIdx);
-            if(fromIdx > 0){
-                regxSb.insert(fromIdx, Stream.generate(() -> " ").limit(pos-fromIdx).collect(Collectors.joining("")));
-            }
-            fromIdx = pos;
+        // add head blink
+        int rPos = regxSb.indexOf(e1);
+        if(rPos > tPos){
+            toSb.insert(0, Stream.generate(() -> " ").limit(rPos-tPos).collect(Collectors.joining("")));
         }
 
         int n = (sPos > tPos)?sPos:tPos;
         regxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
 
-        int rPos = regxSb.indexOf(e1);
-        toSb.insert(0, Stream.generate(() -> " ").limit(rPos-tPos).collect(Collectors.joining("")));
+        int fromIdx = 0 ;
+        for (String s : regxStr.split("")) {
+           int pos = toSb.indexOf(s,fromIdx);
+            if(fromIdx > 0){
+                regxSb.insert(fromIdx+1, Stream.generate(() -> " ").limit(pos-fromIdx-1).collect(Collectors.joining("")));
+            }
+            fromIdx = pos;
+        }
+
+
 
         String[] split = toSb.toString().split("");
         for (int i = 0; i < split.length; i++) {
