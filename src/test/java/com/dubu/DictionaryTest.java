@@ -283,19 +283,11 @@ public class DictionaryTest {
     }
 
     @Test
-    public void testBerries() {
-        Dictionary dictionary = new Dictionary(new String[]{"cherry", "pineapple", "melon", "strawberry", "raspberry"});
-//        Dictionary dictionary = new Dictionary(new String[]{"strawberry"});
-        assertEquals("strawberry", dictionary.findMostSimilar("strawbery"));
-        assertEquals("cherry", dictionary.findMostSimilar("berry"));
-    }
-
-    @Test
     public void testLanguages() {
 //        Dictionary dictionary = new Dictionary(new String[]{"javascript", "java", "ruby", "php", "python", "coffeescript"});
         Dictionary dictionary = new Dictionary(new String[]{"javascript"});
-//        assertEquals("java", dictionary.findMostSimilar("heaven"));
-//        assertEquals("javascript", dictionary.findMostSimilar("javascript"));
+        assertEquals("java", dictionary.findMostSimilar("heaven"));
+        assertEquals("javascript", dictionary.findMostSimilar("javascript"));
     }
 
     @Test
@@ -356,11 +348,27 @@ public class DictionaryTest {
     }
 
     @Test
+    public void testAddSubSwitch() throws Exception {
+        String a = "r    pvi    k";
+        String b = "   r pvi    k";
+        Dictionary dictionary = new Dictionary();
+        assertEquals(9, dictionary.suggestCnt(a,b));
+    }
+
+    @Test
+    public void testAddSubSwitch2() throws Exception {
+        String a = "  er y";
+        String b = "  er y";
+        Dictionary dictionary = new Dictionary();
+        assertEquals(3, dictionary.suggestCnt(a,b));
+    }
+    @Test
     public void testGetString3() throws Exception {
         Dictionary dictionary = new Dictionary();
 //        assertEquals("codwars",dictionary.getString("coddwars","codewars"));
         assertEquals("erry",dictionary.getString("berry","cherry"));
     }
+
     @Test
     public void testCnt() throws Exception {
 
@@ -377,19 +385,11 @@ public class DictionaryTest {
     }
 
     @Test
-    public void testAddSubSwitch() throws Exception {
-        String a = "r    pvi    k";
-        String b = "   r pvi    k";
-        Dictionary dictionary = new Dictionary();
-        assertEquals(9, dictionary.suggestCnt(a,b));
-    }
-
-    @Test
-    public void testAddSubSwitch2() throws Exception {
-        String a = "  er y";
-        String b = "  er y";
-        Dictionary dictionary = new Dictionary();
-        assertEquals(3, dictionary.suggestCnt(a,b));
+    public void testBerries() {
+        Dictionary dictionary = new Dictionary(new String[]{"cherry", "pineapple", "melon", "strawberry", "raspberry"});
+//        Dictionary dictionary = new Dictionary(new String[]{"strawberry"});
+        assertEquals("strawberry", dictionary.findMostSimilar("strawbery"));
+        assertEquals("cherry", dictionary.findMostSimilar("berry"));
     }
 }
 
