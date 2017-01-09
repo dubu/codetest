@@ -60,6 +60,7 @@ class Dictionary {
 
     public String getString(String from, String to) {
         StringBuilder sb = new StringBuilder();
+        from = from.replaceAll(" ","");
         String formatStr = String.format("[^%s]*([%s]*)[^%s]*", from, from, from);
         Pattern pattern = Pattern.compile(formatStr);
         Matcher matcher = pattern.matcher(to);
@@ -183,7 +184,7 @@ class Dictionary {
 
         int cnt = 0;
         String regxStr = getString(from, to);
-        regxStr = "rpvik";
+//        regxStr = "rpvik";
 
         int idx = 0;
         for (char c : regxStr.toCharArray()) {
