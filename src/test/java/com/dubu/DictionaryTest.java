@@ -75,6 +75,14 @@ class Dictionary {
                 String groupOne = matcher.group(1);
                 Set<String> mySet = new HashSet(Arrays.asList(groupOne.split("")));
                 String matchStr = mySet.stream().map(Object::toString).collect(Collectors.joining());
+
+
+               //todo dup order !!
+//                http://www.programcreek.com/2013/01/leetcode-remove-duplicates-from-sorted-array-java/
+
+
+
+
                 for (int j = 0; j < mySet.size(); j++) {
                     char c = groupOne.toCharArray()[j];
                     copyFromList.remove(String.valueOf(c));
@@ -115,7 +123,8 @@ class Dictionary {
 
         int cnt = 0;
         String regxStr = getString(from, to);
-        StringBuilder regxSb = new StringBuilder(regxStr);
+        StringBuilder fromRegxSb = new StringBuilder(regxStr);
+        StringBuilder toRegxSb = new StringBuilder(regxStr);
         StringBuilder fromSb= new StringBuilder(from);
         StringBuilder toSb= new StringBuilder(to);
 
@@ -125,57 +134,40 @@ class Dictionary {
 //        int n = Math.abs(sPos - tPos);
 
         // add head blink
-        int rPos = regxSb.indexOf(e1);
+        int rPos = toRegxSb.indexOf(e1);
         if(rPos > tPos){
             toSb.insert(0, Stream.generate(() -> " ").limit(rPos-tPos).collect(Collectors.joining("")));
         }
 
         int n = (sPos > tPos)?sPos:tPos;
-        regxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
+        toRegxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
+
+//        fromRegxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
+
 
         int fromIdx = 0 ;
         for (String s : regxStr.split("")) {
             int pos = toSb.indexOf(s,fromIdx);
             if(fromIdx > 0){
-                regxSb.insert(fromIdx+1, Stream.generate(() -> " ").limit(pos-fromIdx-1).collect(Collectors.joining("")));
+                toRegxSb.insert(fromIdx+1, Stream.generate(() -> " ").limit(pos-fromIdx-1).collect(Collectors.joining("")));
             }
             fromIdx = pos;
         }
 
-        String regxDiffStr = regxSb.substring(tPos);
 
-
-        String[] split = toSb.toString().split("");
-        for (int i = 0; i < split.length; i++) {
-
-            String t = split[i];
-            String r ;
-            if (i >= regxSb.length()) {
-                r = " ";
-            } else {
-                r = regxSb.toString().split("")[i];
+        fromIdx = 0 ;
+        for (String s : regxStr.split("")) {
+            int pos = fromSb.indexOf(s,fromIdx);
+            if(pos > 0){
+                fromRegxSb.insert(fromIdx+1, Stream.generate(() -> " ").limit(pos-fromIdx-1).collect(Collectors.joining("")));
             }
-
-           if(t.equals(" ") || r.equals(" ")){
-               cnt = ++cnt;
-            }
-           else if(t.equals(r)){
-
-               if(fromSb.length()>i && fromSb.substring(i,i+1).equals(toSb.substring(i,i+1))){
-                   // pass
-               }else{
-
-                   cnt = ++cnt;
-               }
-           }
-           else{
-
-               cnt = ++cnt;
-            }
-
+            fromIdx = pos;
         }
 
-        System.out.println(String.format(" %s %s %s %s", from, to, regxSb, cnt));
+        cnt = suggestCnt(fromRegxSb.toString(), toRegxSb.toString());
+
+
+        System.out.println(String.format(" %s %s %s %s", from, to, toRegxSb, cnt));
         return cnt;
     }
 
@@ -291,7 +283,7 @@ public class DictionaryTest {
 //        karp c i  vu  r     6
 //        karpscdigdvucfr
 
-        String a = "rpvik";
+        String a = "rkacypviuburk";
         String b = "zqdrhpviqslik";
         Dictionary dictionary = new Dictionary();
         assertEquals(9, dictionary.moveCnt(a,b) );
@@ -307,6 +299,13 @@ public class DictionaryTest {
 
     }
 
+    @Test
+    public void testGetString3() throws Exception {
+
+        Dictionary dictionary = new Dictionary();
+        assertEquals("codwars",dictionary.getString("coddwars","codewars"));
+
+    }
     @Test
     public void testCnt() throws Exception {
 
