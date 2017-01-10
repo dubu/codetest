@@ -158,7 +158,7 @@ class Dictionary {
 
         int fromIdx = 0;
         for (String s : regxStr.split("")) {
-            int pos = toSb.indexOf(s, fromIdx);
+            int pos = toSb.indexOf(s, fromIdx+1);
             if (fromIdx > 0 && pos - fromIdx - 1 > 0) {
                 toRegxSb.insert(fromIdx + 1, Stream.generate(() -> " ").limit(pos - fromIdx - 1).collect(Collectors.joining("")));
             }
@@ -168,7 +168,7 @@ class Dictionary {
 
         fromIdx = 0;
         for (String s : regxStr.split("")) {
-            int pos = fromSb.indexOf(s, fromIdx);
+            int pos = fromSb.indexOf(s, fromIdx+1);
             if (fromIdx > 0 && pos - fromIdx - 1 > 0) {
                 fromRegxSb.insert(fromIdx + 1, Stream.generate(() -> " ").limit(pos - fromIdx - 1).collect(Collectors.joining("")));
             }
@@ -386,7 +386,8 @@ public class DictionaryTest {
 //        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
 //        assertEquals(3, dictionary.moveCnt("heaven","java") );
 //        assertEquals(5, dictionary.moveCnt("heaven", "php"));
-        assertEquals(11, dictionary.moveCnt("heaven", "coffeescript"));
+//        assertEquals(11, dictionary.moveCnt("heaven", "coffeescript"));
+        assertEquals(2, dictionary.moveCnt("berry", "cherry"));
 //        assertEquals(3, dictionary.moveCnt("berry","cherry") );
 //        assertEquals(4, dictionary.moveCnt("berry","melon") );
 
