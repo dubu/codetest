@@ -7,6 +7,7 @@ package com.dubu;
  */
 
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -14,7 +15,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
 
 
 class Dictionary {
@@ -386,21 +386,17 @@ public class DictionaryTest {
     public void testCnt() throws Exception {
 
         Dictionary dictionary = new Dictionary();
-//        assertEquals(6, dictionary.moveCnt("strawbery","cherry") );
-//        assertEquals(10, dictionary.moveCnt("strawbery","pineapple") );
-
-        assertEquals(9, dictionary.moveCnt("ia","pineapple") );
-
-
-
-//        assertEquals(9, dictionary.moveCnt("strawbery","melon") );
-//        assertEquals(1, dictionary.moveCnt("strawbery","strawbery") );
-//        assertEquals(6, dictionary.moveCnt("heaven", "php"));
-//        assertEquals(2, dictionary.moveCnt("berry", "cherry"));
-//        assertEquals(5, dictionary.moveCnt("berry","melon") );
+//        assertEquals(7, dictionary.moveCnt("strawbery","cherry") );
+        assertEquals(10, dictionary.moveCnt("strawbery","pineapple") );
+        assertEquals(9, dictionary.moveCnt("strawbery","melon") );
+        assertEquals(1, dictionary.moveCnt("strawbery","strawbery") );
+        assertEquals(6, dictionary.moveCnt("heaven", "php"));
+        assertEquals(2, dictionary.moveCnt("berry", "cherry"));
+        assertEquals(5, dictionary.moveCnt("berry","melon") );
 
 
 
+//        assertEquals(9, dictionary.moveCnt("ia","pineapple") );
 //        assertEquals(10, dictionary.moveCnt("rkacypviuburk","zqdrhpviqslik") );
 
 //        assertEquals(11, dictionary.moveCnt("heaven", "coffeescript"));
