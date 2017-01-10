@@ -155,11 +155,16 @@ class Dictionary {
 //        int n = (sPos > tPos) ? sPos : tPos;
         if(sPos > tPos){
 
-            fromRegxSb.insert(0, Stream.generate(() -> " ").limit(sPos).collect(Collectors.joining("")));
+            if(sPos > 0){
+                fromRegxSb.insert(0, Stream.generate(() -> " ").limit(sPos).collect(Collectors.joining("")));
+            }
             toRegxSb.insert(0, Stream.generate(() -> " ").limit(tPos+sPos-tPos).collect(Collectors.joining("")));
         }else{
             fromRegxSb.insert(0, Stream.generate(() -> " ").limit(sPos+tPos-sPos).collect(Collectors.joining("")));
-            toRegxSb.insert(0, Stream.generate(() -> " ").limit(tPos).collect(Collectors.joining("")));
+            if(tPos > 0){
+
+                toRegxSb.insert(0, Stream.generate(() -> " ").limit(tPos).collect(Collectors.joining("")));
+            }
         }
 
         int fromIdx = -1;
