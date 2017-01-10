@@ -152,24 +152,31 @@ class Dictionary {
         }
 
         // add head
-        int n = (sPos > tPos) ? sPos : tPos;
-        toRegxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
-        fromRegxSb.insert(0, Stream.generate(() -> " ").limit(n).collect(Collectors.joining("")));
+//        int n = (sPos > tPos) ? sPos : tPos;
+        if(sPos > tPos){
 
-        int fromIdx = 0;
+            fromRegxSb.insert(0, Stream.generate(() -> " ").limit(sPos).collect(Collectors.joining("")));
+            toRegxSb.insert(0, Stream.generate(() -> " ").limit(tPos+sPos-tPos).collect(Collectors.joining("")));
+        }else{
+            fromRegxSb.insert(0, Stream.generate(() -> " ").limit(sPos+tPos-sPos).collect(Collectors.joining("")));
+            toRegxSb.insert(0, Stream.generate(() -> " ").limit(tPos).collect(Collectors.joining("")));
+        }
+
+        int fromIdx = -1;
         for (String s : regxStr.split("")) {
             int pos = toSb.indexOf(s, fromIdx+1);
-            if (fromIdx > 0 && pos - fromIdx - 1 > 0) {
+            if (fromIdx != -1 && pos - fromIdx - 1 > 0) {
+
                 toRegxSb.insert(fromIdx + 1, Stream.generate(() -> " ").limit(pos - fromIdx - 1).collect(Collectors.joining("")));
             }
             fromIdx = pos;
         }
 
 
-        fromIdx = 0;
+        fromIdx = -1;
         for (String s : regxStr.split("")) {
             int pos = fromSb.indexOf(s, fromIdx+1);
-            if (fromIdx > 0 && pos - fromIdx - 1 > 0) {
+            if (fromIdx != -1 && pos - fromIdx - 1 > 0) {
                 fromRegxSb.insert(fromIdx + 1, Stream.generate(() -> " ").limit(pos - fromIdx - 1).collect(Collectors.joining("")));
             }
             fromIdx = pos;
@@ -221,10 +228,6 @@ class Dictionary {
         String regxStr = getString(from, to);
 //        regxStr = "rpvik";
 
-
-
-
-
         int idx = 0;
         for (char c : regxStr.toCharArray()) {
             int fromPos = from.indexOf(c, idx);
@@ -234,7 +237,7 @@ class Dictionary {
             if (fromPos == toPos) {
                 // pass
 
-                if (idx == 0) {
+                if (idx == 0 && toPos != 0) {
 
                     cnt = cnt + toPos - idx;
                 } else {
@@ -378,19 +381,23 @@ public class DictionaryTest {
     public void testCnt() throws Exception {
 
         Dictionary dictionary = new Dictionary();
-//        assertEquals(6, dictionary.moveCnt("strawbery","cherry") );
-//        assertEquals(6, dictionary.moveCnt("strawbery","pineapple") );
-//        assertEquals(8, dictionary.moveCnt("ia","pineapple") );
-//        assertEquals(9, dictionary.moveCnt("strawbery","melon") );
-//        assertEquals(6, dictionary.moveCnt("strawbery","strawberry") );
-//        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
-//        assertEquals(3, dictionary.moveCnt("heaven","java") );
-//        assertEquals(5, dictionary.moveCnt("heaven", "php"));
-//        assertEquals(11, dictionary.moveCnt("heaven", "coffeescript"));
-        assertEquals(2, dictionary.moveCnt("berry", "cherry"));
-//        assertEquals(3, dictionary.moveCnt("berry","cherry") );
-//        assertEquals(4, dictionary.moveCnt("berry","melon") );
+        assertEquals(6, dictionary.moveCnt("strawbery","cherry") );
+        assertEquals(10, dictionary.moveCnt("strawbery","pineapple") );
 
+        assertEquals(9, dictionary.moveCnt("ia","pineapple") );
+        assertEquals(9, dictionary.moveCnt("strawbery","melon") );
+        assertEquals(1, dictionary.moveCnt("strawbery","strawbery") );
+        assertEquals(6, dictionary.moveCnt("heaven", "php"));
+        assertEquals(2, dictionary.moveCnt("berry", "cherry"));
+        assertEquals(5, dictionary.moveCnt("berry","melon") );
+
+
+
+//        assertEquals(10, dictionary.moveCnt("rkacypviuburk","zqdrhpviqslik") );
+
+//        assertEquals(11, dictionary.moveCnt("heaven", "coffeescript"));
+//        assertEquals(3, dictionary.moveCnt("heaven","java") );
+//        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
     }
 
     @Test
