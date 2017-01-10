@@ -71,9 +71,9 @@ class Dictionary {
                 String groupOne = matcher.group(1);
 //                Set<String> mySet = new HashSet(Arrays.asList(groupOne.split("")));
                 List<String> mySet = new LinkedList<String>(Arrays.asList(groupOne.split("")));
-                List<String> mySetCopy = new ArrayList(mySet);
                 Arrays.asList(groupOne.split(""));
-                removeDuplicatesNaive(mySet);
+//                removeDuplicatesNaive(mySet);
+                List<String> mySetCopy = new ArrayList(mySet);
 
 
                 String matchStr = mySet.stream().map(Object::toString).collect(Collectors.joining());
@@ -215,10 +215,13 @@ class Dictionary {
 
     public int suggestCnt(String from, String to) {
 
-
         int cnt = 0;
         String regxStr = getString(from, to);
 //        regxStr = "rpvik";
+
+
+
+
 
         int idx = 0;
         for (char c : regxStr.toCharArray()) {
@@ -381,8 +384,8 @@ public class DictionaryTest {
 //        assertEquals(6, dictionary.moveCnt("strawbery","strawberry") );
 //        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
 //        assertEquals(3, dictionary.moveCnt("heaven","java") );
-        assertEquals(5, dictionary.moveCnt("heaven", "php"));
-//        assertEquals(3, dictionary.moveCnt("berry","cherry") );
+//        assertEquals(5, dictionary.moveCnt("heaven", "php"));
+        assertEquals(3, dictionary.moveCnt("berry","cherry") );
 //        assertEquals(4, dictionary.moveCnt("berry","melon") );
 
     }
