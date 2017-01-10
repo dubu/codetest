@@ -88,6 +88,7 @@ class Dictionary {
                     copyFromList.remove(String.valueOf(c));
                     mySet.remove(String.valueOf(c));
                     copyToList.remove(String.valueOf(c));
+                    break;
                 }
 //                String matchStr = matcher.group(1);
                 matchCnt = matchCnt + matchStr.length();
@@ -100,7 +101,8 @@ class Dictionary {
                     }
                 } else {
 
-                    sb.append(matchStr);
+//                    sb.append(matchStr);
+                    sb.append(matchStr.substring(0,1));
                 }
 //                    System.err.println(String.format("### %s %s ### ", to, matcher.group(1), matchStr.length()));
             }
@@ -183,7 +185,7 @@ class Dictionary {
             fromRegxSb.append(Stream.generate(() -> " ").limit(fromTail).collect(Collectors.joining("")));
         }
 
-        if (tailHead > 0) {
+        if (toTail > 0) {
             toRegxSb.append(Stream.generate(() -> " ").limit(toTail).collect(Collectors.joining("")));
         }
 
@@ -345,7 +347,6 @@ public class DictionaryTest {
     public void testGetString2() throws Exception {
 
         Dictionary dictionary = new Dictionary();
-        dictionary.getString("heaven", "javascript");
         assertEquals("av", dictionary.getString("heaven", "javascript"));
 
     }
@@ -385,7 +386,8 @@ public class DictionaryTest {
 //        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
 //        assertEquals(3, dictionary.moveCnt("heaven","java") );
 //        assertEquals(5, dictionary.moveCnt("heaven", "php"));
-        assertEquals(3, dictionary.moveCnt("berry","cherry") );
+        assertEquals(11, dictionary.moveCnt("heaven", "coffeescript"));
+//        assertEquals(3, dictionary.moveCnt("berry","cherry") );
 //        assertEquals(4, dictionary.moveCnt("berry","melon") );
 
     }
