@@ -20,8 +20,6 @@ class Dictionary {
     private static final int FROM = 1;
     private static final int TO = 2;
     private final String[] words;
-    private int rsCnt;
-    private String rsStr;
 
     public Dictionary(String[] words) {
         this.words = words;
@@ -36,13 +34,18 @@ class Dictionary {
 
         String[] strings = words;
 
-        rsCnt = Integer.MAX_VALUE;
-        rsStr = "";
+        int rsCnt = Integer.MAX_VALUE;
+        String rsStr = "";
         for (int i = 0; i < strings.length; i++) {
 
 
             String to = strings[i];
-            moveCnt(from, to);
+            int mvCnt = moveCnt(from, to);
+
+            if(rsCnt > mvCnt){
+                rsCnt = mvCnt;
+                rsStr = to;
+            }
 
 
         }
@@ -52,13 +55,14 @@ class Dictionary {
 
     public int moveCnt(String from, String to) {
 
-        suggestCnt(from, to,FROM);
-        suggestCnt(from, to,TO);
+        int cntFrom = suggestCnt(from, to, FROM);
+        int cntTo = suggestCnt(from, to, TO);
 
-        return rsCnt;
+        return (cntFrom > cntTo ) ? cntTo : cntFrom;
     }
 
-    private void suggestCnt(String from, String to, int type) {
+    private int suggestCnt(String from, String to, int type) {
+        int rsCnt = Integer.MAX_VALUE;
         StringBuilder fromSb = new StringBuilder(from);
         StringBuilder toSb = new StringBuilder(to);
 
@@ -110,9 +114,9 @@ class Dictionary {
             if(rsCnt > mvCnt){
 
                 rsCnt = mvCnt;
-                rsStr = to;
             }
         }
+        return rsCnt;
     }
 }
 
@@ -191,7 +195,7 @@ public class DictionaryTest {
         assertEquals(4, dictionary.moveCnt("berry","melon") );
 
 
-//        assertEquals(7, dictionary.moveCnt("strawbery","cherry") );
+        assertEquals(7, dictionary.moveCnt("strawbery","cherry") );
 
         assertEquals(8, dictionary.moveCnt("ia","pineapple") );
         assertEquals(9, dictionary.moveCnt("rkacypviuburk","zqdrhpviqslik") );
