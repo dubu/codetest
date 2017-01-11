@@ -1,4 +1,5 @@
 package com.dubu;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,32 +14,69 @@ class Calc {
 
     public double evaluate(String expr) {
         // TODO: Your awesome code here
+        if(expr.length() == 0) return 0;
 
-        int val = 0;
+        Double val = Double.valueOf(0);
         String[] split = expr.split(" ");
+        List<String> list = new ArrayList<>();
+        List<String> signList = new ArrayList<>();
         for (int i = 0; i < split.length; i++) {
             String s = split[i];
-            List<Integer> list = new ArrayList<>();
 
-            switch (s){
+            switch (s) {
                 case "+":
-                   val = val + list.get(list.size()-1) + Integer.valueOf(s) ;
-                    break;
+//                   val = val + list.get(list.size()-1) + Integer.valueOf(s) ;
+//                    break;
                 case "-":
-                    val = val + list.get(list.size()-1) - Integer.valueOf(s) ;
-                    break;
+//                    val = val + list.get(list.size()-1) - Integer.valueOf(s) ;
+//                    break;
                 case "*":
-                    val = val + list.get(list.size()-1) * Integer.valueOf(s) ;
-                    break;
+//                    val = val + list.get(list.size()-1) * Integer.valueOf(s) ;
+//                    break;
                 case "/":
-                    val = val + list.get(list.size()-1) / Integer.valueOf(s) ;
-                    break;
+//                    val = val + list.get(list.size()-1) / Integer.valueOf(s) ;
+//                    break;
+                    signList.add(s);
                 default:
-                    list.add(Integer.valueOf(s));
+                    if (signList.size() > 0) {
+                        String sign = signList.get(signList.size() - 1);
+
+                        Double left;
+                        Double right;
+                        switch (sign) {
+                            case "+":
+                                right =Double.valueOf(list.remove(list.size() - 1));
+                                left =Double.valueOf(list.remove(list.size() - 1));
+                                val = val + left + right;
+                                break;
+                            case "-":
+                                right =Double.valueOf(list.remove(list.size() - 1));
+                                left  =Double.valueOf(list.remove(list.size() - 1));
+                                val = val + left - right;
+                                break;
+                            case "*":
+                                right =Double.valueOf(list.remove(list.size() - 1));
+                                left =Double.valueOf(list.remove(list.size() - 1));
+                                val = val + left * right;
+                                break;
+                            case "/":
+                                right =Double.valueOf(list.remove(list.size() - 1));
+                                left =Double.valueOf(list.remove(list.size() - 1));
+                                val = val + left / right;
+                                break;
+                        }
+
+                    } else {
+                        list.add(s);
+                    }
 
             }
         }
 
+        System.out.println(String.format("%s %s",list.size(), signList.size()));
+        if(list.size()>0){
+            return Double.valueOf(list.get(list.size()-1));
+        }
         return val;
     }
 }
