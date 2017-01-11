@@ -2,40 +2,29 @@ package com.dubu;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
-/**
- * Created by rigel on 1/11/17.
- */
 class Calc {
 
     public double evaluate(String expr) {
-        // TODO: Your awesome code here
-        if(expr.length() == 0) return 0;
+        System.out.println(expr);
+        if (expr.length() == 0) return 0;
 
         Double val = Double.valueOf(0);
         String[] split = expr.split(" ");
-        List<String> list = new ArrayList<>();
+        List<Double> list = new ArrayList<>();
         List<String> signList = new ArrayList<>();
         for (int i = 0; i < split.length; i++) {
             String s = split[i];
 
             switch (s) {
                 case "+":
-//                   val = val + list.get(list.size()-1) + Integer.valueOf(s) ;
-//                    break;
                 case "-":
-//                    val = val + list.get(list.size()-1) - Integer.valueOf(s) ;
-//                    break;
                 case "*":
-//                    val = val + list.get(list.size()-1) * Integer.valueOf(s) ;
-//                    break;
                 case "/":
-//                    val = val + list.get(list.size()-1) / Integer.valueOf(s) ;
-//                    break;
                     signList.add(s);
                 default:
                     if (signList.size() > 0) {
@@ -45,37 +34,42 @@ class Calc {
                         Double right;
                         switch (sign) {
                             case "+":
-                                right =Double.valueOf(list.remove(list.size() - 1));
-                                left =Double.valueOf(list.remove(list.size() - 1));
-                                val = val + left + right;
+                                signList.remove(signList.size()-1);
+                                right = Double.valueOf(list.remove(list.size() - 1));
+                                left = Double.valueOf(list.remove(list.size() - 1));
+//                                val = val + left + right;
+                                list.add(left + right);
                                 break;
                             case "-":
-                                right =Double.valueOf(list.remove(list.size() - 1));
-                                left  =Double.valueOf(list.remove(list.size() - 1));
-                                val = val + left - right;
+                                signList.remove(signList.size()-1);
+                                right = Double.valueOf(list.remove(list.size() - 1));
+                                left = Double.valueOf(list.remove(list.size() - 1));
+                                list.add(left - right);
                                 break;
                             case "*":
-                                right =Double.valueOf(list.remove(list.size() - 1));
-                                left =Double.valueOf(list.remove(list.size() - 1));
-                                val = val + left * right;
+                                signList.remove(signList.size()-1);
+                                right = Double.valueOf(list.remove(list.size() - 1));
+                                left = Double.valueOf(list.remove(list.size() - 1));
+                                list.add(left * right);
                                 break;
                             case "/":
-                                right =Double.valueOf(list.remove(list.size() - 1));
-                                left =Double.valueOf(list.remove(list.size() - 1));
-                                val = val + left / right;
+                                signList.remove(signList.size()-1);
+                                right = Double.valueOf(list.remove(list.size() - 1));
+                                left = Double.valueOf(list.remove(list.size() - 1));
+                                list.add(left / right);
                                 break;
                         }
 
                     } else {
-                        list.add(s);
+                        list.add(Double.valueOf(s));
                     }
 
             }
         }
 
-        System.out.println(String.format("%s %s",list.size(), signList.size()));
-        if(list.size()>0){
-            return Double.valueOf(list.get(list.size()-1));
+//        System.out.println(String.format("%s %s", list.size(), signList.size()));
+        if (list.size() > 0) {
+            return Double.valueOf(list.get(list.size() - 1));
         }
         return val;
     }
@@ -120,4 +114,11 @@ public class CalcTest {
     public void shouldSupportDivision() {
         assertEquals("Should support division", 2, calc.evaluate("4 2 /"), 0);
     }
+
+
+    @Test
+    public void shouldSupportDivisionaaa() {
+        assertEquals("Should support division", 7, calc.evaluate("5 1 2 + 4 * + 3 - 2 /"), 0);
+    }
+//    5 1 2 + 4 * + 3 - 2 /
 }
