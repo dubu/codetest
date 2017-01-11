@@ -52,7 +52,7 @@ class Dictionary {
         rsCnt = Integer.MAX_VALUE;
 
         suggestCnt(from, to);
-//        suggestCnt(to,from);
+        suggestCnt(to,from);
 
         return rsCnt;
     }
@@ -65,7 +65,7 @@ class Dictionary {
         String emptyList = Stream.generate(() -> " ").limit(cnt).collect(Collectors.joining(""));
         fromSb.insert(0, emptyList);
 
-        for (int i = 0; i < cnt; i++) {
+        for (int i = 0; i <= cnt; i++) {
 
             StringBuilder tmpFromSb = new StringBuilder(fromSb);
             tmpFromSb.delete(0, i);
@@ -75,6 +75,10 @@ class Dictionary {
 
             int equCnt = 0 ;
             for (int j = min-i; j < min; j++) {
+                if(j < 0){
+                    // pass
+                    continue;
+                }
                 String sb1 = tmpFromSb.substring(j, j+1);
                 String sb2 = toSb.substring(j, j+1);
 
@@ -89,11 +93,12 @@ class Dictionary {
 
             int mvCnt =  max - equCnt;
 
+            System.out.println(String.format("%s %s %s", fromSb.toString(), toSb.toString(),mvCnt));
 
 
             if(rsCnt > mvCnt){
 
-                rsCnt =  equCnt;
+                rsCnt = mvCnt;
             }
         }
     }
@@ -148,18 +153,6 @@ public class DictionaryTest {
 
     }
 
-    @Test
-    public void testSortOrder4() throws Exception {
-
-//        karp c i  vu  r     6
-//        karpscdigdvucfr
-
-        String a = "karpcivur";
-        String b = "karpscdigdvucfr";
-        Dictionary dictionary = new Dictionary();
-//        assertEquals(6, dictionary.switchCnt(a,b) );
-
-    }
 
     @Test
     public void testPass2() throws Exception {
@@ -178,22 +171,22 @@ public class DictionaryTest {
     public void testCnt() throws Exception {
 
         Dictionary dictionary = new Dictionary();
-//        assertEquals(7, dictionary.moveCnt("strawbery","cherry") );
-        assertEquals(10, dictionary.moveCnt("strawbery","pineapple") );
+        assertEquals(9, dictionary.moveCnt("strawbery","pineapple") );
         assertEquals(9, dictionary.moveCnt("strawbery","melon") );
-        assertEquals(1, dictionary.moveCnt("strawbery","strawbery") );
+        assertEquals(0, dictionary.moveCnt("strawbery","strawbery") );
         assertEquals(6, dictionary.moveCnt("heaven", "php"));
         assertEquals(2, dictionary.moveCnt("berry", "cherry"));
-        assertEquals(5, dictionary.moveCnt("berry","melon") );
+        assertEquals(4, dictionary.moveCnt("berry","melon") );
 
 
+//        assertEquals(7, dictionary.moveCnt("strawbery","cherry") );
 
-//        assertEquals(9, dictionary.moveCnt("ia","pineapple") );
-//        assertEquals(10, dictionary.moveCnt("rkacypviuburk","zqdrhpviqslik") );
+        assertEquals(8, dictionary.moveCnt("ia","pineapple") );
+        assertEquals(9, dictionary.moveCnt("rkacypviuburk","zqdrhpviqslik") );
+        assertEquals(11, dictionary.moveCnt("heaven", "coffeescript"));
 
-//        assertEquals(11, dictionary.moveCnt("heaven", "coffeescript"));
-//        assertEquals(3, dictionary.moveCnt("heaven","java") );
-//        assertEquals(6, dictionary.moveCnt("strawbery","raspberry") );
+        assertEquals(4, dictionary.moveCnt("heaven","java") );
+        assertEquals(7, dictionary.moveCnt("strawbery","raspberry") );
     }
 
     @Test
