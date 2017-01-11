@@ -17,8 +17,11 @@ import static org.junit.Assert.assertEquals;
 
 
 class Dictionary {
+    private static final int FROM = 1;
+    private static final int TO = 2;
     private final String[] words;
     private int rsCnt;
+    private String rsStr;
 
     public Dictionary(String[] words) {
         this.words = words;
@@ -33,45 +36,53 @@ class Dictionary {
 
         String[] strings = words;
 
-        int storeInt = Integer.MAX_VALUE;
-        String storeStr = "";
+        rsCnt = Integer.MAX_VALUE;
+        rsStr = "";
         for (int i = 0; i < strings.length; i++) {
 
+
             String to = strings[i];
-
-
+            moveCnt(from, to);
 
 
         }
-        System.out.println(storeStr);
 
-        return storeStr;
+        return rsStr;
     }
 
     public int moveCnt(String from, String to) {
-        rsCnt = Integer.MAX_VALUE;
 
-        suggestCnt(from, to);
-        suggestCnt(to,from);
+        suggestCnt(from, to,FROM);
+        suggestCnt(from, to,TO);
 
         return rsCnt;
     }
 
-    private void suggestCnt(String from, String to) {
+    private void suggestCnt(String from, String to, int type) {
         StringBuilder fromSb = new StringBuilder(from);
         StringBuilder toSb = new StringBuilder(to);
 
-        int cnt = to.length();
+        int cnt = (type == FROM) ? to.length():from.length();
         String emptyList = Stream.generate(() -> " ").limit(cnt).collect(Collectors.joining(""));
-        fromSb.insert(0, emptyList);
+        if(type == FROM){
+            fromSb.insert(0, emptyList);
+        }else{
+            toSb.insert(0, emptyList);
+        }
 
         for (int i = 0; i <= cnt; i++) {
 
             StringBuilder tmpFromSb = new StringBuilder(fromSb);
-            tmpFromSb.delete(0, i);
+            StringBuilder tmpToSb = new StringBuilder(toSb);
 
-            int max = tmpFromSb.length() > toSb.length() ?tmpFromSb.length():toSb.length();
-            int min = tmpFromSb.length() > toSb.length() ?toSb.length():tmpFromSb.length();
+            if(type == FROM){
+                tmpFromSb.delete(0, i);
+            }else{
+                tmpToSb.delete(0, i);
+            }
+
+            int max = tmpFromSb.length() > tmpToSb.length() ?tmpFromSb.length():tmpToSb.length();
+            int min = tmpFromSb.length() > tmpToSb.length() ?tmpToSb.length():tmpFromSb.length();
 
             int equCnt = 0 ;
             for (int j = min-i; j < min; j++) {
@@ -80,7 +91,7 @@ class Dictionary {
                     continue;
                 }
                 String sb1 = tmpFromSb.substring(j, j+1);
-                String sb2 = toSb.substring(j, j+1);
+                String sb2 = tmpToSb.substring(j, j+1);
 
                 if(sb1.equals(sb2)){
                     if(sb1.equals(" ")){
@@ -99,6 +110,7 @@ class Dictionary {
             if(rsCnt > mvCnt){
 
                 rsCnt = mvCnt;
+                rsStr = to;
             }
         }
     }
