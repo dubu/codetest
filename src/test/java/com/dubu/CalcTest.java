@@ -1,6 +1,9 @@
 package com.dubu;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -10,7 +13,33 @@ class Calc {
 
     public double evaluate(String expr) {
         // TODO: Your awesome code here
-        return 0;
+
+        int val = 0;
+        String[] split = expr.split(" ");
+        for (int i = 0; i < split.length; i++) {
+            String s = split[i];
+            List<Integer> list = new ArrayList<>();
+
+            switch (s){
+                case "+":
+                   val = val + list.get(list.size()-1) + Integer.valueOf(s) ;
+                    break;
+                case "-":
+                    val = val + list.get(list.size()-1) - Integer.valueOf(s) ;
+                    break;
+                case "*":
+                    val = val + list.get(list.size()-1) * Integer.valueOf(s) ;
+                    break;
+                case "/":
+                    val = val + list.get(list.size()-1) / Integer.valueOf(s) ;
+                    break;
+                default:
+                    list.add(Integer.valueOf(s));
+
+            }
+        }
+
+        return val;
     }
 }
 
