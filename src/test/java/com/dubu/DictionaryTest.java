@@ -49,10 +49,10 @@ class Dictionary {
     }
 
     public int moveCnt(String from, String to) {
-        rsCnt = 0;
+        rsCnt = Integer.MAX_VALUE;
 
         suggestCnt(from, to);
-        suggestCnt( to,from);
+//        suggestCnt(to,from);
 
         return rsCnt;
     }
@@ -61,22 +61,22 @@ class Dictionary {
         StringBuilder fromSb = new StringBuilder(from);
         StringBuilder toSb = new StringBuilder(to);
 
-        int cnt = to.length()-1;
+        int cnt = to.length();
         String emptyList = Stream.generate(() -> " ").limit(cnt).collect(Collectors.joining(""));
         fromSb.insert(0, emptyList);
 
         for (int i = 0; i < cnt; i++) {
 
-            StringBuilder tmpFromSb = new StringBuilder(from);
+            StringBuilder tmpFromSb = new StringBuilder(fromSb);
             tmpFromSb.delete(0, i);
 
             int max = tmpFromSb.length() > toSb.length() ?tmpFromSb.length():toSb.length();
             int min = tmpFromSb.length() > toSb.length() ?toSb.length():tmpFromSb.length();
 
             int equCnt = 0 ;
-            for (int j = min; j >0; j = j-1) {
-                String sb1 = tmpFromSb.substring(j-1, j);
-                String sb2 = toSb.substring(j-1, j);
+            for (int j = min-i; j < min; j++) {
+                String sb1 = tmpFromSb.substring(j, j+1);
+                String sb2 = toSb.substring(j, j+1);
 
                 if(sb1.equals(sb2)){
                     if(sb1.equals(" ")){
@@ -91,7 +91,7 @@ class Dictionary {
 
 
 
-            if(rsCnt < mvCnt){
+            if(rsCnt > mvCnt){
 
                 rsCnt =  equCnt;
             }
