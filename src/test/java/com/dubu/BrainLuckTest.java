@@ -38,40 +38,45 @@ class BrainLuck {
         int pos = 0;
         int storePos = 0;
         char val = 0;
-        for (String code : codeList) {
-            switch (code){
-                case ">":
-                    pos = ++pos;
-                    break;
-                case "<":
-                    pos = --pos;
-                    break;
-                case "+":
-                    val = ++val ;
-                    break;
-                case "-":
-                    val = --val ;
-                    break;
-                case ".":
-                    sb.append(val);
-                    break;
-                case ",":
-                    String s = strList.remove(strList.size() - 1);
-                    val = s.charAt(0);
-                    break;
-                case "[":
-                    storePos = pos;
-                    break;
-                case "]":
-                    if(val == 255){
-                        return sb.toString();
-                    }else{
-                        pos = storePos;
-                    }
-                    break;
-                default:
-                    System.err.println("ERROR!");
+        boolean flag = false;
+        while (flag){
 
+            for (String code : codeList) {
+                switch (code){
+                    case ">":
+                        pos = ++pos;
+                        break;
+                    case "<":
+                        pos = --pos;
+                        break;
+                    case "+":
+                        val = ++val ;
+                        break;
+                    case "-":
+                        val = --val ;
+                        break;
+                    case ".":
+                        sb.append(val);
+                        break;
+                    case ",":
+                        String s = strList.remove(0);
+                        val = s.charAt(0);
+                        break;
+                    case "[":
+                        storePos = pos;
+                        flag =true;
+                        break;
+                    case "]":
+                        if(val == 255){
+                            flag = false;
+                        }else{
+                            pos = storePos;
+                        }
+                        break;
+                    default:
+                        System.err.println("ERROR!");
+
+                }
             }
         }
         return sb.toString();
