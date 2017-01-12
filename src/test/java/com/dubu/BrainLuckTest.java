@@ -11,8 +11,7 @@ package com.dubu;
  * http://www.iamcal.com/misc/bf_debug/
  */
 
-import org.assertj.core.internal.Characters;
-import org.assertj.core.internal.Integers;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -25,7 +24,7 @@ import java.util.stream.Collectors;
 class BrainLuck {
 
     private List<String> codeList;
-    private List<Character> charList;
+    private List<Character> inputList;
 
     public BrainLuck(String code) {
         this.codeList = Arrays.asList(code.split(""));
@@ -33,17 +32,13 @@ class BrainLuck {
 
     public String process(String input) {
         StringBuilder sb = new StringBuilder();
-        char[] charArr = new char[input.length()];
 
-//        this.strList =  new LinkedList<>(Arrays.asList(input.split("")));
-//        this.strList =  new LinkedList<>(Arrays.asList(input.toCharArray()));
-//        List<char[]> chars = Arrays.asList(input.toCharArray());
-        this.charList = input.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
+        this.inputList = input.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         int pos = 0;
-        int storePos = 0;
+//        int storePos = 0;
         char val = 0;
         boolean flag = true;
-//        for (String code : codeList) {
+        Stack braceStack = new Stack();
         for (int i = 0; i < codeList.size() ; i++) {
             String code = codeList.get(i);
 
@@ -64,18 +59,21 @@ class BrainLuck {
                     sb.append(val);
                     break;
                 case ",":
-                    char s = charList.remove(0);
+                    char s = inputList.remove(0);
                     val = s;
                     break;
                 case "[":
-                    storePos = i;
+//                    storePos = i;
+                    braceStack.push(i);
                     break;
                 case "]":
                     System.out.println(Integer.valueOf(val));
-                    if(val%257 == 256){
+                    if(val%256 == 0){
+                        braceStack.pop();
                         // pass
                     }else{
-                        i = storePos;
+                        int peek = (int) braceStack.peek();
+                        i = peek;
                     }
                     break;
                 default:
@@ -135,6 +133,27 @@ public class BrainLuckTest {
         assertEquals('7',chars[56]);
         assertEquals(55,chars[56]);
         assertEquals(49,chars[50]);
+
+    }
+
+
+    @Test
+    public void testPop() throws Exception {
+        Stack s  = new Stack();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+
+        s.push(10);
+
+
+//        for (int i = 0; i < s.size(); i++) {
+//            System.out.println(s.pop());
+//        }
+
+        while (!s.empty()){
+            System.out.println(s.pop());
+        }
 
     }
 }
