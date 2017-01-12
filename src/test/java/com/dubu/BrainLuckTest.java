@@ -2,6 +2,14 @@ package com.dubu;
 
 /**
  * Created by dubu on 2017-01-11.
+ *
+ * https://www.codewars.com/kata/my-smallest-code-interpreter-aka-brainf-star-star-k/train/java
+ *
+ *
+ * https://en.wikipedia.org/wiki/Brainfuck
+ *
+ * http://www.iamcal.com/misc/bf_debug/
+ *
  */
 import org.junit.Test;
 
