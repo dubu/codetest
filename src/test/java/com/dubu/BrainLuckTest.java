@@ -11,6 +11,7 @@ package com.dubu;
  * http://www.iamcal.com/misc/bf_debug/
  */
 
+import org.assertj.core.internal.Characters;
 import org.assertj.core.internal.Integers;
 import org.junit.Test;
 
@@ -27,36 +28,53 @@ class BrainLuck {
 
     public BrainLuck(String code) {
         this.codeList = Arrays.asList(code.split(""));
-        char[] charArr = new char[Integer.MAX_VALUE];
     }
 
     public String process(String input) {
+        StringBuilder sb = new StringBuilder();
+        char[] charArr = new char[input.length()];
 
-        this.strList =  Arrays.asList(input.split(""));
+        this.strList =  new LinkedList<>(Arrays.asList(input.split("")));
+        int pos = 0;
+        int storePos = 0;
+        char val = 0;
         for (String code : codeList) {
             switch (code){
                 case ">":
+                    pos = ++pos;
                     break;
                 case "<":
+                    pos = --pos;
                     break;
                 case "+":
+                    val = ++val ;
                     break;
                 case "-":
+                    val = --val ;
                     break;
                 case ".":
+                    sb.append(val);
                     break;
                 case ",":
+                    String s = strList.remove(strList.size() - 1);
+                    val = s.charAt(0);
                     break;
                 case "[":
+                    storePos = pos;
                     break;
                 case "]":
+                    if(val == 255){
+                        return sb.toString();
+                    }else{
+                        pos = storePos;
+                    }
                     break;
                 default:
                     System.err.println("ERROR!");
 
             }
         }
-        return "";
+        return sb.toString();
     }
 
 }
