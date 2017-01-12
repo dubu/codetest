@@ -20,11 +20,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 class BrainLuck {
 
     private List<String> codeList;
-    private List<String> strList;
+    private List<Character> charList;
 
     public BrainLuck(String code) {
         this.codeList = Arrays.asList(code.split(""));
@@ -34,52 +35,61 @@ class BrainLuck {
         StringBuilder sb = new StringBuilder();
         char[] charArr = new char[input.length()];
 
-        this.strList =  new LinkedList<>(Arrays.asList(input.split("")));
+//        this.strList =  new LinkedList<>(Arrays.asList(input.split("")));
+//        this.strList =  new LinkedList<>(Arrays.asList(input.toCharArray()));
+//        List<char[]> chars = Arrays.asList(input.toCharArray());
+        this.charList = input.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         int pos = 0;
         int storePos = 0;
         char val = 0;
-        boolean flag = false;
-        while (flag){
+        boolean flag = true;
+//        for (String code : codeList) {
+        for (int i = 0; i < codeList.size() ; i++) {
+            String code = codeList.get(i);
 
-            for (String code : codeList) {
-                switch (code){
-                    case ">":
-                        pos = ++pos;
-                        break;
-                    case "<":
-                        pos = --pos;
-                        break;
-                    case "+":
-                        val = ++val ;
-                        break;
-                    case "-":
-                        val = --val ;
-                        break;
-                    case ".":
-                        sb.append(val);
-                        break;
-                    case ",":
-                        String s = strList.remove(0);
-                        val = s.charAt(0);
-                        break;
-                    case "[":
-                        storePos = pos;
-                        flag =true;
-                        break;
-                    case "]":
-                        if(val == 255){
-                            flag = false;
-                        }else{
-                            pos = storePos;
-                        }
-                        break;
-                    default:
-                        System.err.println("ERROR!");
+            switch (code){
+                case ">":
+                    pos = ++pos;
+                    break;
+                case "<":
+                    pos = --pos;
+                    break;
+                case "+":
+                    val = ++val ;
+                    break;
+                case "-":
+                    val = --val ;
+                    break;
+                case ".":
+                    sb.append(val);
+                    break;
+                case ",":
+                    char s = charList.remove(0);
+                    val = s;
+                    break;
+                case "[":
+                    storePos = i;
+                    break;
+                case "]":
+                    System.out.println(Integer.valueOf(val));
+                    if(val%257 == 256){
+                        // pass
+                    }else{
+                        i = storePos;
+                    }
+                    break;
+                default:
+                    System.err.println("ERROR!");
 
-                }
             }
         }
-        return sb.toString();
+        if(sb.length() == 0 ){
+            return  "";
+        }else{
+
+            return sb.toString();
+        }
+
     }
 
 }
