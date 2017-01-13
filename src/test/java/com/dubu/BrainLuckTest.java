@@ -28,17 +28,20 @@ class BrainLuck {
     private List<Character> mem;
 
     public BrainLuck(String code) {
-        System.out.println(code);
+//        System.out.println(code);
         this.codeList = Arrays.asList(code.split(""));
     }
 
     public String process(String input) {
-        Character[] myarray = new Character[10000];
+        System.out.println(input.toCharArray());
+
+        Character[] myarray = new Character[100];
         Arrays.fill(myarray, '\0');
 //        this.mem = Arrays.asList( '\0','\0','\0','\0');
         this.mem = Arrays.asList( myarray);
         StringBuilder sb = new StringBuilder();
         this.inputList = input.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
+        input.chars().mapToObj(c -> (char) c).forEach(s -> System.out.print(Integer.valueOf(s)));
         int pos = 0;
 //        int storePos = 0;
         char val = 0;
@@ -46,9 +49,9 @@ class BrainLuck {
         for (int i = 0; i < codeList.size() ; i++) {
             String code = codeList.get(i);
 
-            if(pos < 0 || pos >3){
-                System.err.println("out of position");
-            }
+//            if(pos < 0 || pos >3){
+//                System.err.println("out of position");
+//            }
             switch (code){
                 case ">":
                     mem.set(pos,val);
@@ -181,7 +184,7 @@ public class BrainLuckTest {
     }
 
 
-//    @Test
+    @Test
     public void testStep1() throws Exception {
 
         final char[] input = {8, 9};
@@ -197,7 +200,8 @@ public class BrainLuckTest {
 
 //    @Test
     public void testHelloWorld() {
-        assertThat(new BrainLuck("++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.").process( "" ), is(String.valueOf((char) (8 * 9))));
+        String code = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.";
+        assertThat(new BrainLuck(code).process( "" ), is(String.valueOf((char) (8 * 9))));
 
     }
 
@@ -206,6 +210,17 @@ public class BrainLuckTest {
         char[] myarray = new char[10000];
         Arrays.fill(myarray, '\0');
         System.out.println(myarray);
+
+    }
+
+
+    @Test
+    public void testPibonachi() throws Exception {
+
+        final char[] input = {10};
+        String code = ",>+>>>>++++++++++++++++++++++++++++++++++++++++++++>++++++++++++++++++++++++++++++++<<<<<<[>[>>>>>>+>+<<<<<<<-]>>>>>>>[<<<<<<<+>>>>>>>-]<[>++++++++++[-<-[>>+>+<<<-]>>>[<<<+>>>-]+<[>[-]<[-]]>[<<[>>>+<<<-]>>[-]]<<]>>>[>>+>+<<<-]>>>[<<<+>>>-]+<[>[-]<[-]]>[<<+>>[-]]<<<<<<<]>>>>>[++++++++++++++++++++++++++++++++++++++++++++++++.[-]]++++++++++<[->-<]>++++++++++++++++++++++++++++++++++++++++++++++++.[-]<<<<<<<<<<<<[>>>+>+<<<<-]>>>>[<<<<+>>>>-]<-[>>.>.<<<[-]]<<[>>+>+<<<-]>>>[<<<+>>>-]<<[<+>-]>[<+>-]<<<-]";
+
+        assertThat(new BrainLuck(code).process(String.valueOf(input[0]) ),is(String.valueOf((char) (8 * 9))));
 
     }
 }
