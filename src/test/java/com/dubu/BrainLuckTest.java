@@ -35,7 +35,7 @@ class BrainLuck {
     public String process(String input) {
         System.out.println(input.toCharArray());
 
-        Character[] myarray = new Character[100];
+        Character[] myarray = new Character[20];
         Arrays.fill(myarray, '\0');
 //        this.mem = Arrays.asList( '\0','\0','\0','\0');
         this.mem = Arrays.asList( myarray);
@@ -52,16 +52,18 @@ class BrainLuck {
 //            if(pos < 0 || pos >3){
 //                System.err.println("out of position");
 //            }
+
+
             switch (code){
                 case ">":
                     mem.set(pos,val);
-                    pos = ++pos;
-                    val =  mem.get(pos);
+//                    pos = ++pos;
+                    val =  mem.get(++pos);
                     break;
                 case "<":
                     mem.set(pos,val);
-                    pos = --pos;
-                    val =  mem.get(pos);
+//                    pos = --pos;
+                    val =  mem.get(--pos);
                     break;
                 case "+":
                     val = ++val ;
@@ -205,6 +207,22 @@ public class BrainLuckTest {
 
     }
 
+    @Test
+    public void testFibo() {
+        String code = "++\n" +
+            ">+>>>>++++++++++++++++++++++++++++++++++++++++++++\n" +
+            ">++++++++++++++++++++++++++++++++<<<<<<[>[>>>>>>+>\n" +
+            "+<<<<<<<-]>>>>>>>[<<<<<<<+>>>>>>>-]<[>++++++++++[-\n" +
+            "<-[>>+>+<<<-]>>>[<<<+>>>-]+<[>[-]<[-]]>[<<[>>>+<<<\n" +
+            "-]>>[-]]<<]>>>[>>+>+<<<-]>>>[<<<+>>>-]+<[>[-]<[-]]\n" +
+            ">[<<+>>[-]]<<<<<<<]>>>>>[+++++++++++++++++++++++++\n" +
+            "+++++++++++++++++++++++.[-]]++++++++++<[->-<]>++++\n" +
+            "++++++++++++++++++++++++++++++++++++++++++++.[-]<<\n" +
+            "<<<<<<<<<<[>>>+>+<<<<-]>>>>[<<<<+>>>>-]<-[>>.>.<<<\n" +
+            "[-]]<<[>>+>+<<<-]>>>[<<<+>>>-]<<[<+>-]>[<+>-]<<<-]";
+        assertThat(new BrainLuck(code).process(""), is(String.valueOf((char) (8 * 9))));
+
+    }
     @Test
     public void testArrayInitZero() throws Exception {
         char[] myarray = new char[10000];
