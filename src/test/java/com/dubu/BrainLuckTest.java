@@ -28,6 +28,7 @@ class BrainLuck {
     private List<Character> mem;
 
     public BrainLuck(String code) {
+        System.out.println(code);
         this.codeList = Arrays.asList(code.split(""));
     }
 
@@ -188,5 +189,19 @@ public class BrainLuckTest {
             ".>.>.>. ";
 
         assertThat(new BrainLuck(code).process(String.valueOf(input[0]) + String.valueOf(input[1])), is("899"));
+    }
+
+    @Test
+    public void testHelloWorld() {
+        assertThat(new BrainLuck("++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.").process( "" ), is("Hello"));
+
+    }
+
+    @Test
+    public void testArrayInitZero() throws Exception {
+        char[] myarray = new char[10000];
+        Arrays.fill(myarray, '\0');
+        System.out.println(myarray);
+
     }
 }
