@@ -25,29 +25,36 @@ class BrainLuck {
 
     private List<String> codeList;
     private List<Character> inputList;
+    private List<Character> mem;
 
     public BrainLuck(String code) {
         this.codeList = Arrays.asList(code.split(""));
     }
 
     public String process(String input) {
+        this.mem = Arrays.asList( '\0','\0','\0','\0');
         StringBuilder sb = new StringBuilder();
-
         this.inputList = input.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         int pos = 0;
 //        int storePos = 0;
         char val = 0;
-        boolean flag = true;
         Stack braceStack = new Stack();
         for (int i = 0; i < codeList.size() ; i++) {
             String code = codeList.get(i);
 
+            if(pos < 0 || pos >3){
+                System.err.println("out of position");
+            }
             switch (code){
                 case ">":
+                    mem.set(pos,val);
                     pos = ++pos;
+                    val =  mem.get(pos);
                     break;
                 case "<":
+                    mem.set(pos,val);
                     pos = --pos;
+                    val =  mem.get(pos);
                     break;
                 case "+":
                     val = ++val ;
@@ -67,8 +74,12 @@ class BrainLuck {
                     braceStack.push(i);
                     break;
                 case "]":
-                    System.out.println(Integer.valueOf(val));
-                    if(val%256 == 0){
+//                    System.out.println(Integer.valueOf(val));
+                    if(val <0 ){
+                        System.err.println("invaild value");
+                    }
+                    if(val == 0 || val == 256){
+//                        if(val%256 == 0){
                         braceStack.pop();
                         // pass
                     }else{
@@ -77,7 +88,7 @@ class BrainLuck {
                     }
                     break;
                 default:
-                    System.err.println("ERROR!");
+//                    System.err.println("ERROR!");
 
             }
         }
@@ -115,11 +126,11 @@ public class BrainLuckTest {
 //    @Test
     public void testRot13() throws Exception {
 
-
-        assertThat(new BrainLuck(",[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>>+++++[<----->-]<<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>>+++++[<----->-]<<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]>.[-]<,]").process("12"), is("no"));
+        String code = ",[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>>+++++[<----->-]<<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>>+++++[<----->-]<<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>++++++++++++++<-[>+<-]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]>.[-]<,]";
+        assertThat(new BrainLuck(code).process("12"), is("no"));
     }
 
-//    @Test
+    @Test
     public void testTwoNumbersMultiplier() {
         final char[] input = {8, 9};
         assertThat(new BrainLuck(",>,<[>[->+>+<<]>>[-<<+>>]<<<-]>>.").process(String.valueOf(input[0]) + String.valueOf(input[1])), is(String.valueOf((char) (input[0] * input[1]))));
@@ -163,5 +174,19 @@ public class BrainLuckTest {
             System.out.println(s.pop());
         }
 
+    }
+
+
+    @Test
+    public void testStep1() throws Exception {
+
+        final char[] input = {8, 9};
+        String code = ",>,<\n" +
+            " >\n" +
+            " [->+>+<<]\n" +
+            " <\n" +
+            ".>.>.>. ";
+
+        assertThat(new BrainLuck(code).process(String.valueOf(input[0]) + String.valueOf(input[1])), is("899"));
     }
 }
