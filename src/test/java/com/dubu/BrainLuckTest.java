@@ -44,11 +44,8 @@ class BrainLuck {
         this.inputList = input.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         input.chars().mapToObj(c -> (char) c).forEach(s -> System.out.print(Integer.valueOf(s)));
         int pos = 0;
-//        int storePos = 0;
         char val = 0;
         Stack braceStack = new Stack();
-        String lastCode = "";
-        char tmpVal = 0;
         for (int i = 0; i < codeList.size() ; i++) {
             String code = codeList.get(i);
 
@@ -61,38 +58,33 @@ class BrainLuck {
                 case "+":
                     val = ++val ;
                     val = (char) (val%256);
-                    lastCode = code;
+
                     break;
                 case "-":
                     val = --val ;
                     val = (char) (val%256);
-                    lastCode = code;
                     break;
                 case ">":
                     mem.set(pos,val);
                     pos = ++pos;
                     val =  mem.get(pos);
-                    lastCode = code;
                     break;
                 case "<":
                     mem.set(pos,val);
                     pos = --pos;
                     val =  mem.get(pos);
-                    lastCode = code;
                     break;
                 case ".":
                     sb.append(val);
-                    lastCode = code;
+
                     break;
                 case ",":
                     char s = inputList.remove(0);
                     val = s;
-                    lastCode = code;
                     break;
                 case "[":
-//                    storePos = i;
                     braceStack.push(i);
-                    lastCode = code;
+
                     break;
                 case "]":
 //                    System.out.println(Integer.valueOf(val));
@@ -108,7 +100,6 @@ class BrainLuck {
                         int peek = (int) braceStack.peek();
                         i = peek;
                     }
-                    lastCode = code;
                     break;
 
             }
