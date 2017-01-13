@@ -11,15 +11,16 @@ package com.dubu;
  * http://www.iamcal.com/misc/bf_debug/
  */
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 class BrainLuck {
 
@@ -35,7 +36,7 @@ class BrainLuck {
     public String process(String input) {
         System.out.println(input.toCharArray());
 
-        Character[] myarray = new Character[100];
+        Character[] myarray = new Character[1000];
         Arrays.fill(myarray, '\0');
 //        this.mem = Arrays.asList( '\0','\0','\0','\0');
         this.mem = Arrays.asList( myarray);
@@ -109,8 +110,6 @@ class BrainLuck {
                     }
                     lastCode = code;
                     break;
-//                default:
-//                    System.err.println("ERROR!");
 
             }
 
