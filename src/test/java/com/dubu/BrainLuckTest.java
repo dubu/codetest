@@ -193,6 +193,12 @@ public class BrainLuckTest {
     }
 
     @Test
+    public void testAcAcRepeat() throws Exception {
+
+        assertThat(new BrainLuck(",++++++.>>>>>>,++++++.").process("ac"), is("gi"));
+    }
+
+    @Test
     public void testEchoUntilByte255Encountered() {
         assertThat(new BrainLuck(",+[-.,+]").process("Codewars" + ((char) 255)), is("Codewars"));
     }
@@ -285,7 +291,7 @@ public class BrainLuckTest {
     ////    test line ////
 
 
-//    @Test
+    @Test
     public void testFibo() {
         String code = "++\n" +
             ">+>>>>++++++++++++++++++++++++++++++++++++++++++++\n" +
