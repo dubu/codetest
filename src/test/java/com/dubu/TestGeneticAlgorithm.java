@@ -2,6 +2,15 @@ package com.dubu;
 
 /**
  * Created by dubu on 2017-01-14.
+ *
+ * https://www.codewars.com/kata/binary-genetic-algorithms/train/java
+ *
+ * https://namu.wiki/w/%EC%9C%A0%EC%A0%84%20%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98
+ *
+ *
+ * https://en.wikipedia.org/wiki/Genetic_algorithm
+ *
+ *
  */
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
