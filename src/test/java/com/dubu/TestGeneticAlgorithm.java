@@ -87,6 +87,8 @@ public class TestGeneticAlgorithm {
     public void testRun() {
 
         double[] list = {1,2,3,4};
+//        double[] list = {4,3,2,1};
+//        double[] list = {10,11,12,13};
         float cnt1 = 0;
         float cnt2 = 0;
         float cnt3 = 0;
