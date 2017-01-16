@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.ToDoubleFunction;
 import java.util.List;
 import java.util.Map;
@@ -168,21 +169,65 @@ public class TestGeneticAlgorithm {
     @Test
     public void testSelect() throws Exception {
 
-
         List<String> population = Arrays.asList("A", "B", "C", "D", "E");
         List<Double> fitnesses = Arrays.asList(1.0, 2.0, 3.0, 4.0,5.0);
 
-
         GeneticAlgorithm ga = new GeneticAlgorithm();
         String[] select = ga.select(population, fitnesses);
-
 
         for (int i = 0; i < select.length; i++) {
             String s = select[i];
             System.out.println(s);
         }
 
-
     }
+
+
+    @Test
+    public void testScore() throws Exception {
+
+//        sqrt((chromosome sum - ideal sum)^2+(chromosome product - ideal product)^2)
+
+
+        String s = "0010010111";
+
+//        double[] arr = {1,2,3,4,5,6,7,8,9,10};
+
+//        s.split("")
+
+
+        AtomicInteger index = new AtomicInteger();
+        long sum = Arrays.stream(s.split("")).map(s1 -> {
+
+            if (s1.equals("0")) {
+
+                return index.incrementAndGet();
+            } else {
+                index.incrementAndGet();
+                return 0;
+            }
+        }).mapToInt(i1 -> i1).sum();
+
+
+        assertEquals(19, sum);
+
+        index.set(0);
+        int product = Arrays.stream(s.split("")).map(s1 -> {
+
+            if (s1.equals("1")) {
+
+                return index.incrementAndGet();
+            } else {
+                index.incrementAndGet();
+                return 1;
+            }
+        }).reduce((integer, integer2) -> integer * integer2).get();
+
+
+        assertEquals(12960, product);
+//        System.out.println(sum);
+//        System.out.println(product);
+    }
+
 }
 
