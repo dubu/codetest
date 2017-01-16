@@ -58,12 +58,21 @@ class GeneticAlgorithm {
 
     }
 
-    private String mutate(String chromosome, double p) {
+    public String mutate(String chromosome, double p) {
         return null;
     }
 
-    private String[] crossover(String chromosome1, String chromosome2) {
-        return null;
+    public String[] crossover(String chromosome1, String chromosome2) {
+
+
+        double weight_sum = chromosome1.length();
+        int value = (int) (randUniformPositive() * weight_sum);
+
+        String s1 = chromosome1.substring(0, value) + chromosome2.substring(value);
+        String s2 = chromosome2.substring(0, value) + chromosome1.substring(value);
+
+        String[] rs = {s1, s2};
+        return rs;
     }
 
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m) {
@@ -184,23 +193,13 @@ public class TestGeneticAlgorithm {
 
 
     @Test
-    public void testScore() throws Exception {
-
-//        sqrt((chromosome sum - ideal sum)^2+(chromosome product - ideal product)^2)
-
+    public void testSumAndProduct() throws Exception {
 
         String s = "0010010111";
 
-//        double[] arr = {1,2,3,4,5,6,7,8,9,10};
-
-//        s.split("")
-
-
         AtomicInteger index = new AtomicInteger();
         long sum = Arrays.stream(s.split("")).map(s1 -> {
-
             if (s1.equals("0")) {
-
                 return index.incrementAndGet();
             } else {
                 index.incrementAndGet();
@@ -213,9 +212,7 @@ public class TestGeneticAlgorithm {
 
         index.set(0);
         int product = Arrays.stream(s.split("")).map(s1 -> {
-
             if (s1.equals("1")) {
-
                 return index.incrementAndGet();
             } else {
                 index.incrementAndGet();
@@ -223,11 +220,30 @@ public class TestGeneticAlgorithm {
             }
         }).reduce((integer, integer2) -> integer * integer2).get();
 
-
         assertEquals(12960, product);
 //        System.out.println(sum);
 //        System.out.println(product);
     }
 
+    @Test
+    public void testScore() throws Exception {
+
+//        sqrt((chromosome sum - ideal sum)^2+(chromosome product - ideal product)^2)
+
+    }
+
+    @Test
+    public void testCross() throws Exception {
+
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+
+
+        for (int i = 0; i < 10000; i++) {
+
+            String[] crossover = ga.crossover("01011010", "11110110");
+            Arrays.stream(crossover).forEach((s) -> System.out.println(s));
+        }
+
+    }
 }
 
