@@ -59,7 +59,28 @@ class GeneticAlgorithm {
     }
 
     public String mutate(String chromosome, double p) {
-        return null;
+
+        StringBuilder sb = new StringBuilder(chromosome);
+        double [] pArr = {p,1-p};
+        int i = rouletteSelect(pArr);
+
+        if(i == 0){
+            // do muate
+            int pos = (int) (randUniformPositive() * chromosome.length());
+
+
+            String mut = sb.substring(pos,pos+1);
+
+            if(mut.length() >0 ){
+                mut = mut.equals("1") ? "0":"1";
+            }
+
+            sb.replace(pos,pos+1,mut);
+
+
+        }
+
+        return sb.toString();
     }
 
     public String[] crossover(String chromosome1, String chromosome2) {
@@ -191,6 +212,21 @@ public class TestGeneticAlgorithm {
 
     }
 
+    @Test
+    public void testSelect2() throws Exception {
+
+        double p = 0.1;
+        List<String> population = Arrays.asList("1", "0");
+        List<Double> fitnesses = Arrays.asList(p, 1-p);
+
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+        String[] select = ga.select(population, fitnesses);
+
+        for (int i = 0; i < select.length; i++) {
+            String s = select[i];
+            System.out.println(s);
+        }
+    }
 
     @Test
     public void testSumAndProduct() throws Exception {
@@ -244,6 +280,20 @@ public class TestGeneticAlgorithm {
             Arrays.stream(crossover).forEach((s) -> System.out.println(s));
         }
 
+    }
+
+
+    @Test
+    public void testMutate() throws Exception {
+
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+
+
+        for (int i = 0; i <100; i++) {
+
+            String rs= ga.mutate("000000", 0.1);
+            System.out.println(rs);
+        }
     }
 }
 
