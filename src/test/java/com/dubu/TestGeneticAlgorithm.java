@@ -123,31 +123,22 @@ class GeneticAlgorithm {
         //to
 //        List<String> numList = Arrays.asList(num.toString());
 
-        List<String> numList = new ArrayList<String>();
+        // 0 init
+        List<String> population = new ArrayList<String>();
         for (int i = 0; i < 10; i++) {
-            numList.add(generate(length));
+            population.add(generate(length));
         }
 
-//        select(numList, )
+        // 1 select
+        List<Double> fitnesses = getFitnesses(population);
+        String[] selectArr = select(population, fitnesses);
+
+        // 2 crosss
+
+        // 3 mutate
 
 
-//        select(p1,pi)
-
-
-//        select(Arrays.asList("00000"),fitness);
-
-        // init
-
-
-        // select
-
-
-        // crosss
-
-        // replace
-
-
-        // loop
+        // 4 loop
 
 
         return null;
