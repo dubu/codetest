@@ -66,10 +66,33 @@ class GeneticAlgorithm {
     }
 
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m) {
+
+
+        // init
+
+
+        // select
+
+
+        // crosss
+
+        // replace
+
+
+        // loop
+
+
         return null;
     }
 
+
+
+
+
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m, int iterations) {
+
+
+
         return null;
     }
 
@@ -133,7 +156,6 @@ public class TestGeneticAlgorithm {
         System.out.println(cnt3);
         System.out.println(cnt4);
         System.out.println(cntElse);
-
 
         assertEquals(0.1,cnt1/cnt,0.1);
         assertEquals(0.2,cnt2/cnt,0.1);
