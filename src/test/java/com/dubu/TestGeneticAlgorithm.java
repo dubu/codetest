@@ -15,7 +15,10 @@ package com.dubu;
  *
  *
  */
-import org.apache.commons.lang3.ArrayUtils;
+
+
+
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -25,7 +28,6 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.ToDoubleFunction;
 
-import static org.junit.Assert.assertEquals;
 
 class GeneticAlgorithm {
 
@@ -62,12 +64,20 @@ class GeneticAlgorithm {
         int rsSize = 4;
         String [] rsList = new String[rsSize];
 
-        Double[] dd = new Double[fitnesses.size()];
-        fitnesses.toArray(dd);
+//        Double[] dd = new Double[fitnesses.size()];
+//        fitnesses.toArray(dd);
+
+        double[] dd = new double[fitnesses.size()];
+
+        for (int i = 0; i < fitnesses.size(); i++) {
+            Double aDouble = fitnesses.get(i);
+            dd[i] = aDouble;
+        }
 
         for (int i = 0; i < rsSize; i++) {
 
-            int i1 = rouletteSelect(ArrayUtils.toPrimitive(dd));
+//            int i1 = rouletteSelect(ArrayUtils.toPrimitive(dd));
+            int i1 = rouletteSelect(dd);
             // todo Score select
             rsList[i] = population.get(i1);
 
