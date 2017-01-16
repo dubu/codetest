@@ -15,9 +15,12 @@ package com.dubu;
  *
  *
  */
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.function.ToDoubleFunction;
 import java.util.List;
@@ -33,8 +36,25 @@ class GeneticAlgorithm {
         return "";
     }
 
-    private String[] select(List<String> population, List<Double> fitnesses) {
-        return null;
+    public String[] select(List<String> population, List<Double> fitnesses) {
+
+
+        StringBuilder sb = new StringBuilder();
+
+        Double[] dd = new Double[fitnesses.size()];
+        fitnesses.toArray(dd);
+//        ArrayUtils.toPrimitive(dd);
+
+
+        for (int i = 0; i < population.size(); i++) {
+
+            int i1 = rouletteSelect(ArrayUtils.toPrimitive(dd));
+            sb.append(population.get(i1));
+
+        }
+
+        return sb.toString().split("");
+
     }
 
     private String mutate(String chromosome, double p) {
@@ -52,39 +72,32 @@ class GeneticAlgorithm {
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m, int iterations) {
         return null;
     }
+
+    public int rouletteSelect(double[] weight) {
+        double weight_sum = 0;
+        for(int i=0; i<weight.length; i++) {
+            weight_sum += weight[i];
+        }
+        double value = randUniformPositive() * weight_sum;
+        for(int i=0; i<weight.length; i++) {
+            value -= weight[i];
+            if(value <= 0) return i;
+        }
+        return weight.length - 1;
+    }
+    private  double randUniformPositive() {
+        // easiest implementation
+        return new Random().nextDouble();
+    }
 }
 
 
 public class TestGeneticAlgorithm {
 
-    // Returns the selected index based on the weights(probabilities)
-    int rouletteSelect(double[] weight) {
-        // calculate the total weight
-        double weight_sum = 0;
-        for(int i=0; i<weight.length; i++) {
-            weight_sum += weight[i];
-        }
-        // get a random value
-        double value = randUniformPositive() * weight_sum;
-        // locate the random value based on the weights
-        for(int i=0; i<weight.length; i++) {
-            value -= weight[i];
-            if(value <= 0) return i;
-        }
-        // when rounding errors occur, we return the last item's index
-        return weight.length - 1;
-    }
-
-    // Returns a uniformly distributed double value between 0.0 and 1.0
-    double randUniformPositive() {
-        // easiest implementation
-        return new Random().nextDouble();
-    }
-
-
-
     @Test
     public void testRun() {
+
+        GeneticAlgorithm ga = new GeneticAlgorithm();
 
         double[] list = {1,2,3,4};
 //        double[] list = {4,3,2,1};
@@ -99,7 +112,7 @@ public class TestGeneticAlgorithm {
         for (int i = 0; i < cnt; i++) {
 
 
-            int i1 = rouletteSelect(list);
+            int i1 = ga.rouletteSelect(list);
             if(i1 == 0){
                 cnt1 = ++cnt1;
             }else if(i1 == 1){
@@ -128,6 +141,26 @@ public class TestGeneticAlgorithm {
         assertEquals(0.4,cnt4/cnt,0.1);
 
         //Your test
+    }
+
+    @Test
+    public void testSelect() throws Exception {
+
+
+        List<String> population = Arrays.asList("A", "B", "C", "D", "E");
+        List<Double> fitnesses = Arrays.asList(1.0, 2.0, 3.0, 4.0,5.0);
+
+
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+        String[] select = ga.select(population, fitnesses);
+
+
+        for (int i = 0; i < select.length; i++) {
+            String s = select[i];
+            System.out.println(s);
+        }
+
+
     }
 }
 
