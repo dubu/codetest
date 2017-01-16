@@ -134,6 +134,20 @@ class GeneticAlgorithm {
         String[] selectArr = select(population, fitnesses);
 
         // 2 crosss
+        for (int i = 0; i < population.size() * p_c; i++) {
+            int idx1 = (int) (randUniformPositive() * population.size());
+            String cro1 = population.get(idx1);
+
+            int idx2 = (int) (randUniformPositive() * population.size());
+            String cro2 = population.get(idx2);
+
+            String[] crossover = crossover(cro1, cro2);
+
+            selectArr[idx1] = crossover[0];
+            selectArr[idx2] = crossover[1];
+
+        }
+
 
         // 3 mutate
 
