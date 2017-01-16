@@ -17,17 +17,21 @@ package com.dubu;
  */
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.ToDoubleFunction;
-import java.util.List;
-import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 class GeneticAlgorithm {
+
+
+    private double idealSum = 38;
+    private double idealProduct = 210;
+
     /***************************************************************
      * Feel free to change the private methods' signatures (I did) *
      * Only the "run" functions are tested                         *
@@ -143,10 +147,42 @@ class GeneticAlgorithm {
         // easiest implementation
         return new Random().nextDouble();
     }
+
+
+    public double score(double sum, double product) {
+        return Math.sqrt(Math.pow(sum - idealSum, 2) + Math.pow(product - idealProduct, 2));
+    }
+
+
+    public int getProduct(String s) {
+        AtomicInteger index = new AtomicInteger();
+        return (int) Arrays.stream(s.split("")).map(s1 -> {
+            if (s1.equals("1")) {
+                return index.incrementAndGet();
+            } else {
+                index.incrementAndGet();
+                return 1;
+            }
+        }).reduce((integer, integer2) -> integer * integer2).get();
+    }
+
+    public long getSum(String s) {
+        AtomicInteger index = new AtomicInteger();
+        return (long) Arrays.stream(s.split("")).map(s1 -> {
+            if (s1.equals("0")) {
+                return index.incrementAndGet();
+            } else {
+                index.incrementAndGet();
+                return 0;
+            }
+        }).mapToInt(i1 -> i1).sum();
+    }
 }
 
 
 public class TestGeneticAlgorithm {
+
+
 
     @Test
     public void testRun() {
@@ -231,32 +267,17 @@ public class TestGeneticAlgorithm {
     @Test
     public void testSumAndProduct() throws Exception {
 
+        GeneticAlgorithm  ga = new GeneticAlgorithm();
         String s = "0010010111";
 
-        AtomicInteger index = new AtomicInteger();
-        long sum = Arrays.stream(s.split("")).map(s1 -> {
-            if (s1.equals("0")) {
-                return index.incrementAndGet();
-            } else {
-                index.incrementAndGet();
-                return 0;
-            }
-        }).mapToInt(i1 -> i1).sum();
-
+        long sum = ga.getSum(s);
+        int product = ga.getProduct(s);
 
         assertEquals(19, sum);
-
-        index.set(0);
-        int product = Arrays.stream(s.split("")).map(s1 -> {
-            if (s1.equals("1")) {
-                return index.incrementAndGet();
-            } else {
-                index.incrementAndGet();
-                return 1;
-            }
-        }).reduce((integer, integer2) -> integer * integer2).get();
-
         assertEquals(12960, product);
+
+
+
 //        System.out.println(sum);
 //        System.out.println(product);
     }
@@ -265,6 +286,25 @@ public class TestGeneticAlgorithm {
     public void testScore() throws Exception {
 
 //        sqrt((chromosome sum - ideal sum)^2+(chromosome product - ideal product)^2)
+
+        GeneticAlgorithm  ga = new GeneticAlgorithm();
+//        String s = "0010010111";
+
+
+        List<String> list = Arrays.asList("0010010111", "1110001110", "1111100000", "0000011111");
+
+        for (int i = 0; i < list.size(); i++) {
+            String s =  list.get(i);
+
+            long sum = ga.getSum(s);
+            int product = ga.getProduct(s);
+
+            double sqrt = ga.score(sum, product);
+            System.out.println(sqrt);
+        }
+
+//        double sum = 10;
+//        double product = 20;
 
     }
 
