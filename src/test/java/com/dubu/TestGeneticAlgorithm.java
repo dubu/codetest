@@ -18,6 +18,7 @@ package com.dubu;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -36,29 +37,43 @@ class GeneticAlgorithm {
      * Feel free to change the private methods' signatures (I did) *
      * Only the "run" functions are tested                         *
      ***************************************************************/
+
     private String generate(int length) {
 
-        return "";
+        StringBuilder sb = new StringBuilder();
+        double[] pArr = {0.5, 0.5};
+
+        for (int i = 0; i < length; i++) {
+
+            int num = rouletteSelect(pArr);
+            if (num == 0) {
+                sb.append("0");
+            }else{
+                sb.append("1");
+            }
+        }
+        return sb.toString();
     }
+
 
     public String[] select(List<String> population, List<Double> fitnesses) {
 
 
-        StringBuilder sb = new StringBuilder();
+        int rsSize = 4;
+        String [] rsList = new String[rsSize];
 
         Double[] dd = new Double[fitnesses.size()];
         fitnesses.toArray(dd);
-//        ArrayUtils.toPrimitive(dd);
 
-
-        for (int i = 0; i < population.size(); i++) {
+        for (int i = 0; i < rsSize; i++) {
 
             int i1 = rouletteSelect(ArrayUtils.toPrimitive(dd));
-            sb.append(population.get(i1));
+            // todo Score select
+            rsList[i] = population.get(i1);
 
         }
 
-        return sb.toString().split("");
+        return  rsList;
 
     }
 
@@ -102,6 +117,24 @@ class GeneticAlgorithm {
 
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m) {
 
+        String generate = generate(length);
+        Double num = fitness.applyAsDouble(generate);
+
+        //to
+//        List<String> numList = Arrays.asList(num.toString());
+
+        List<String> numList = new ArrayList<String>();
+        for (int i = 0; i < 10; i++) {
+            numList.add(generate(length));
+        }
+
+//        select(numList, )
+
+
+//        select(p1,pi)
+
+
+//        select(Arrays.asList("00000"),fitness);
 
         // init
 
@@ -177,6 +210,22 @@ class GeneticAlgorithm {
             }
         }).mapToInt(i1 -> i1).sum();
     }
+
+    public List<Double> getFitnesses(List<String> population) {
+        List<Double> fitnesses = new ArrayList<>();
+
+        for (int i = 0; i < population.size(); i++) {
+            String s = population.get(i);
+            long sum = getSum(s);
+            int product = getProduct(s);
+
+            double score = score(sum, product);
+            fitnesses.add(1/score);
+
+        }
+
+        return fitnesses;
+    }
 }
 
 
@@ -235,10 +284,12 @@ public class TestGeneticAlgorithm {
     @Test
     public void testSelect() throws Exception {
 
-        List<String> population = Arrays.asList("A", "B", "C", "D", "E");
-        List<Double> fitnesses = Arrays.asList(1.0, 2.0, 3.0, 4.0,5.0);
 
-        GeneticAlgorithm ga = new GeneticAlgorithm();
+        GeneticAlgorithm  ga = new GeneticAlgorithm();
+
+        List<String> population = Arrays.asList("00001", "00010", "00100", "01000", "10000");
+//        List<Double> fitnesses = Arrays.asList(1.0, 2.0, 3.0, 4.0,5.0);
+        List<Double> fitnesses = ga.getFitnesses(population);
         String[] select = ga.select(population, fitnesses);
 
         for (int i = 0; i < select.length; i++) {
@@ -299,8 +350,8 @@ public class TestGeneticAlgorithm {
             long sum = ga.getSum(s);
             int product = ga.getProduct(s);
 
-            double sqrt = ga.score(sum, product);
-            System.out.println(sqrt);
+            double score = ga.score(sum, product);
+            System.out.println(score);
         }
 
 //        double sum = 10;
@@ -334,6 +385,17 @@ public class TestGeneticAlgorithm {
             String rs= ga.mutate("000000", 0.1);
             System.out.println(rs);
         }
+    }
+
+
+    @Test
+    public void testDubu() throws Exception {
+
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+
+        ga.run(value -> Double.valueOf(value+1) ,10,0.1,0.2);
+
+
     }
 }
 
