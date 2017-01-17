@@ -164,7 +164,13 @@ class GeneticAlgorithm {
         // 0 init
         List<String> population = new ArrayList<String>();
         for (int i = 0; i < 10; i++) {
-            population.add(generate(length));
+            String generate = generate(length);
+            double d = fitness.applyAsDouble(generate);
+//            population.add(Double.toString(d));
+
+            String format = String.format("%.0f", d);
+            String replace = String.format("%" + length + "s", format).replace(' ', '0');
+            population.add(replace);
         }
 
         for (int i = 0; i < loopCnt; i++) {
@@ -439,7 +445,7 @@ public class TestGeneticAlgorithm {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
-        String s = ga.run(value -> Double.valueOf(value + 1), 10, 0.1, 0.2);
+        String s = ga.run(value -> Double.valueOf(value), 10, 0.6, 0.002);
         System.out.println(s);
 
 
