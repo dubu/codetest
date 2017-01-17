@@ -155,7 +155,7 @@ class GeneticAlgorithm {
 
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m) {
 
-        int defaultLoop = 10;
+        int defaultLoop = 100;
         String s = this.run(fitness, length, p_c, p_m, defaultLoop);
         return s;
     }
@@ -164,6 +164,7 @@ class GeneticAlgorithm {
 
         int loopCnt = iterations;
         String rsStr= "";
+        double rsScore = Double.MAX_VALUE;
 
         // 0 init
         List<String> population = new ArrayList<String>();
@@ -215,9 +216,13 @@ class GeneticAlgorithm {
 
             }
 
-            // store hight rank
-            rsStr = selectArr[0];
-
+            // store close ideal
+            double score = score(getSum(rsStr), getProduct(rsStr));
+            if(score < rsScore){
+                System.out.println(score);
+                rsScore = score;
+                rsStr = selectArr[0];
+            }
             // 4 loop
         }
 
@@ -399,7 +404,7 @@ public class TestGeneticAlgorithm {
 
 
 //        List<String> list = Arrays.asList("0010010111", "1110001110", "1111100000", "0000011111");
-        List<String> list = Arrays.asList("0001110001");
+        List<String> list = Arrays.asList("1001010100");
 
         for (int i = 0; i < list.size(); i++) {
             String s =  list.get(i);
