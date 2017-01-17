@@ -175,7 +175,16 @@ class GeneticAlgorithm {
 
             String format = String.format("%.0f", d);
             String replace = String.format("%" + length + "s", format).replace(' ', '0');
-            population.add(replace);
+
+//            replace = "00000000000000000000000000000000000";
+
+
+//            System.out.println(replace);
+//            population.add(replace);
+
+
+            System.out.println(generate);
+            population.add(generate);
         }
 
         for (int i = 0; i < loopCnt; i++) {
@@ -220,9 +229,9 @@ class GeneticAlgorithm {
             double score = score(getSum(selectArr[0]), getProduct(selectArr[0]));
 //            System.out.println(score);
             if(score < rsScore){
-                System.err.println(score);
                 rsScore = score;
                 rsStr = selectArr[0];
+                System.err.println(String.format("%s %s",rsStr,score));
             }
             if(score == 0){
                 return rsStr;
@@ -408,7 +417,7 @@ public class TestGeneticAlgorithm {
 
 
 //        List<String> list = Arrays.asList("0010010111", "1110001110", "1111100000", "0000011111");
-        List<String> list = Arrays.asList("1001010100");
+        List<String> list = Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","10010101000000100101110010100010001","10011011011011101100101000000011100");
 
         for (int i = 0; i < list.size(); i++) {
             String s =  list.get(i);
@@ -460,6 +469,18 @@ public class TestGeneticAlgorithm {
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
         String s = ga.run(value -> Double.valueOf(value), 12, 0.6, 0.002,100000);
+        System.out.println(s);
+
+
+    }
+
+
+    @Test
+    public void testRunZero35() throws Exception {
+
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+
+        String s = ga.run(value -> Double.valueOf(value), 35, 0.6, 0.002,300000);
         System.out.println(s);
 
 
