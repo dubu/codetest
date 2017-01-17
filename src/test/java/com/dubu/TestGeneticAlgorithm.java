@@ -127,6 +127,7 @@ class GeneticAlgorithm {
 
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m) {
 
+        String rsStr= "";
         String generate = generate(length);
         Double num = fitness.applyAsDouble(generate);
 
@@ -139,33 +140,44 @@ class GeneticAlgorithm {
             population.add(generate(length));
         }
 
-        // 1 select
-        List<Double> fitnesses = getFitnesses(population);
-        String[] selectArr = select(population, fitnesses);
 
-        // 2 crosss
-        for (int i = 0; i < population.size() * p_c; i++) {
-            int idx1 = (int) (randUniformPositive() * population.size());
-            String cro1 = population.get(idx1);
+        int loopCnt = 2;
+        for (int i = 0; i < loopCnt; i++) {
 
-            int idx2 = (int) (randUniformPositive() * population.size());
-            String cro2 = population.get(idx2);
+            // 1 select
+            List<Double> fitnesses = getFitnesses(population);
+            String[] selectArr = select(population, fitnesses);
 
-            String[] crossover = crossover(cro1, cro2);
+            // 2 crosss
+            for (int j = 0; j < selectArr.length * p_c; j++) {
+                int idx1 = (int) (randUniformPositive() * population.size());
+                String cro1 = selectArr[idx1];
 
-            selectArr[idx1] = crossover[0];
-            selectArr[idx2] = crossover[1];
+                int idx2 = (int) (randUniformPositive() * population.size());
+                String cro2 = selectArr[idx2];
 
+                String[] crossover = crossover(cro1, cro2);
+
+                selectArr[idx1] = crossover[0];
+                selectArr[idx2] = crossover[1];
+
+            }
+
+            // 3 mutate
+            for (int j = 0; j < population.size() ; j++) {
+                String cromo = population.get(j);
+
+                String mutate = mutate(cromo, p_m);
+                selectArr[j] = mutate;
+
+            }
+
+
+            // 4 loop
+            rsStr = selectArr[0];
         }
 
-
-        // 3 mutate
-
-
-        // 4 loop
-
-
-        return null;
+        return rsStr;
     }
 
 
