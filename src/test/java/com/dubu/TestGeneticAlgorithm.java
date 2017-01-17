@@ -92,8 +92,12 @@ class GeneticAlgorithm {
             int productA = getProduct(a);
             int productB = getProduct(b);
 
+            double scoreA = score(sumA, productA);
+            double scoreB = score(sumB, productB);
 
-            if(score(sumA,productA) <  score(sumB,productB)){
+            if(scoreA < scoreB){
+//                System.out.println(scoreA);
+//                System.out.println(scoreB);
                 return 1;
             }
             return 0;
@@ -151,7 +155,7 @@ class GeneticAlgorithm {
 
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m) {
 
-        int defaultLoop = 100;
+        int defaultLoop = 10;
         String s = this.run(fitness, length, p_c, p_m, defaultLoop);
         return s;
     }
@@ -394,7 +398,8 @@ public class TestGeneticAlgorithm {
 //        String s = "0010010111";
 
 
-        List<String> list = Arrays.asList("0010010111", "1110001110", "1111100000", "0000011111");
+//        List<String> list = Arrays.asList("0010010111", "1110001110", "1111100000", "0000011111");
+        List<String> list = Arrays.asList("0001110001");
 
         for (int i = 0; i < list.size(); i++) {
             String s =  list.get(i);
