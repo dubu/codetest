@@ -102,7 +102,7 @@ class GeneticAlgorithm {
         int rsSize = fitnesses.size()/2;
         String [] rsArr = new String[rsSize];
         for (int i = 0; i < rsSize; i++) {
-            String s = rsArr[i];
+            String s = rsList.get(i);
             rsArr[i] =  s;
 
         }
@@ -151,7 +151,8 @@ class GeneticAlgorithm {
 
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m) {
 
-        String s = this.run(fitness, length, p_c, p_m, 2);
+        int defaultLoop = 100;
+        String s = this.run(fitness, length, p_c, p_m, defaultLoop);
         return s;
     }
 
@@ -177,8 +178,16 @@ class GeneticAlgorithm {
                 int idx1 = (int) (randUniformPositive() * selectArr.length);
                 String cro1 = selectArr[idx1];
 
+                if(cro1 == null){
+                    System.err.println("err");
+                }
+
                 int idx2 = (int) (randUniformPositive() * selectArr.length);
                 String cro2 = selectArr[idx2];
+
+                if(cro2 == null){
+                    System.err.println("err");
+                }
 
                 String[] crossover = crossover(cro1, cro2);
 
