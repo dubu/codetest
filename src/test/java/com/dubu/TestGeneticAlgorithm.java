@@ -23,6 +23,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -61,29 +62,52 @@ class GeneticAlgorithm {
     public String[] select(List<String> population, List<Double> fitnesses) {
 
 
-        int rsSize = 4;
-        String [] rsList = new String[rsSize];
+        List<String> rsList = new ArrayList<String>();
 
 //        Double[] dd = new Double[fitnesses.size()];
 //        fitnesses.toArray(dd);
 
-        double[] dd = new double[fitnesses.size()];
+        double[] fitArr = new double[fitnesses.size()];
 
         for (int i = 0; i < fitnesses.size(); i++) {
             Double aDouble = fitnesses.get(i);
-            dd[i] = aDouble;
+            fitArr[i] = aDouble;
         }
 
+        for (int i = 0; i < fitnesses.size(); i++) {
+
+            int idx = rouletteSelect(fitArr);
+//            rsArr[i] = population.get(idx);
+
+            rsList.add(population.get(idx));
+
+        }
+
+        // score select
+        Collections.sort(rsList, (a, b) -> {
+
+            long sumA = getSum(a);
+            long sumB = getSum(b);
+
+            int productA = getProduct(a);
+            int productB = getProduct(b);
+
+
+            if(score(sumA,productA) <  score(sumB,productB)){
+                return 1;
+            }
+            return 0;
+        });
+
+        int rsSize = fitnesses.size()/2;
+        String [] rsArr = new String[rsSize];
         for (int i = 0; i < rsSize; i++) {
-
-//            int i1 = rouletteSelect(ArrayUtils.toPrimitive(dd));
-            int i1 = rouletteSelect(dd);
-            // todo Score select
-            rsList[i] = population.get(i1);
+            String s = rsArr[i];
+            rsArr[i] =  s;
 
         }
 
-        return  rsList;
+        return  rsArr;
 
     }
 
