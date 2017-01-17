@@ -127,12 +127,14 @@ class GeneticAlgorithm {
 
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m) {
 
-        String rsStr= "";
-        String generate = generate(length);
-        Double num = fitness.applyAsDouble(generate);
+        String s = this.run(fitness, length, p_c, p_m, 2);
+        return s;
+    }
 
-        //to
-//        List<String> numList = Arrays.asList(num.toString());
+    public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m, int iterations) {
+
+        int loopCnt = iterations;
+        String rsStr= "";
 
         // 0 init
         List<String> population = new ArrayList<String>();
@@ -140,8 +142,6 @@ class GeneticAlgorithm {
             population.add(generate(length));
         }
 
-
-        int loopCnt = 2;
         for (int i = 0; i < loopCnt; i++) {
 
             // 1 select
@@ -150,10 +150,10 @@ class GeneticAlgorithm {
 
             // 2 crosss
             for (int j = 0; j < selectArr.length * p_c; j++) {
-                int idx1 = (int) (randUniformPositive() * population.size());
+                int idx1 = (int) (randUniformPositive() * selectArr.length);
                 String cro1 = selectArr[idx1];
 
-                int idx2 = (int) (randUniformPositive() * population.size());
+                int idx2 = (int) (randUniformPositive() * selectArr.length);
                 String cro2 = selectArr[idx2];
 
                 String[] crossover = crossover(cro1, cro2);
@@ -164,31 +164,21 @@ class GeneticAlgorithm {
             }
 
             // 3 mutate
-            for (int j = 0; j < population.size() ; j++) {
-                String cromo = population.get(j);
+            for (int j = 0; j < selectArr.length ; j++) {
+                String cromo = selectArr[j];
 
                 String mutate = mutate(cromo, p_m);
                 selectArr[j] = mutate;
 
             }
 
+            // store hight rank
+            rsStr = selectArr[0];
 
             // 4 loop
-            rsStr = selectArr[0];
         }
 
         return rsStr;
-    }
-
-
-
-
-
-    public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m, int iterations) {
-
-
-
-        return null;
     }
 
     public int rouletteSelect(double[] weight) {
@@ -258,10 +248,8 @@ class GeneticAlgorithm {
 
 public class TestGeneticAlgorithm {
 
-
-
     @Test
-    public void testRun() {
+    public void testRouletteSelect() {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
@@ -354,8 +342,6 @@ public class TestGeneticAlgorithm {
         assertEquals(19, sum);
         assertEquals(12960, product);
 
-
-
 //        System.out.println(sum);
 //        System.out.println(product);
     }
@@ -416,11 +402,12 @@ public class TestGeneticAlgorithm {
 
 
     @Test
-    public void testDubu() throws Exception {
+    public void testRun() throws Exception {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
-        ga.run(value -> Double.valueOf(value+1) ,10,0.1,0.2);
+        String s = ga.run(value -> Double.valueOf(value + 1), 10, 0.1, 0.2);
+        System.out.println(s);
 
 
     }
