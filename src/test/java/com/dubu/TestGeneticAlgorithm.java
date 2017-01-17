@@ -217,11 +217,15 @@ class GeneticAlgorithm {
             }
 
             // store close ideal
-            double score = score(getSum(rsStr), getProduct(rsStr));
+            double score = score(getSum(selectArr[0]), getProduct(selectArr[0]));
+//            System.out.println(score);
             if(score < rsScore){
-                System.out.println(score);
+                System.err.println(score);
                 rsScore = score;
                 rsStr = selectArr[0];
+            }
+            if(score == 0){
+                return rsStr;
             }
             // 4 loop
         }
@@ -455,7 +459,7 @@ public class TestGeneticAlgorithm {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
-        String s = ga.run(value -> Double.valueOf(value), 10, 0.6, 0.002);
+        String s = ga.run(value -> Double.valueOf(value), 12, 0.6, 0.002,100000);
         System.out.println(s);
 
 
