@@ -76,10 +76,18 @@ class GeneticAlgorithm {
 
         for (int i = 0; i < fitnesses.size(); i++) {
 
-            int idx = rouletteSelect(fitArr);
-//            rsArr[i] = population.get(idx);
+            boolean flag = true;
+            while(flag){
 
-            rsList.add(population.get(idx));
+                int idx = rouletteSelect(fitArr);
+//            rsArr[i] = population.get(idx);
+                if(rsList.contains(population.get(idx))){
+                    // pass
+                }else{
+                    rsList.add(population.get(idx));
+                    flag = false;
+                }
+            }
 
         }
 
@@ -95,12 +103,14 @@ class GeneticAlgorithm {
             double scoreA = score(sumA, productA);
             double scoreB = score(sumB, productB);
 
-            if(scoreA < scoreB){
+            if(scoreA > scoreB){
 //                System.out.println(scoreA);
 //                System.out.println(scoreB);
                 return 1;
+            }else{
+
+                return -1;
             }
-            return 0;
         });
 
         int rsSize = fitnesses.size()/2;
@@ -169,22 +179,27 @@ class GeneticAlgorithm {
         // 0 init
         List<String> population = new ArrayList<String>();
         for (int i = 0; i < 10; i++) {
-            String generate = generate(length);
-            double d = fitness.applyAsDouble(generate);
+            boolean flag = true;
+            while (flag){
+                String generate = generate(length);
+                double d = fitness.applyAsDouble(generate);
 //            population.add(Double.toString(d));
 
-            String format = String.format("%.0f", d);
-            String replace = String.format("%" + length + "s", format).replace(' ', '0');
+                String format = String.format("%.0f", d);
+                String replace = String.format("%" + length + "s", format).replace(' ', '0');
 
 //            replace = "00000000000000000000000000000000000";
-
-
 //            System.out.println(replace);
 //            population.add(replace);
 
+                System.out.println(generate);
+                if(population.contains(generate)){
 
-            System.out.println(generate);
-            population.add(generate);
+                }else{
+                    population.add(generate);
+                    flag =false;
+                }
+            }
         }
 
         for (int i = 0; i < loopCnt; i++) {
@@ -417,7 +432,9 @@ public class TestGeneticAlgorithm {
 
 
 //        List<String> list = Arrays.asList("0010010111", "1110001110", "1111100000", "0000011111");
-        List<String> list = Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","10010101000000100101110010100010001","10011011011011101100101000000011100");
+//        List<String> list = Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","10010101000000100101110010100010001","10011011011011101100101000000011100");
+//        List<String> list = Arrays.asList("01001000000000100010111110101111110","01001001111001110011010100111011011","01100010011111111001010110110100011","11100110100000100101011011010011100");
+        List<String> list = Arrays.asList("101010001001","001010001001","010011110000","001001011110");
 
         for (int i = 0; i < list.size(); i++) {
             String s =  list.get(i);
@@ -483,6 +500,21 @@ public class TestGeneticAlgorithm {
         String s = ga.run(value -> Double.valueOf(value), 35, 0.6, 0.002,300000);
         System.out.println(s);
 
+
+    }
+
+    @Test
+    public void testCompare() throws Exception {
+        List<Integer> integers = Arrays.asList(5, 2, 4, 1, 32, 7);
+        Collections.sort(integers, (o1, o2) -> {
+            if (o1 > o2) {
+                return 1 ;
+            }else{
+                return -1;
+            }
+        });
+
+        System.out.println(integers);
 
     }
 }
