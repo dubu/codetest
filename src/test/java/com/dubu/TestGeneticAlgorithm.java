@@ -73,17 +73,22 @@ class GeneticAlgorithm {
 
         for (int i = 0; i < fitnesses.size(); i++) {
 
-            boolean flag = true;
-            while(flag){
+//            boolean flag = true;
+//            while(flag){
+//
+//                int idx = rouletteSelect(fitArr);
+//                if(rsList.contains(population.get(idx))){
+//                    // pass
+//                }else{
+//                    rsList.add(population.get(idx));
+//                    flag = false;
+//                }
+//            }
 
-                int idx = rouletteSelect(fitArr);
-                if(rsList.contains(population.get(idx))){
-                    // pass
-                }else{
-                    rsList.add(population.get(idx));
-                    flag = false;
-                }
-            }
+
+            // allow duplication
+            int idx = rouletteSelect(fitArr);
+            rsList.add(population.get(idx));
 
         }
 
@@ -164,6 +169,13 @@ class GeneticAlgorithm {
                     String format = String.format("%.0f", d);
                     String replace = String.format("%" + length + "s", format).replace(' ', '0');
 
+
+
+                    // test
+//                    populationList.add("00000000000000000000000000000000000");
+//                    flag =false;
+
+
 //                    System.out.println(generate);
                     if(populationList.contains(generate)){
                         // pass
@@ -172,6 +184,9 @@ class GeneticAlgorithm {
                         populationList.add(generate);
                         flag =false;
                     }
+
+
+
                 }
             }
 
@@ -258,8 +273,12 @@ class GeneticAlgorithm {
             }
         }
 
+        if(Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","01011000100110100011011100100111111","11111111111000000110010000010011010").contains(rsStr)){
+            System.err.println("FOUND!!");
+        }
 
-        System.err.println("ideal : "+ rsStr);
+
+        System.err.println(String.format("close : %s %s", rsStr,rsScore));
         return rsStr;
     }
 
@@ -440,7 +459,8 @@ public class TestGeneticAlgorithm {
 //        List<String> list = Arrays.asList("0010010111", "1110001110", "1111100000", "0000011111");
 //        List<String> list = Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","10010101000000100101110010100010001","10011011011011101100101000000011100");
 //        List<String> list = Arrays.asList("01001000000000100010111110101111110","01001001111001110011010100111011011","01100010011111111001010110110100011","11100110100000100101011011010011100");
-        List<String> list = Arrays.asList("00101000100110001000010110100011111","01100010100100011111110001000000110","01111010010110111000111001011010101","11101011011000100010100110001101011");
+//        List<String> list = Arrays.asList("00101000100110001000010110100011111","01100010100100011111110001000000110","01111010010110111000111001011010101","11101011011000100010100110001101011");
+        List<String> list = Arrays.asList("0011001110111010100001100001110001","0000001101001001110110110011111","1011000100110100011011100100111111","1111111111100000011001000001001101");
 
         for (int i = 0; i < list.size(); i++) {
             String s =  list.get(i);
@@ -491,7 +511,7 @@ public class TestGeneticAlgorithm {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
-        String s = ga.run(value -> Double.valueOf(value), 12, 0.6, 0.002,100);
+        String s = ga.run(value -> Double.valueOf(value), 10, 0.002,10);
         System.out.println(s);
 
 
@@ -503,8 +523,11 @@ public class TestGeneticAlgorithm {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
-        String s = ga.run(value -> Double.valueOf(value), 35, 0.6, 0.002,100);
-        System.out.println(s);
+        for (int i = 0; i < 10; i++) {
+            String s = ga.run(value -> Double.valueOf(value), 35, 0.6, 0.002,100);
+            System.out.println(s);
+
+        }
 
 
     }
