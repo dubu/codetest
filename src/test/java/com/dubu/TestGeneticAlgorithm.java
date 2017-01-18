@@ -257,6 +257,93 @@ class GeneticAlgorithm {
         return rsStr;
     }
 
+    public String runHistory(ToDoubleFunction<String> fitness, int length, double p_c, double p_m, int iterations) {
+
+        int loopCnt = iterations;
+        String rsStr= "";
+        double rsScore = Double.MAX_VALUE;
+
+        // 0 init
+        List<String> population = new ArrayList<String>();
+        for (int i = 0; i < 10; i++) {
+            boolean flag = true;
+            while (flag){
+                String generate = generate(length);
+                double d = fitness.applyAsDouble(generate);
+//            population.add(Double.toString(d));
+
+                String format = String.format("%.0f", d);
+                String replace = String.format("%" + length + "s", format).replace(' ', '0');
+
+//            replace = "00000000000000000000000000000000000";
+//            System.out.println(replace);
+//            population.add(replace);
+
+                System.out.println(generate);
+                if(population.contains(generate)){
+
+                }else{
+                    population.add(generate);
+                    flag =false;
+                }
+            }
+        }
+
+        for (int i = 0; i < loopCnt; i++) {
+
+            // 1 select
+            List<Double> fitnesses = getFitnesses(population);
+            String[] selectArr = select(population, fitnesses);
+
+            // 2 crosss
+            for (int j = 0; j < selectArr.length * p_c; j++) {
+                int idx1 = (int) (randUniformPositive() * selectArr.length);
+                String cro1 = selectArr[idx1];
+
+                if(cro1 == null){
+                    System.err.println("err");
+                }
+
+                int idx2 = (int) (randUniformPositive() * selectArr.length);
+                String cro2 = selectArr[idx2];
+
+                if(cro2 == null){
+                    System.err.println("err");
+                }
+
+                String[] crossover = crossover(cro1, cro2);
+
+                selectArr[idx1] = crossover[0];
+                selectArr[idx2] = crossover[1];
+
+            }
+
+            // 3 mutate
+            for (int j = 0; j < selectArr.length ; j++) {
+                String cromo = selectArr[j];
+
+                String mutate = mutate(cromo, p_m);
+                selectArr[j] = mutate;
+
+            }
+
+            // store close ideal
+            double score = score(getSum(selectArr[0]), getProduct(selectArr[0]));
+//            System.out.println(score);
+            if(score < rsScore){
+                rsScore = score;
+                rsStr = selectArr[0];
+                System.err.println(String.format("%s %s",rsStr,score));
+            }
+            if(score == 0){
+                return rsStr;
+            }
+            // 4 loop
+        }
+
+        return rsStr;
+    }
+
     public int rouletteSelect(double[] weight) {
         double weight_sum = 0;
         for(int i=0; i<weight.length; i++) {
