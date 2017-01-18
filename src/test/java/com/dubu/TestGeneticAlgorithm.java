@@ -149,168 +149,117 @@ class GeneticAlgorithm {
         String rsStr= "";
         double rsScore = Double.MAX_VALUE;
 
-        // 0 init
-        List<String> populationList = new ArrayList<String>();
-        int listSize = 10;
-        for (int i = 0; i < listSize; i++) {
-            boolean flag = true;
-            while (flag){
-                String generate = generate(length);
-                double d = fitness.applyAsDouble(generate);
 
-                String format = String.format("%.0f", d);
-                String replace = String.format("%" + length + "s", format).replace(' ', '0');
+        for (int ii = 0; ii < 10; ii++) {
 
-                System.out.println(generate);
-                if(populationList.contains(generate)){
-                    // pass
+            // 0 init
+            List<String> populationList = new ArrayList<String>();
+            int listSize = 10;
+            for (int i = 0; i < listSize; i++) {
+                boolean flag = true;
+                while (flag){
+                    String generate = generate(length);
+                    double d = fitness.applyAsDouble(generate);
 
-                }else{
-                    populationList.add(generate);
-                    flag =false;
+                    String format = String.format("%.0f", d);
+                    String replace = String.format("%" + length + "s", format).replace(' ', '0');
+
+//                    System.out.println(generate);
+                    if(populationList.contains(generate)){
+                        // pass
+
+                    }else{
+                        populationList.add(generate);
+                        flag =false;
+                    }
                 }
             }
-        }
 
-        for (int i = 0; i < loopCnt; i++) {
+            for (int i = 0; i < loopCnt; i++) {
 
-            // 1 select
-            List<Double> fitnessesList = getFitnesses(populationList);
-            String[] selectArr = select(populationList, fitnessesList);
+                // 1 select
+                List<Double> fitnessesList = getFitnesses(populationList);
+                String[] selectArr = select(populationList, fitnessesList);
 
-            // 2 crosss
-            for (int j = 0; j < selectArr.length * p_c; j++) {
-                int idx1 = (int) (randUniformPositive() * selectArr.length);
-                String cro1 = selectArr[idx1];
+                // 2 crosss
+                for (int j = 0; j < selectArr.length * p_c/2; j++) {
+                    int idx1 = (int) (randUniformPositive() * selectArr.length);
+                    String cro1 = selectArr[idx1];
 
-                if(cro1 == null){
-                    System.err.println("err");
+                    if(cro1 == null){
+                        System.err.println("err");
+                    }
+
+                    int idx2 = (int) (randUniformPositive() * selectArr.length);
+                    String cro2 = selectArr[idx2];
+
+                    if(cro2 == null){
+                        System.err.println("err");
+                    }
+
+                    String[] crossover = crossover(cro1, cro2);
+
+                    selectArr[idx1] = crossover[0];
+                    selectArr[idx2] = crossover[1];
+
                 }
 
-                int idx2 = (int) (randUniformPositive() * selectArr.length);
-                String cro2 = selectArr[idx2];
+                // 3 mutate
+                for (int j = 0; j < selectArr.length ; j++) {
+                    String cromo = selectArr[j];
 
-                if(cro2 == null){
-                    System.err.println("err");
+                    String mutate = mutate(cromo, p_m);
+                    selectArr[j] = mutate;
+
                 }
 
-                String[] crossover = crossover(cro1, cro2);
+                // score
+                // score sort
 
-                selectArr[idx1] = crossover[0];
-                selectArr[idx2] = crossover[1];
+                List<String> sortList = Arrays.asList(selectArr);
+                Collections.sort(sortList, (a, b) -> {
 
-            }
+                    long sumA = getSum(a);
+                    long sumB = getSum(b);
 
-            // 3 mutate
-            for (int j = 0; j < selectArr.length ; j++) {
-                String cromo = selectArr[j];
+                    int productA = getProduct(a);
+                    int productB = getProduct(b);
 
-                String mutate = mutate(cromo, p_m);
-                selectArr[j] = mutate;
+                    double scoreA = score(sumA, productA);
+                    double scoreB = score(sumB, productB);
 
-            }
+                    if(scoreA > scoreB){
+//                System.out.println(scoreA);
+//                System.out.println(scoreB);
+                        return 1;
+                    }else{
 
-            // store close ideal
-            double score = score(getSum(selectArr[0]), getProduct(selectArr[0]));
+                        return -1;
+                    }
+                });
+
+                // store close ideal
+                String closeStr = sortList.get(0);
+                double score = score(getSum(closeStr), getProduct(closeStr));
 //            System.out.println(score);
-            if(score < rsScore){
-                rsScore = score;
-                rsStr = selectArr[0];
-                System.err.println(String.format("%s %s",rsStr,score));
-            }
-            if(score == 0){
-                return rsStr;
-            }
-            // 4 loop
-        }
-
-        return rsStr;
-    }
-
-    public String runHistory(ToDoubleFunction<String> fitness, int length, double p_c, double p_m, int iterations) {
-
-        int loopCnt = iterations;
-        String rsStr= "";
-        double rsScore = Double.MAX_VALUE;
-
-        // 0 init
-        List<String> population = new ArrayList<String>();
-        for (int i = 0; i < 10; i++) {
-            boolean flag = true;
-            while (flag){
-                String generate = generate(length);
-                double d = fitness.applyAsDouble(generate);
-//            population.add(Double.toString(d));
-
-                String format = String.format("%.0f", d);
-                String replace = String.format("%" + length + "s", format).replace(' ', '0');
-
-//            replace = "00000000000000000000000000000000000";
-//            System.out.println(replace);
-//            population.add(replace);
-
-                System.out.println(generate);
-                if(population.contains(generate)){
-
-                }else{
-                    population.add(generate);
-                    flag =false;
+                if(score < rsScore){
+                    rsScore = score;
+                    rsStr = selectArr[0];
+                    System.err.println(String.format("%s %s",rsStr,score));
                 }
+
+                if(score == 0){
+                    return rsStr;
+                }
+
+
+
+                // 4 loop
             }
         }
 
-        for (int i = 0; i < loopCnt; i++) {
 
-            // 1 select
-            List<Double> fitnesses = getFitnesses(population);
-            String[] selectArr = select(population, fitnesses);
-
-            // 2 crosss
-            for (int j = 0; j < selectArr.length * p_c; j++) {
-                int idx1 = (int) (randUniformPositive() * selectArr.length);
-                String cro1 = selectArr[idx1];
-
-                if(cro1 == null){
-                    System.err.println("err");
-                }
-
-                int idx2 = (int) (randUniformPositive() * selectArr.length);
-                String cro2 = selectArr[idx2];
-
-                if(cro2 == null){
-                    System.err.println("err");
-                }
-
-                String[] crossover = crossover(cro1, cro2);
-
-                selectArr[idx1] = crossover[0];
-                selectArr[idx2] = crossover[1];
-
-            }
-
-            // 3 mutate
-            for (int j = 0; j < selectArr.length ; j++) {
-                String cromo = selectArr[j];
-
-                String mutate = mutate(cromo, p_m);
-                selectArr[j] = mutate;
-
-            }
-
-            // store close ideal
-            double score = score(getSum(selectArr[0]), getProduct(selectArr[0]));
-//            System.out.println(score);
-            if(score < rsScore){
-                rsScore = score;
-                rsStr = selectArr[0];
-                System.err.println(String.format("%s %s",rsStr,score));
-            }
-            if(score == 0){
-                return rsStr;
-            }
-            // 4 loop
-        }
-
+        System.err.println("ideal : "+ rsStr);
         return rsStr;
     }
 
@@ -491,7 +440,7 @@ public class TestGeneticAlgorithm {
 //        List<String> list = Arrays.asList("0010010111", "1110001110", "1111100000", "0000011111");
 //        List<String> list = Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","10010101000000100101110010100010001","10011011011011101100101000000011100");
 //        List<String> list = Arrays.asList("01001000000000100010111110101111110","01001001111001110011010100111011011","01100010011111111001010110110100011","11100110100000100101011011010011100");
-        List<String> list = Arrays.asList("101010001001","001010001001","010011110000","001001011110");
+        List<String> list = Arrays.asList("00101000100110001000010110100011111","01100010100100011111110001000000110","01111010010110111000111001011010101","11101011011000100010100110001101011");
 
         for (int i = 0; i < list.size(); i++) {
             String s =  list.get(i);
@@ -542,7 +491,7 @@ public class TestGeneticAlgorithm {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
-        String s = ga.run(value -> Double.valueOf(value), 12, 0.6, 0.002,100000);
+        String s = ga.run(value -> Double.valueOf(value), 12, 0.6, 0.002,100);
         System.out.println(s);
 
 
@@ -554,7 +503,7 @@ public class TestGeneticAlgorithm {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
-        String s = ga.run(value -> Double.valueOf(value), 35, 0.6, 0.002,300000);
+        String s = ga.run(value -> Double.valueOf(value), 35, 0.6, 0.002,100);
         System.out.println(s);
 
 
