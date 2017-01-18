@@ -61,7 +61,9 @@ class GeneticAlgorithm {
 
     public String[] select(List<String> population, List<Double> fitnesses) {
 
+
         List<String> rsList = new ArrayList<String>();
+
         double[] fitArr = new double[fitnesses.size()];
 
         for (int i = 0; i < fitnesses.size(); i++) {
@@ -69,29 +71,30 @@ class GeneticAlgorithm {
             fitArr[i] = aDouble;
         }
 
+        for (int i = 0; i < fitnesses.size(); i++) {
 
-        int idx = rouletteSelect(fitArr);
-        rsList.add(population.get(idx));
-        boolean flag = true;
-        while (flag) {
+            boolean flag = true;
+            while(flag){
 
-            idx = rouletteSelect(fitArr);
-            if (rsList.contains(population.get(idx))) {
-                // pass
-            } else {
-                rsList.add(population.get(idx));
-                flag = false;
+                int idx = rouletteSelect(fitArr);
+                if(rsList.contains(population.get(idx))){
+                    // pass
+                }else{
+                    rsList.add(population.get(idx));
+                    flag = false;
+                }
             }
+
         }
+
         int rsSize = rsList.size();
         String [] rsArr = new String[rsSize];
         for (int i = 0; i < rsSize; i++) {
             String s = rsList.get(i);
             rsArr[i] =  s;
-
         }
-        return rsArr;
 
+        return  rsArr;
 
     }
 
