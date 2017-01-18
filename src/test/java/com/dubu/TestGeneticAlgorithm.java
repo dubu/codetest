@@ -62,6 +62,7 @@ class GeneticAlgorithm {
     public String[] select(List<String> population, List<Double> fitnesses) {
 
 
+
         List<String> rsList = new ArrayList<String>();
 
         double[] fitArr = new double[fitnesses.size()];
@@ -195,6 +196,15 @@ class GeneticAlgorithm {
                 // 1 select
                 List<Double> fitnessesList = getFitnesses(populationList);
                 String[] selectArr = select(populationList, fitnessesList);
+
+               if(i == 0 ){
+                   populationList.stream().forEach(System.out::println);
+                   System.out.println("====");
+                   fitnessesList.stream().forEach(System.out::println);
+                   System.out.println("--------");
+
+               }
+
 
                 // 2 crosss
                 for (int j = 0; j < selectArr.length * p_c/2; j++) {
@@ -523,7 +533,7 @@ public class TestGeneticAlgorithm {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             String s = ga.run(value -> Double.valueOf(value), 35, 0.6, 0.002,100);
             System.out.println(s);
 
