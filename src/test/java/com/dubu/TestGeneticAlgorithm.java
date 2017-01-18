@@ -61,12 +61,7 @@ class GeneticAlgorithm {
 
     public String[] select(List<String> population, List<Double> fitnesses) {
 
-
         List<String> rsList = new ArrayList<String>();
-
-//        Double[] dd = new Double[fitnesses.size()];
-//        fitnesses.toArray(dd);
-
         double[] fitArr = new double[fitnesses.size()];
 
         for (int i = 0; i < fitnesses.size(); i++) {
@@ -74,54 +69,29 @@ class GeneticAlgorithm {
             fitArr[i] = aDouble;
         }
 
-        for (int i = 0; i < fitnesses.size(); i++) {
 
-            boolean flag = true;
-            while(flag){
+        int idx = rouletteSelect(fitArr);
+        rsList.add(population.get(idx));
+        boolean flag = true;
+        while (flag) {
 
-                int idx = rouletteSelect(fitArr);
-//            rsArr[i] = population.get(idx);
-                if(rsList.contains(population.get(idx))){
-                    // pass
-                }else{
-                    rsList.add(population.get(idx));
-                    flag = false;
-                }
+            idx = rouletteSelect(fitArr);
+            if (rsList.contains(population.get(idx))) {
+                // pass
+            } else {
+                rsList.add(population.get(idx));
+                flag = false;
             }
-
         }
-
-        // score select
-        Collections.sort(rsList, (a, b) -> {
-
-            long sumA = getSum(a);
-            long sumB = getSum(b);
-
-            int productA = getProduct(a);
-            int productB = getProduct(b);
-
-            double scoreA = score(sumA, productA);
-            double scoreB = score(sumB, productB);
-
-            if(scoreA > scoreB){
-//                System.out.println(scoreA);
-//                System.out.println(scoreB);
-                return 1;
-            }else{
-
-                return -1;
-            }
-        });
-
-        int rsSize = fitnesses.size()/2;
+        int rsSize = rsList.size();
         String [] rsArr = new String[rsSize];
         for (int i = 0; i < rsSize; i++) {
             String s = rsList.get(i);
             rsArr[i] =  s;
 
         }
+        return rsArr;
 
-        return  rsArr;
 
     }
 
@@ -165,8 +135,8 @@ class GeneticAlgorithm {
 
     public String run(ToDoubleFunction<String> fitness, int length, double p_c, double p_m) {
 
-        int defaultLoop = 100;
-        String s = this.run(fitness, length, p_c, p_m, defaultLoop);
+        int defaultLoopCnt = 100;
+        String s = this.run(fitness, length, p_c, p_m, defaultLoopCnt);
         return s;
     }
 
@@ -177,26 +147,23 @@ class GeneticAlgorithm {
         double rsScore = Double.MAX_VALUE;
 
         // 0 init
-        List<String> population = new ArrayList<String>();
-        for (int i = 0; i < 10; i++) {
+        List<String> populationList = new ArrayList<String>();
+        int listSize = 10;
+        for (int i = 0; i < listSize; i++) {
             boolean flag = true;
             while (flag){
                 String generate = generate(length);
                 double d = fitness.applyAsDouble(generate);
-//            population.add(Double.toString(d));
 
                 String format = String.format("%.0f", d);
                 String replace = String.format("%" + length + "s", format).replace(' ', '0');
 
-//            replace = "00000000000000000000000000000000000";
-//            System.out.println(replace);
-//            population.add(replace);
-
                 System.out.println(generate);
-                if(population.contains(generate)){
+                if(populationList.contains(generate)){
+                    // pass
 
                 }else{
-                    population.add(generate);
+                    populationList.add(generate);
                     flag =false;
                 }
             }
@@ -205,8 +172,8 @@ class GeneticAlgorithm {
         for (int i = 0; i < loopCnt; i++) {
 
             // 1 select
-            List<Double> fitnesses = getFitnesses(population);
-            String[] selectArr = select(population, fitnesses);
+            List<Double> fitnessesList = getFitnesses(populationList);
+            String[] selectArr = select(populationList, fitnessesList);
 
             // 2 crosss
             for (int j = 0; j < selectArr.length * p_c; j++) {
