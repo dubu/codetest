@@ -21,11 +21,7 @@ package com.dubu;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.ToDoubleFunction;
 
@@ -73,22 +69,22 @@ class GeneticAlgorithm {
 
         for (int i = 0; i < selectCnt; i++) {
 
-            boolean flag = true;
-            while(flag){
-
-                int idx = rouletteSelect(fitArr);
-                if(rsList.contains(population.get(idx))){
-                    // pass
-                }else{
-                    rsList.add(population.get(idx));
-                    flag = false;
-                }
-            }
+//            boolean flag = true;
+//            while(flag){
+//
+//                int idx = rouletteSelect(fitArr);
+//                if(rsList.contains(population.get(idx))){
+//                    // pass
+//                }else{
+//                    rsList.add(population.get(idx));
+//                    flag = false;
+//                }
+//            }
 
 
             // allow duplication
-//            int idx = rouletteSelect(fitArr);
-//            rsList.add(population.get(idx));
+            int idx = rouletteSelect(fitArr);
+            rsList.add(population.get(idx));
 
         }
 
@@ -154,10 +150,14 @@ class GeneticAlgorithm {
         String rsStr= "";
         double rsFitness = 0;
 
-        for (int ii = 0; ii < 10; ii++) {
+        for (int ii = 0; ii < iterations; ii++) {
 
             // 0 init
-            List<String> populationList = new ArrayList<String>();
+//            List<String> populationList = new ArrayList<String>();
+//            LinkedList<String>(Arrays.asList(from.split("")));
+
+            List<String> populationList = new LinkedList<String>();
+
             int listSize = 10;
             for (int i = 0; i < listSize; i++) {
                 boolean flag = true;
@@ -188,27 +188,28 @@ class GeneticAlgorithm {
                     , "10110010001001010110101010101111011"
                     , "10110000011011010000011010001001001"
             );
-            populationList =  testList;
+//            populationList =  testList;
 
-            for (int i = 0; i < loopCnt; i++) {
+            for (int i = 0; i < populationList.size()/2; i++) {
 
                 // 1 select
                 List<Double> fitnessesList = getFitnesses(populationList,fitness);
 
-                // select two
-                String[] selectArr = select(populationList, fitnessesList);
 
-               if(i == -1 ){
-                   populationList.stream().forEach(System.out::println);
-                   System.out.println("====");
-                   fitnessesList.stream().forEach(System.out::println);
-                   System.out.println("--------");
+                if(i == -1 ){
+                    populationList.stream().forEach(System.out::println);
+                    System.out.println("====");
+                    fitnessesList.stream().forEach(System.out::println);
+                    System.out.println("--------");
 
-               }
+                }
 
                 // 2 crosss
 
                 if(randUniformPositive() <= p_c ){
+                    // select two
+                    String[] selectArr = select(populationList, fitnessesList);
+
                     String cro1 = selectArr[0];
                     String cro2 = selectArr[1];
                     String[] crossover = crossover(cro1, cro2);
@@ -226,33 +227,36 @@ class GeneticAlgorithm {
                 // score
                 // score sort
 
-                List<String> sortList = Arrays.asList(selectArr);
-                Collections.sort(sortList, (a, b) -> {
-
-                    if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
-                        return -1;
-                    }else{
-                        return 1;
-                    }
-
-                });
-
-                // store close ideal
-                String closeStr = sortList.get(0);
-                double fit = fitness.applyAsDouble(closeStr);
-//            System.out.println(score);
-                if(fit > rsFitness){
-                    rsFitness = fit;
-                    rsStr = selectArr[0];
-                    System.err.println(String.format("%s %s",rsStr,rsFitness));
-                }
-
-                if(fit == 1){
-                    return rsStr;
-                }
 
                 // 4 loop
             }
+
+            Collections.sort(populationList, (a, b) -> {
+
+                if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
+                    return -1;
+                }else{
+                    return 1;
+                }
+
+            });
+
+            // store close ideal
+            String closeStr = populationList.get(0);
+            double fit = fitness.applyAsDouble(closeStr);
+//            System.out.println(score);
+            if(fit > rsFitness){
+                rsFitness = fit;
+                rsStr = populationList.get(0);
+                System.err.println(String.format("%s %s",rsStr,rsFitness));
+            }
+
+            if(fit == 1){
+                return rsStr;
+            }
+
+
+
         }
 
         if(Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","01011000100110100011011100100111111","11111111111000000110010000010011010").contains(rsStr)){
