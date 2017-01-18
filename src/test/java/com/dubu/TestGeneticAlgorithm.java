@@ -153,7 +153,8 @@ class GeneticAlgorithm {
 
         int loopCnt = iterations;
         String rsStr= "";
-        double rsScore = Double.MAX_VALUE;
+        double rsScore = 0;
+        double rsFitness = Double.MAX_VALUE;
 
 
         for (int ii = 0; ii < 10; ii++) {
@@ -280,14 +281,15 @@ class GeneticAlgorithm {
                 // store close ideal
                 String closeStr = sortList.get(0);
                 double score = score(getSum(closeStr), getProduct(closeStr));
+                double fit = 1 / (score + 1);
 //            System.out.println(score);
-                if(score < rsScore){
-                    rsScore = score;
+                if(fit < rsFitness){
+                    rsFitness = fit;
                     rsStr = selectArr[0];
-                    System.err.println(String.format("%s %s",rsStr,score));
+                    System.err.println(String.format("%s %s",rsStr,rsFitness));
                 }
 
-                if(score == 0){
+                if(fit == 0){
                     return rsStr;
                 }
 
@@ -302,7 +304,7 @@ class GeneticAlgorithm {
         }
 
 
-        System.err.println(String.format("close : %s %s", rsStr,rsScore));
+        System.err.println(String.format("close : %s %s", rsStr,rsFitness));
         return rsStr;
     }
 
@@ -367,6 +369,16 @@ class GeneticAlgorithm {
         }
 
         return fitnesses;
+    }
+
+
+    public double getFitOne(String population){
+        long sum = getSum(population);
+        int product = getProduct(population);
+
+        double score = score(sum, product);
+        return 1/(score+1);
+
     }
 }
 
@@ -484,7 +496,7 @@ public class TestGeneticAlgorithm {
 //        List<String> list = Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","10010101000000100101110010100010001","10011011011011101100101000000011100");
 //        List<String> list = Arrays.asList("01001000000000100010111110101111110","01001001111001110011010100111011011","01100010011111111001010110110100011","11100110100000100101011011010011100");
 //        List<String> list = Arrays.asList("00101000100110001000010110100011111","01100010100100011111110001000000110","01111010010110111000111001011010101","11101011011000100010100110001101011");
-        List<String> list = Arrays.asList("10110010010111011101001101111100010","0000001101001001110110110011111","1011000100110100011011100100111111","1111111111100000011001000001001101");
+        List<String> list = Arrays.asList("10110010001000011011100000010011011");
 
         for (int i = 0; i < list.size(); i++) {
             String s =  list.get(i);
@@ -494,6 +506,7 @@ public class TestGeneticAlgorithm {
 
             double score = ga.score(sum, product);
             System.out.println(score);
+            System.out.println(1/(score+1));
         }
 
 //        double sum = 10;
