@@ -194,6 +194,8 @@ class GeneticAlgorithm {
 
                 // 1 select
                 List<Double> fitnessesList = getFitnesses(populationList,fitness);
+
+                // select two
                 String[] selectArr = select(populationList, fitnessesList);
 
                if(i == -1 ){
@@ -205,35 +207,20 @@ class GeneticAlgorithm {
                }
 
                 // 2 crosss
-                for (int j = 0; j < selectArr.length * p_c/2; j++) {
-                    int idx1 = (int) (randUniformPositive() * selectArr.length);
-                    String cro1 = selectArr[idx1];
 
-                    if(cro1 == null){
-                        System.err.println("err");
-                    }
-
-                    int idx2 = (int) (randUniformPositive() * selectArr.length);
-                    String cro2 = selectArr[idx2];
-
-                    if(cro2 == null){
-                        System.err.println("err");
-                    }
-
+                if(randUniformPositive() <= p_c ){
+                    String cro1 = selectArr[0];
+                    String cro2 = selectArr[1];
                     String[] crossover = crossover(cro1, cro2);
 
-                    selectArr[idx1] = crossover[0];
-                    selectArr[idx2] = crossover[1];
+                    populationList.remove(cro1);
+                    populationList.remove(cro2);
 
-                }
+                    String mutate0 = mutate(crossover[0], p_m);
+                    String mutate1 = mutate(crossover[1], p_m);
 
-                // 3 mutate
-                for (int j = 0; j < selectArr.length ; j++) {
-                    String cromo = selectArr[j];
-
-                    String mutate = mutate(cromo, p_m);
-                    selectArr[j] = mutate;
-
+                    populationList.add(mutate0);
+                    populationList.add(mutate1);
                 }
 
                 // score
