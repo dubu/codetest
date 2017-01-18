@@ -11,7 +11,7 @@ package com.dubu;
  * https://en.wikipedia.org/wiki/Fitness_proportionate_selection
  *
  *
- * https://en.wikipedia.org/wiki/Genetic_algorithm
+ * https://en.wikipedia.org/wiki/Genetic_algorithm/
  *
  *
  */
@@ -191,13 +191,27 @@ class GeneticAlgorithm {
                 }
             }
 
+            List<String> testList = Arrays.asList("11011100101001001101101111001000010"
+                    , "01111011100011110000110101110010011"
+                    , "00101100111100011011100000010001111"
+                    , "00110010010000111110000111001001011"
+                    , "00101100011011001111000101000111110"
+                    , "10101011010001001010010010011010010"
+                    , "01010011001111111111111111000100110"
+                    , "01000100000000111010000001010100100"
+                    , "10110010001001010110101010101111011"
+                    , "10110000011011010000011010001001001"
+            );
+
+            populationList =  testList;
+
             for (int i = 0; i < loopCnt; i++) {
 
                 // 1 select
                 List<Double> fitnessesList = getFitnesses(populationList);
                 String[] selectArr = select(populationList, fitnessesList);
 
-               if(i == 0 ){
+               if(i == -1 ){
                    populationList.stream().forEach(System.out::println);
                    System.out.println("====");
                    fitnessesList.stream().forEach(System.out::println);
@@ -256,10 +270,10 @@ class GeneticAlgorithm {
                     if(scoreA > scoreB){
 //                System.out.println(scoreA);
 //                System.out.println(scoreB);
-                        return 1;
+                        return -1;
                     }else{
 
-                        return -1;
+                        return 1;
                     }
                 });
 
@@ -348,7 +362,7 @@ class GeneticAlgorithm {
             int product = getProduct(s);
 
             double score = score(sum, product);
-            fitnesses.add(1/score);
+            fitnesses.add(1/(score+1));
 
         }
 
@@ -470,7 +484,7 @@ public class TestGeneticAlgorithm {
 //        List<String> list = Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","10010101000000100101110010100010001","10011011011011101100101000000011100");
 //        List<String> list = Arrays.asList("01001000000000100010111110101111110","01001001111001110011010100111011011","01100010011111111001010110110100011","11100110100000100101011011010011100");
 //        List<String> list = Arrays.asList("00101000100110001000010110100011111","01100010100100011111110001000000110","01111010010110111000111001011010101","11101011011000100010100110001101011");
-        List<String> list = Arrays.asList("0011001110111010100001100001110001","0000001101001001110110110011111","1011000100110100011011100100111111","1111111111100000011001000001001101");
+        List<String> list = Arrays.asList("10110010010111011101001101111100010","0000001101001001110110110011111","1011000100110100011011100100111111","1111111111100000011001000001001101");
 
         for (int i = 0; i < list.size(); i++) {
             String s =  list.get(i);
@@ -533,7 +547,7 @@ public class TestGeneticAlgorithm {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             String s = ga.run(value -> Double.valueOf(value), 35, 0.6, 0.002,100);
             System.out.println(s);
 
@@ -555,6 +569,28 @@ public class TestGeneticAlgorithm {
 
         System.out.println(integers);
 
+    }
+
+    @Test
+    public void testFiteness() throws Exception {
+
+        List<String> testList = Arrays.asList("11011100101001001101101111001000010"
+                , "01111011100011110000110101110010011"
+                , "00101100111100011011100000010001111"
+                , "00110010010000111110000111001001011"
+                , "00101100011011001111000101000111110"
+                , "10101011010001001010010010011010010"
+                , "01010011001111111111111111000100110"
+                , "01000100000000111010000001010100100"
+                , "10110010001001010110101010101111011"
+                , "10110000011011010000011010001001001"
+        );
+
+
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+        List<Double> fitnesses = ga.getFitnesses(testList);
+
+        fitnesses.stream().forEach(System.out::println);
     }
 }
 
