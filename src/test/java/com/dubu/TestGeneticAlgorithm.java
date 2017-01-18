@@ -153,8 +153,7 @@ class GeneticAlgorithm {
 
         int loopCnt = iterations;
         String rsStr= "";
-        double rsScore = 0;
-        double rsFitness = Double.MAX_VALUE;
+        double rsFitness = 0;
 
         for (int ii = 0; ii < 10; ii++) {
 
@@ -256,7 +255,7 @@ class GeneticAlgorithm {
                 String closeStr = sortList.get(0);
                 double fit = fitness.applyAsDouble(closeStr);
 //            System.out.println(score);
-                if(fit < rsFitness){
+                if(fit > rsFitness){
                     rsFitness = fit;
                     rsStr = selectArr[0];
                     System.err.println(String.format("%s %s",rsStr,rsFitness));
