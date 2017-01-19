@@ -29,8 +29,8 @@ import java.util.function.ToDoubleFunction;
 class GeneticAlgorithm {
 
 
-    private double idealSum = 38;
-    private double idealProduct = 210;
+    public double idealSum = 38;
+    public double idealProduct = 210;
 
     /***************************************************************
      * Feel free to change the private methods' signatures (I did) *
@@ -178,15 +178,15 @@ class GeneticAlgorithm {
             }
 
             List<String> testList = Arrays.asList("11011100101001001101101111001000010"
-                    , "01111011100011110000110101110010011"
-                    , "00101100111100011011100000010001111"
-                    , "00110010010000111110000111001001011"
-                    , "00101100011011001111000101000111110"
-                    , "10101011010001001010010010011010010"
-                    , "01010011001111111111111111000100110"
-                    , "01000100000000111010000001010100100"
-                    , "10110010001001010110101010101111011"
-                    , "10110000011011010000011010001001001"
+                , "01111011100011110000110101110010011"
+                , "00101100111100011011100000010001111"
+                , "00110010010000111110000111001001011"
+                , "00101100011011001111000101000111110"
+                , "10101011010001001010010010011010010"
+                , "01010011001111111111111111000100110"
+                , "01000100000000111010000001010100100"
+                , "10110010001001010110101010101111011"
+                , "10110000011011010000011010001001001"
             );
 //            populationList =  testList;
 
@@ -196,11 +196,12 @@ class GeneticAlgorithm {
                 List<Double> fitnessesList = getFitnesses(populationList,fitness);
 
 
-                if(i == -1 ){
+                if(i == 0 ){
                     populationList.stream().forEach(System.out::println);
                     System.out.println("====");
                     fitnessesList.stream().forEach(System.out::println);
                     System.out.println("--------");
+                    populationList.stream().map(s ->fitness.applyAsDouble(s)).forEach(System.out::println);
 
                 }
 
@@ -291,16 +292,16 @@ class GeneticAlgorithm {
     }
 
 
-    public int getProduct(String s) {
+    public double getProduct(String s) {
         AtomicInteger index = new AtomicInteger();
-        return (int) Arrays.stream(s.split("")).map(s1 -> {
+        return Arrays.stream(s.split("")).map(s1 -> {
             if (s1.equals("1")) {
                 return index.incrementAndGet();
             } else {
                 index.incrementAndGet();
                 return 1;
             }
-        }).reduce((integer, integer2) -> integer * integer2).get();
+        }).mapToDouble(d -> d ).reduce((integer, integer2) -> integer * integer2).getAsDouble();
     }
 
     public long getSum(String s) {
@@ -338,7 +339,7 @@ class GeneticAlgorithm {
 
     public double getFitOne(String population){
         long sum = getSum(population);
-        int product = getProduct(population);
+        double product = getProduct(population);
 
         double score = score(sum, product);
         return 1/(score+1);
@@ -410,7 +411,7 @@ public class TestGeneticAlgorithm {
             @Override
             public double applyAsDouble(String s) {
                 long sum = ga.getSum(s);
-                int product = ga.getProduct(s);
+                double product = ga.getProduct(s);
                 double score = ga.score(sum, product);
                 return 1 / (score + 1);
             }
@@ -447,7 +448,7 @@ public class TestGeneticAlgorithm {
         String s = "0010010111";
 
         long sum = ga.getSum(s);
-        int product = ga.getProduct(s);
+        double product = ga.getProduct(s);
 
         assertEquals(19, sum);
         assertEquals(12960, product);
@@ -475,7 +476,7 @@ public class TestGeneticAlgorithm {
             String s =  list.get(i);
 
             long sum = ga.getSum(s);
-            int product = ga.getProduct(s);
+            double product = ga.getProduct(s);
 
             double score = ga.score(sum, product);
             System.out.println(score);
@@ -537,7 +538,7 @@ public class TestGeneticAlgorithm {
             @Override
             public double applyAsDouble(String s) {
                 long sum = ga.getSum(s);
-                int product = ga.getProduct(s);
+                double product = ga.getProduct(s);
                 double score = ga.score(sum, product);
                 return 1 / (score + 1);
             }
@@ -566,5 +567,152 @@ public class TestGeneticAlgorithm {
 
     }
 
+    @Test
+    public void testEquation() throws Exception {
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+//        String s1 = "11011100101001001101101111001000010";
+//        String s2 = "01111011100011110000110101110010011";
+
+        String s1 = "10111110100011110010001010000010111";
+        String s2 = "10100011000010110100111000100001000";
+
+        long sum1 =  ga.getSum(s1);
+        long sum2 =  ga.getSum(s2);
+
+        double prod1  =  ga.getProduct(s1);
+        double prod2  =  ga.getProduct(s2);
+
+        double fit1 =  0.047619047619047616;
+        double fit2 =  0.045454545454545456;
+
+        double sco1 = 1/fit1 - 1;
+        double sco2 = 1/fit2 - 1;
+
+//        int idealProd = 0;
+//        math.sqrt( Math.pow(sum - idealSum, 2) - 0.2^2 ) -product =  - idealProduct
+
+        for (int idealSum = 0; idealSum <= 10000  ; idealSum++) {
+
+            double ip11= Math.sqrt(Math.abs(Math.pow(sco1,2)-Math.pow(sum1-idealSum,2)))-prod1;
+            double ip12= Math.sqrt(Math.abs(Math.pow(sco1,2)-Math.pow(sum1-idealSum,2)))+prod1;
+
+            double ip21= Math.sqrt(Math.abs(Math.pow(sco2,2)-Math.pow(sum2-idealSum,2)))-prod2;
+            double ip22= Math.sqrt(Math.abs(Math.pow(sco2,2)-Math.pow(sum2-idealSum,2)))+prod2;
+
+            if(Math.abs(Math.abs(ip11) -  Math.abs(ip21)) < 1 || Math.abs(Math.abs(ip11) - Math.abs(ip22)) < 1){
+                System.out.println(idealSum);
+                System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - idealSum, 2)) - prod1);
+            }
+
+            if(Math.abs(Math.abs(ip12) -  Math.abs(ip21)) < 1 || Math.abs(Math.abs(ip12) - Math.abs(ip22)) < 1){
+                System.out.println(idealSum);
+                System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - idealSum, 2)) + prod1);
+            }
+
+        }
+
+
+
+    }
+
+    @Test
+    public void testName() throws Exception {
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+        String s1 = "000111";
+        String s2 = "010101";
+
+        long sum1 =  ga.getSum(s1);
+        long sum2 =  ga.getSum(s2);
+
+        double prod1  =  ga.getProduct(s1);
+        double prod2  =  ga.getProduct(s2);
+
+        double sco1 =  ga.score(sum1,prod1);
+        double sco2 =  ga.score(sum2,prod2);
+//        double v1= Math.sqrt(Math.pow(sum1 - ga.idealSum, 2) - Math.pow(sco1, 2)) - prod1;
+        double v1= Math.sqrt(Math.pow(sco1,2)-Math.pow(sum1-ga.idealSum,2))-prod1;
+
+
+//        Math.sqrt(Math.pow(sum - idealSum, 2) + Math.pow(product - idealProduct, 2));
+
+        System.out.println(v1);
+    }
+
+
+    @Test
+    public void testSqurt() throws Exception {
+        System.out.println(Math.sqrt(4));
+        System.out.println(Math.pow(3,2));
+
+    }
+
+
+    @Test
+    public void testScore22() throws Exception {
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+        String s1 = "000111";
+        String s2 = "010101";
+
+        long sum1 =  ga.getSum(s1);
+        long sum2 =  ga.getSum(s2);
+
+        double prod1  =  ga.getProduct(s1);
+        double prod2  =  ga.getProduct(s2);
+
+        double sco1 =  ga.score(sum1,prod1);
+        double sco2 =  ga.score(sum2,prod2);
+
+
+        System.out.println(sco1);
+        System.out.println(Math.sqrt(Math.pow(sum1 - ga.idealSum, 2) + Math.pow(prod1 - ga.idealProduct, 2)));
+
+
+
+        System.out.println(Math.pow(sco1,2));
+        System.out.println(Math.pow(sum1 - ga.idealSum, 2) + Math.pow(prod1 - ga.idealProduct, 2));
+
+
+        System.out.println(Math.pow(sum1 - ga.idealSum, 2));
+        System.out.println(Math.pow(sco1, 2) - Math.pow(prod1 - ga.idealProduct, 2));
+
+
+        System.out.println(Math.pow(prod1 - ga.idealProduct, 2));
+        System.out.println(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2));
+
+
+        System.out.println(prod1 - ga.idealProduct);
+        System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2)));
+
+        System.out.println(Math.abs(- ga.idealProduct));
+        System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2)) + prod1);
+        System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2)) - prod1);
+
+    }
+
+
+    @Test
+    public void testSum() throws Exception {
+
+
+        int sum = 0;
+        for (int i = 0; i <= 35; i++) {
+            sum = sum +i ;
+        }
+        System.out.println(sum);
+    }
+
+
+    @Test
+    public void testProduct() throws Exception {
+
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+        String s2 = "10100011000010110100111000100001000";
+
+
+        System.out.println(ga.getProduct(s2));
+
+
+    }
 }
+
 
