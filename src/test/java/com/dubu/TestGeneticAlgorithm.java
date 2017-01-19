@@ -29,8 +29,8 @@ import java.util.function.ToDoubleFunction;
 class GeneticAlgorithm {
 
 
-    public double idealSum = 38;
-    public double idealProduct = 210;
+    public double idealSum = 337;
+    public double idealProduct = 1.31755793433264E19;
 
     /***************************************************************
      * Feel free to change the private methods' signatures (I did) *
@@ -573,17 +573,33 @@ public class TestGeneticAlgorithm {
 //        String s1 = "11011100101001001101101111001000010";
 //        String s2 = "01111011100011110000110101110010011";
 
-        String s1 = "10111110100011110010001010000010111";
-        String s2 = "10100011000010110100111000100001000";
+        String s1 = "";
+        String s2 = "";
+        double fit1 =  0.0;
+        double fit2 =  0.0;
+
+        s1 = "10111110100011110010001010000010111";
+        s2 = "10100011000010110100111000100001000";
+        fit1 =  0.047619047619047616;
+        fit2 =  0.045454545454545456;
+
+        s1 = "000111";
+        s2 = "010101";
+        fit1 =  0.01036058659323429;
+        fit2 =  0.0060395514240891525;
+
+        // ideal s1 = "10111110100011110010001010000010111";
+
+        s1 = "10111110100011110010001000000000000";
+        s2 = "10100011000010110100111000100001000";
+        fit1 =  ga.getFitOne(s1);
+        fit2 =  ga.getFitOne(s2);
 
         long sum1 =  ga.getSum(s1);
         long sum2 =  ga.getSum(s2);
 
         double prod1  =  ga.getProduct(s1);
         double prod2  =  ga.getProduct(s2);
-
-        double fit1 =  0.047619047619047616;
-        double fit2 =  0.045454545454545456;
 
         double sco1 = 1/fit1 - 1;
         double sco2 = 1/fit2 - 1;
@@ -594,46 +610,23 @@ public class TestGeneticAlgorithm {
 
         double min = Double.MAX_VALUE;
 
-        for (int idealSum = 0; idealSum <= 10000  ; idealSum++) {
+        for (int idealSum = 0; idealSum <= 630  ; idealSum++) {
 
+//            idealSum = 630;
             double ip11= Math.sqrt(Math.abs(Math.pow(sco1,2)-Math.pow(sum1-idealSum,2)))-prod1;
             double ip12= Math.sqrt(Math.abs(Math.pow(sco1,2)-Math.pow(sum1-idealSum,2)))+prod1;
 
             double ip21= Math.sqrt(Math.abs(Math.pow(sco2,2)-Math.pow(sum2-idealSum,2)))-prod2;
             double ip22= Math.sqrt(Math.abs(Math.pow(sco2,2)-Math.pow(sum2-idealSum,2)))+prod2;
 
-
-
-           if(Math.abs(Math.abs(ip11) -  Math.abs(ip21)) < min) {
-               min =  Math.abs(Math.abs(ip11) -  Math.abs(ip21));
-               System.out.println(String.format("%s %s %s %s ",ip11,ip21,min, idealSum));
-           }
-
-            if(Math.abs(Math.abs(ip11) -  Math.abs(ip22)) < min) {
-                min =  Math.abs(Math.abs(ip11) -  Math.abs(ip22));
-                System.out.println(String.format("%s %s %s %s",ip11,ip22,min, idealSum));
+//            if(Arrays.asList(Math.abs(ip11),Math.abs(ip12)).contains(Math.abs(ip21))){
+            if (Math.abs(ip11) == Math.abs(ip22)) {
+                System.out.println(idealSum);
             }
 
-            if(Math.abs(Math.abs(ip12) -  Math.abs(ip21)) < min) {
-                min =  Math.abs(Math.abs(ip12) -  Math.abs(ip21));
-                System.out.println(String.format("%s %s %s %s",ip12,ip21,min,idealSum));
+            if(Arrays.asList(ip11,ip12).contains(ip22)){
+                System.out.println(idealSum);
             }
-
-            if(Math.abs(Math.abs(ip12) -  Math.abs(ip22)) < min) {
-                min =  Math.abs(Math.abs(ip12) -  Math.abs(ip22));
-                System.out.println(String.format("%s %s %s %s",ip12,ip22,min,idealSum));
-            }
-
-//            if(Math.abs(Math.abs(ip11) -  Math.abs(ip21)) < 1 || Math.abs(Math.abs(ip11) - Math.abs(ip22)) < 1){
-//                System.out.println(idealSum);
-//                System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - idealSum, 2)) - prod1);
-//            }
-//
-//            if(Math.abs(Math.abs(ip12) -  Math.abs(ip21)) < 1 || Math.abs(Math.abs(ip12) - Math.abs(ip22)) < 1){
-//                System.out.println(idealSum);
-//                System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - idealSum, 2)) + prod1);
-//            }
-
         }
 
 
@@ -643,8 +636,12 @@ public class TestGeneticAlgorithm {
     @Test
     public void testName() throws Exception {
         GeneticAlgorithm ga = new GeneticAlgorithm();
+
         String s1 = "000111";
         String s2 = "010101";
+
+//        s1 = "10111110100011110010001010000010111";
+//        s2 = "10100011000010110100111000100001000";
 
         long sum1 =  ga.getSum(s1);
         long sum2 =  ga.getSum(s2);
@@ -655,12 +652,15 @@ public class TestGeneticAlgorithm {
         double sco1 =  ga.score(sum1,prod1);
         double sco2 =  ga.score(sum2,prod2);
 //        double v1= Math.sqrt(Math.pow(sum1 - ga.idealSum, 2) - Math.pow(sco1, 2)) - prod1;
-        double v1= Math.sqrt(Math.pow(sco1,2)-Math.pow(sum1-ga.idealSum,2))-prod1;
+        double idProd1= Math.sqrt(Math.pow(sco1,2)-Math.pow(sum1-ga.idealSum,2))-prod1;
+        double idProd2= Math.sqrt(Math.pow(sco1,2)-Math.pow(sum1-ga.idealSum,2))+prod1;
+
+        double prod = idProd1;
 
 
 //        Math.sqrt(Math.pow(sum - idealSum, 2) + Math.pow(product - idealProduct, 2));
 
-        System.out.println(v1);
+        System.out.println(prod);
     }
 
 
@@ -685,8 +685,8 @@ public class TestGeneticAlgorithm {
         double prod2  =  ga.getProduct(s2);
 
         double sco1 =  ga.score(sum1,prod1);
-        double sco2 =  ga.score(sum2,prod2);
 
+        double sco2 =  ga.score(sum2,prod2);
 
         System.out.println(sco1);
         System.out.println(Math.sqrt(Math.pow(sum1 - ga.idealSum, 2) + Math.pow(prod1 - ga.idealProduct, 2)));
@@ -704,13 +704,13 @@ public class TestGeneticAlgorithm {
         System.out.println(Math.pow(prod1 - ga.idealProduct, 2));
         System.out.println(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2));
 
-
         System.out.println(prod1 - ga.idealProduct);
         System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2)));
 
+        System.out.println("####");
+        System.out.println(prod1 +Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2)) );
+        System.out.println(prod1 -Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2)) );
         System.out.println(Math.abs(- ga.idealProduct));
-        System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2)) + prod1);
-        System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - ga.idealSum, 2)) - prod1);
 
     }
 
