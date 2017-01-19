@@ -196,7 +196,7 @@ class GeneticAlgorithm {
                 List<Double> fitnessesList = getFitnesses(populationList,fitness);
 
 
-                if(i == 0 ){
+                if(i == -1 ){
                     populationList.stream().forEach(System.out::println);
                     System.out.println("====");
                     fitnessesList.stream().forEach(System.out::println);
@@ -496,7 +496,7 @@ public class TestGeneticAlgorithm {
 
         for (int i = 0; i < 10000; i++) {
 
-            String[] crossover = ga.crossover("01011010", "11110110");
+            String[] crossover = ga.crossover("0000000000", "1111100000");
             Arrays.stream(crossover).forEach((s) -> System.out.println(s));
         }
 
@@ -591,6 +591,9 @@ public class TestGeneticAlgorithm {
 //        int idealProd = 0;
 //        math.sqrt( Math.pow(sum - idealSum, 2) - 0.2^2 ) -product =  - idealProduct
 
+
+        double min = Double.MAX_VALUE;
+
         for (int idealSum = 0; idealSum <= 10000  ; idealSum++) {
 
             double ip11= Math.sqrt(Math.abs(Math.pow(sco1,2)-Math.pow(sum1-idealSum,2)))-prod1;
@@ -599,15 +602,37 @@ public class TestGeneticAlgorithm {
             double ip21= Math.sqrt(Math.abs(Math.pow(sco2,2)-Math.pow(sum2-idealSum,2)))-prod2;
             double ip22= Math.sqrt(Math.abs(Math.pow(sco2,2)-Math.pow(sum2-idealSum,2)))+prod2;
 
-            if(Math.abs(Math.abs(ip11) -  Math.abs(ip21)) < 1 || Math.abs(Math.abs(ip11) - Math.abs(ip22)) < 1){
-                System.out.println(idealSum);
-                System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - idealSum, 2)) - prod1);
+
+
+           if(Math.abs(Math.abs(ip11) -  Math.abs(ip21)) < min) {
+               min =  Math.abs(Math.abs(ip11) -  Math.abs(ip21));
+               System.out.println(String.format("%s %s %s %s ",ip11,ip21,min, idealSum));
+           }
+
+            if(Math.abs(Math.abs(ip11) -  Math.abs(ip22)) < min) {
+                min =  Math.abs(Math.abs(ip11) -  Math.abs(ip22));
+                System.out.println(String.format("%s %s %s %s",ip11,ip22,min, idealSum));
             }
 
-            if(Math.abs(Math.abs(ip12) -  Math.abs(ip21)) < 1 || Math.abs(Math.abs(ip12) - Math.abs(ip22)) < 1){
-                System.out.println(idealSum);
-                System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - idealSum, 2)) + prod1);
+            if(Math.abs(Math.abs(ip12) -  Math.abs(ip21)) < min) {
+                min =  Math.abs(Math.abs(ip12) -  Math.abs(ip21));
+                System.out.println(String.format("%s %s %s %s",ip12,ip21,min,idealSum));
             }
+
+            if(Math.abs(Math.abs(ip12) -  Math.abs(ip22)) < min) {
+                min =  Math.abs(Math.abs(ip12) -  Math.abs(ip22));
+                System.out.println(String.format("%s %s %s %s",ip12,ip22,min,idealSum));
+            }
+
+//            if(Math.abs(Math.abs(ip11) -  Math.abs(ip21)) < 1 || Math.abs(Math.abs(ip11) - Math.abs(ip22)) < 1){
+//                System.out.println(idealSum);
+//                System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - idealSum, 2)) - prod1);
+//            }
+//
+//            if(Math.abs(Math.abs(ip12) -  Math.abs(ip21)) < 1 || Math.abs(Math.abs(ip12) - Math.abs(ip22)) < 1){
+//                System.out.println(idealSum);
+//                System.out.println(Math.sqrt(Math.pow(sco1, 2) - Math.pow(sum1 - idealSum, 2)) + prod1);
+//            }
 
         }
 
