@@ -157,7 +157,7 @@ class GeneticAlgorithm {
         for (int iii = 0; iii < iterations; iii++) {
 
 
-            int generationCnt = 100;
+            int generationCnt = 1000;
 
             // 0 init
 //        List<String> populationList = new LinkedList<String>();
@@ -211,7 +211,7 @@ class GeneticAlgorithm {
                             if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
                                 return -1;
                             }else{
-                                return 1;
+                                return 0;
                             }
 
                         });
@@ -285,7 +285,7 @@ class GeneticAlgorithm {
                     if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
                         return -1;
                     }else{
-                        return 1;
+                        return 0;
                     }
 
                 });
@@ -624,8 +624,8 @@ public class TestGeneticAlgorithm {
     public void testRunX() throws Exception {
 //        String str = "00010001000001000100000000010011111";
 //        String str = "10011000111011100101100111010100110";
-//        String str = "10110010010111011101001101111100010";
-        String str = "1100000000000000000000000010000000";   // 20, 100 ,100, iii 6
+        String str = "10110010010111011101001101111100010";
+//        String str = "1100000000000000000000000010000000";   // 20, 100 ,100, iii 6
 
 //        String str = "100111011001"; //36
         GeneticAlgorithm ga = new GeneticAlgorithm();
@@ -671,7 +671,7 @@ public class TestGeneticAlgorithm {
         List<Integer> integers = Arrays.asList(5, 2, 4, 1, 32, 7);
         Collections.sort(integers, (o1, o2) -> {
             if (o1 > o2) {
-                return 1 ;
+                return 0 ;
             }else{
                 return -1;
             }
