@@ -29,9 +29,12 @@ import java.util.function.ToDoubleFunction;
 class GeneticAlgorithm {
 
 
-    public double idealSum = 337;
-    public double idealProduct = 1.31755793433264E19;
+//    public double idealSum = 337;
+//    public double idealProduct = 1.31755793433264E19;
 
+
+    public double idealSum = 0;
+    public double idealProduct = 0;
     /***************************************************************
      * Feel free to change the private methods' signatures (I did) *
      * Only the "run" functions are tested                         *
@@ -69,22 +72,22 @@ class GeneticAlgorithm {
 
         for (int i = 0; i < selectCnt; i++) {
 
-//            boolean flag = true;
-//            while(flag){
+            boolean flag = true;
+            while(flag){
+
+                int idx = rouletteSelect(fitArr);
+                if(rsList.contains(population.get(idx))){
+                    // pass
+                }else{
+                    rsList.add(population.get(idx));
+                    flag = false;
+                }
+            }
+
 //
-//                int idx = rouletteSelect(fitArr);
-//                if(rsList.contains(population.get(idx))){
-//                    // pass
-//                }else{
-//                    rsList.add(population.get(idx));
-//                    flag = false;
-//                }
-//            }
-
-
-            // allow duplication
-            int idx = rouletteSelect(fitArr);
-            rsList.add(population.get(idx));
+//            // allow duplication
+//            int idx = rouletteSelect(fitArr);
+//            rsList.add(population.get(idx));
 
         }
 
@@ -150,45 +153,43 @@ class GeneticAlgorithm {
         String rsStr= "";
         double rsFitness = 0;
 
-        for (int ii = 0; ii < iterations; ii++) {
-
-            // 0 init
-//            List<String> populationList = new ArrayList<String>();
-//            LinkedList<String>(Arrays.asList(from.split("")));
-
-            List<String> populationList = new LinkedList<String>();
-
-            int listSize = 10;
-            for (int i = 0; i < listSize; i++) {
-                boolean flag = true;
-                while (flag){
-                    String generate = generate(length);
-                    // test
+        // 0 init
+        List<String> populationList = new LinkedList<String>();
+        int listSize = 10;
+        for (int i = 0; i < listSize; i++) {
+            boolean flag = true;
+            while (flag){
+                String generate = generate(length);
+                // test
 //                    populationList.add("00000000000000000000000000000000000");
 //                    flag =false;
 //                    System.out.println(generate);
 
-                    if(populationList.contains(generate)){
-                        // pass
-                    }else{
-                        populationList.add(generate);
-                        flag =false;
-                    }
+                if(populationList.contains(generate)){
+                    // pass
+                }else{
+                    populationList.add(generate);
+                    flag =false;
                 }
             }
+        }
 
-            List<String> testList = Arrays.asList("11011100101001001101101111001000010"
-                , "01111011100011110000110101110010011"
-                , "00101100111100011011100000010001111"
-                , "00110010010000111110000111001001011"
-                , "00101100011011001111000101000111110"
-                , "10101011010001001010010010011010010"
-                , "01010011001111111111111111000100110"
-                , "01000100000000111010000001010100100"
-                , "10110010001001010110101010101111011"
-                , "10110000011011010000011010001001001"
-            );
+        List<String> testList = Arrays.asList("11011100101001001101101111001000010"
+            , "01111011100011110000110101110010011"
+            , "00101100111100011011100000010001111"
+            , "00110010010000111110000111001001011"
+            , "00101100011011001111000101000111110"
+            , "10101011010001001010010010011010010"
+            , "01010011001111111111111111000100110"
+            , "01000100000000111010000001010100100"
+            , "10110010001001010110101010101111011"
+            , "10110000011011010000011010001001001"
+        );
 //            populationList =  testList;
+
+
+        for (int ii = 0; ii < iterations; ii++) {
+
 
             for (int i = 0; i < populationList.size()/2; i++) {
 
@@ -196,11 +197,20 @@ class GeneticAlgorithm {
                 List<Double> fitnessesList = getFitnesses(populationList,fitness);
 
 
-                if(i == -1 ){
+                if(i == 0 ){
+                    Collections.sort(populationList, (a, b) -> {
+
+                        if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
+                            return -1;
+                        }else{
+                            return 1;
+                        }
+
+                    });
+
+                    System.out.println("====  "+ i);
                     populationList.stream().forEach(System.out::println);
                     System.out.println("====");
-                    fitnessesList.stream().forEach(System.out::println);
-                    System.out.println("--------");
                     populationList.stream().map(s ->fitness.applyAsDouble(s)).forEach(System.out::println);
 
                 }
@@ -555,6 +565,40 @@ public class TestGeneticAlgorithm {
             }
 
         }
+
+    }
+
+    @Test
+    public void testRunX() throws Exception {
+        String str = "00010001";
+        GeneticAlgorithm ga = new GeneticAlgorithm();
+
+        long idealSum = ga.getSum(str);
+        double idealProduct = ga.getProduct(str);
+        ga.idealProduct =  idealProduct;
+        ga.idealSum =  idealSum;
+
+        ToDoubleFunction<String> toDoubleFunction = new ToDoubleFunction<String>() {
+            @Override
+            public double applyAsDouble(String s) {
+                long sum = ga.getSum(s);
+                double product = ga.getProduct(s);
+                double score = ga.score(sum, product);
+                return 1 / (score + 1);
+            }
+        };
+
+
+        for (int i = 0; i < 1; i++) {
+            String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,100);
+            System.out.println(s);
+
+            if(s.equals(str)){
+                System.err.printf("####### found   ##########   ");
+            }
+
+        }
+
 
 
     }
