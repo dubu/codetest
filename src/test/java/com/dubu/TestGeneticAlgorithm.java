@@ -181,18 +181,18 @@ class GeneticAlgorithm {
                 }
             }
 
-            List<String> testList = Arrays.asList("11011100101001001101101111001000010"
-                , "01111011100011110000110101110010011"
-                , "00101100111100011011100000010001111"
-                , "00110010010000111110000111001001011"
-                , "00101100011011001111000101000111110"
-                , "10101011010001001010010010011010010"
-                , "01010011001111111111111111000100110"
-                , "01000100000000111010000001010100100"
+            List<String> testList = Arrays.asList("01101101010110011100111111000110010"
+                , "10101110010011001101101101101010110"
+                , "10101010111000011111100111011001001"
+                , "11011010101100010000010111100111111"
+                , "11001100111111111101110101000100001"
+                , "11001100100110011111010110110010011"
+                , "01101111100000101110110111000111010"
+                , "11011110101101001010110111010110010"
                 , "10110010001001010110101010101111011"
                 , "10110000011011010000011010001001001"
             );
-//            populationList =  testList;
+            populationList =  testList;
 
 
             for (int ii = 0; ii < generationCnt; ii++) {
@@ -225,12 +225,12 @@ class GeneticAlgorithm {
 
                     // 2 crosss
 
-                    if(randUniformPositive() <= p_c ){
                         // select two
-                        String[] selectArr = select(populationList, fitnessesList);
+                    String[] selectArr = select(populationList, fitnessesList);
+                    String cro1 = selectArr[0];
+                    String cro2 = selectArr[1];
 
-                        String cro1 = selectArr[0];
-                        String cro2 = selectArr[1];
+                    if(randUniformPositive() <= p_c ){
                         String[] crossover = crossover(cro1, cro2);
 
 //                    populationList.remove(cro1);
@@ -251,9 +251,24 @@ class GeneticAlgorithm {
                             nextPopulationList.add(mutate1);
                         }
 
+                    }else{
+                        // not cross
+                        if(nextPopulationList.contains(cro1)){
+                            // pass
+                        }else{
+                            nextPopulationList.add(cro1);
+                        }
+
+                        if(nextPopulationList.contains(cro2)){
+                            // pass
+                        }else{
+                            nextPopulationList.add(cro2);
+                        }
+
                     }
 
-                    // score
+
+                   // score
                     // score sort
 
 
@@ -291,6 +306,13 @@ class GeneticAlgorithm {
                 }
 
 
+                if(ii == generationCnt-1){
+                    System.out.println("====  "+ nextPopulationList.size());
+                    populationList.stream().forEach(System.out::println);
+                    System.out.println("====");
+                    populationList.stream().map(s ->fitness.applyAsDouble(s)).forEach(System.out::println);
+
+                }
 
             }
 
@@ -624,8 +646,8 @@ public class TestGeneticAlgorithm {
 
 
         int foundTime = 0;
-        for (int i = 0; i < 10; i++) {
-            String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,100);
+        for (int i = 0; i < 1; i++) {
+            String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,1);
 
             System.err.println(s);
             System.err.println("     ");
