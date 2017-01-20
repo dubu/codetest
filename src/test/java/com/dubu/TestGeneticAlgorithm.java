@@ -590,8 +590,8 @@ public class TestGeneticAlgorithm {
     public void testRunX() throws Exception {
 //        String str = "00010001000001000100000000010011111";
 //        String str = "10011000111011100101100111010100110";
-//        String str = "1001100011101110";
-        String str = "00000000000000001000000000000000000";
+//        String str = "01001101101010101010011110101000111";
+        String str = "100111011001";
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
         long idealSum = ga.getSum(str);
