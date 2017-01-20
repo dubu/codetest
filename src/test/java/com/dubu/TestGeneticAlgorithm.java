@@ -276,7 +276,7 @@ class GeneticAlgorithm {
             if(fit > rsFitness){
                 rsFitness = fit;
                 rsStr = populationList.get(0);
-//                System.err.println(String.format("%s %s",rsStr,rsFitness));
+                System.err.println(String.format("%s %s",rsStr,rsFitness));
             }
 
             if(fit == 1){
@@ -292,7 +292,7 @@ class GeneticAlgorithm {
 //        }
 
 
-        System.out.println(String.format("close : %s %s", rsStr,rsFitness));
+//        System.out.println(String.format("close : %s %s", rsStr,rsFitness));
 
         return rsStr;
     }
