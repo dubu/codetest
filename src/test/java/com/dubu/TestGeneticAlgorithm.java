@@ -532,6 +532,9 @@ public class TestGeneticAlgorithm {
     @Test
     public void testRunZero35() throws Exception {
 
+
+//        10111110100011110010001010000010111
+
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
         ToDoubleFunction<String> toDoubleFunction = new ToDoubleFunction<String>() {
@@ -546,6 +549,10 @@ public class TestGeneticAlgorithm {
         for (int i = 0; i < 10; i++) {
             String s = ga.run(toDoubleFunction, 35, 0.6, 0.002,100);
             System.out.println(s);
+
+            if(s.equals("10111110100011110010001010000010111")){
+                System.out.printf("#######   found  ##########");
+            }
 
         }
 
@@ -718,7 +725,6 @@ public class TestGeneticAlgorithm {
     @Test
     public void testSum() throws Exception {
 
-
         int sum = 0;
         for (int i = 0; i <= 35; i++) {
             sum = sum +i ;
@@ -732,10 +738,18 @@ public class TestGeneticAlgorithm {
 
         GeneticAlgorithm ga = new GeneticAlgorithm();
         String s2 = "10100011000010110100111000100001000";
-
-
         System.out.println(ga.getProduct(s2));
+    }
 
+
+    @Test
+    public void testEExpress() throws Exception {
+
+        double sum = 1 ;
+        for (int i = 0; i < 100; i++) {
+           sum  = sum / 100;
+        }
+        System.out.println(sum);
 
     }
 }
