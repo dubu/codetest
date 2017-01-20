@@ -157,12 +157,12 @@ class GeneticAlgorithm {
         for (int iii = 0; iii < iterations; iii++) {
 
 
-            int generationCnt = 1000;
+            int generationCnt = 100;
 
             // 0 init
 //        List<String> populationList = new LinkedList<String>();
             List<String> populationList = new ArrayList();
-            int listSize = 20;
+            int listSize = length;
             for (int i = 0; i < listSize; i++) {
                 boolean flag = true;
                 while (flag){
@@ -625,7 +625,7 @@ public class TestGeneticAlgorithm {
 //        String str = "00010001000001000100000000010011111";
 //        String str = "10011000111011100101100111010100110";
 //        String str = "10110010010111011101001101111100010";
-        String str = "1100000000000000000000000010000000";
+        String str = "1100000000000000000000000010000000";   // 20, 100 ,100, iii 6
 
 //        String str = "100111011001"; //36
         GeneticAlgorithm ga = new GeneticAlgorithm();
