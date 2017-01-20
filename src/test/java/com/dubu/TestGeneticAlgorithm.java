@@ -153,139 +153,151 @@ class GeneticAlgorithm {
         String rsStr= "";
         double rsFitness = 0;
 
-        // 0 init
+
+        for (int iii = 0; iii < iterations; iii++) {
+
+
+            int generationCnt = 100;
+
+            // 0 init
 //        List<String> populationList = new LinkedList<String>();
-        List<String> populationList = new ArrayList();
-        int listSize = 10;
-        for (int i = 0; i < listSize; i++) {
-            boolean flag = true;
-            while (flag){
-                String generate = generate(length);
-                // test
+            List<String> populationList = new ArrayList();
+            int listSize = 10;
+            for (int i = 0; i < listSize; i++) {
+                boolean flag = true;
+                while (flag){
+                    String generate = generate(length);
+                    // test
 //                    populationList.add("00000000000000000000000000000000000");
 //                    flag =false;
 //                    System.out.println(generate);
 
-                if(populationList.contains(generate)){
-                    // pass
-                }else{
-                    populationList.add(generate);
-                    flag =false;
+                    if(populationList.contains(generate)){
+                        // pass
+                    }else{
+                        populationList.add(generate);
+                        flag =false;
+                    }
                 }
             }
-        }
 
-        List<String> testList = Arrays.asList("11011100101001001101101111001000010"
-            , "01111011100011110000110101110010011"
-            , "00101100111100011011100000010001111"
-            , "00110010010000111110000111001001011"
-            , "00101100011011001111000101000111110"
-            , "10101011010001001010010010011010010"
-            , "01010011001111111111111111000100110"
-            , "01000100000000111010000001010100100"
-            , "10110010001001010110101010101111011"
-            , "10110000011011010000011010001001001"
-        );
+            List<String> testList = Arrays.asList("11011100101001001101101111001000010"
+                , "01111011100011110000110101110010011"
+                , "00101100111100011011100000010001111"
+                , "00110010010000111110000111001001011"
+                , "00101100011011001111000101000111110"
+                , "10101011010001001010010010011010010"
+                , "01010011001111111111111111000100110"
+                , "01000100000000111010000001010100100"
+                , "10110010001001010110101010101111011"
+                , "10110000011011010000011010001001001"
+            );
 //            populationList =  testList;
 
 
-        for (int ii = 0; ii < iterations; ii++) {
+            for (int ii = 0; ii < generationCnt; ii++) {
 
-            ArrayList<String> nextPopulationList = new ArrayList<>();
+                ArrayList<String> nextPopulationList = new ArrayList<>();
 //            for (int i = 0; i < populationList.size()/2; i++) {
 
-            while(nextPopulationList.size() < listSize){
-                // 1 select
-                List<Double> fitnessesList = getFitnesses(populationList,fitness);
+                while(nextPopulationList.size() < listSize){
+                    // 1 select
+                    List<Double> fitnessesList = getFitnesses(populationList,fitness);
 
 
-                if(nextPopulationList.size() == -1 ){
-                    Collections.sort(populationList, (a, b) -> {
+                    if(nextPopulationList.size() == -1 ){
+                        Collections.sort(populationList, (a, b) -> {
 
-                        if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
-                            return -1;
-                        }else{
-                            return 1;
-                        }
+                            if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
+                                return -1;
+                            }else{
+                                return 1;
+                            }
 
-                    });
+                        });
 
-                    System.out.println("====  "+ nextPopulationList.size());
-                    populationList.stream().forEach(System.out::println);
-                    System.out.println("====");
-                    populationList.stream().map(s ->fitness.applyAsDouble(s)).forEach(System.out::println);
+                        System.out.println("====  "+ nextPopulationList.size());
+                        populationList.stream().forEach(System.out::println);
+                        System.out.println("====");
+                        populationList.stream().map(s ->fitness.applyAsDouble(s)).forEach(System.out::println);
 
-                }
+                    }
 
-                // 2 crosss
+                    // 2 crosss
 
-                if(randUniformPositive() <= p_c ){
-                    // select two
-                    String[] selectArr = select(populationList, fitnessesList);
+                    if(randUniformPositive() <= p_c ){
+                        // select two
+                        String[] selectArr = select(populationList, fitnessesList);
 
-                    String cro1 = selectArr[0];
-                    String cro2 = selectArr[1];
-                    String[] crossover = crossover(cro1, cro2);
+                        String cro1 = selectArr[0];
+                        String cro2 = selectArr[1];
+                        String[] crossover = crossover(cro1, cro2);
 
 //                    populationList.remove(cro1);
 //                    populationList.remove(cro2);
 
-                    String mutate0 = mutate(crossover[0], p_m);
-                    String mutate1 = mutate(crossover[1], p_m);
+                        String mutate0 = mutate(crossover[0], p_m);
+                        String mutate1 = mutate(crossover[1], p_m);
 
-                    if(nextPopulationList.contains(mutate0)){
-                        // pass
-                    }else{
-                        nextPopulationList.add(mutate0);
+                        if(nextPopulationList.contains(mutate0)){
+                            // pass
+                        }else{
+                            nextPopulationList.add(mutate0);
+                        }
+
+                        if(nextPopulationList.contains(mutate1)){
+                            // pass
+                        }else{
+                            nextPopulationList.add(mutate1);
+                        }
+
                     }
 
-                    if(nextPopulationList.contains(mutate1)){
-                        // pass
+                    // score
+                    // score sort
+
+
+                    // 4 loop
+                }
+
+
+
+                // replace next generation !!
+                populationList = nextPopulationList;
+
+                Collections.sort(populationList, (a, b) -> {
+
+                    if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
+                        return -1;
                     }else{
-                        nextPopulationList.add(mutate1);
+                        return 1;
                     }
 
-                }
+                });
 
-                // score
-                // score sort
-
-
-                // 4 loop
-            }
-
-
-
-            // replace next generation !!
-            populationList = nextPopulationList;
-
-            Collections.sort(populationList, (a, b) -> {
-
-                if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
-                    return -1;
-                }else{
-                    return 1;
-                }
-
-            });
-
-            // store close ideal
-            String closeStr = populationList.get(0);
-            double fit = fitness.applyAsDouble(closeStr);
+                // store close ideal
+                String closeStr = populationList.get(0);
+                double fit = fitness.applyAsDouble(closeStr);
 //            System.out.println(score);
-            if(fit > rsFitness){
-                rsFitness = fit;
-                rsStr = populationList.get(0);
-                System.err.println(String.format("%s %s",rsStr,rsFitness));
-            }
+                if(fit > rsFitness){
+                    rsFitness = fit;
+                    rsStr = populationList.get(0);
+                    System.err.println(String.format("%s %s",rsStr,rsFitness));
+                }
 
-            if(fit == 1){
-                return rsStr;
-            }
+                if(fit == 1){
+                    System.err.println("for iii "+iii);
+                    return rsStr;
+                }
 
+
+
+            }
 
 
         }
+
+
 
 //        if(Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","01011000100110100011011100100111111","11111111111000000110010000010011010").contains(rsStr)){
 //            System.err.println("FOUND!!");
@@ -590,8 +602,9 @@ public class TestGeneticAlgorithm {
     public void testRunX() throws Exception {
 //        String str = "00010001000001000100000000010011111";
 //        String str = "10011000111011100101100111010100110";
-//        String str = "01001101101010101010011110101000111";
-        String str = "100111011001";
+        String str = "10110010010111011101001101111100010";
+
+//        String str = "100111011001"; //36
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
         long idealSum = ga.getSum(str);
@@ -611,8 +624,8 @@ public class TestGeneticAlgorithm {
 
 
         int foundTime = 0;
-        for (int i = 0; i < 100; i++) {
-            String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,1000);
+        for (int i = 0; i < 10; i++) {
+            String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,100);
 
             System.err.println(s);
             System.err.println("     ");
