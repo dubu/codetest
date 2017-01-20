@@ -612,8 +612,11 @@ public class TestGeneticAlgorithm {
 
         int foundTime = 0;
         for (int i = 0; i < 100; i++) {
-            String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,100);
-            System.out.println(s);
+            String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,1000);
+
+            System.err.println(s);
+            System.err.println("     ");
+
 
             if(s.equals(str)){
                 System.err.printf("####### found   ##########   " +i );
@@ -624,8 +627,6 @@ public class TestGeneticAlgorithm {
         }
 
         System.out.println(foundTime);
-
-
 
     }
 
