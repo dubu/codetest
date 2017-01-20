@@ -72,22 +72,22 @@ class GeneticAlgorithm {
 
         for (int i = 0; i < selectCnt; i++) {
 
-            boolean flag = true;
-            while(flag){
-
-                int idx = rouletteSelect(fitArr);
-                if(rsList.contains(population.get(idx))){
-                    // pass
-                }else{
-                    rsList.add(population.get(idx));
-                    flag = false;
-                }
-            }
-
+//            boolean flag = true;
+//            while(flag){
 //
-//            // allow duplication
-//            int idx = rouletteSelect(fitArr);
-//            rsList.add(population.get(idx));
+//                int idx = rouletteSelect(fitArr);
+//                if(rsList.contains(population.get(idx))){
+//                    // pass
+//                }else{
+//                    rsList.add(population.get(idx));
+//                    flag = false;
+//                }
+//            }
+
+
+            // allow duplication
+            int idx = rouletteSelect(fitArr);
+            rsList.add(population.get(idx));
 
         }
 
@@ -154,7 +154,8 @@ class GeneticAlgorithm {
         double rsFitness = 0;
 
         // 0 init
-        List<String> populationList = new LinkedList<String>();
+//        List<String> populationList = new LinkedList<String>();
+        List<String> populationList = new ArrayList();
         int listSize = 10;
         for (int i = 0; i < listSize; i++) {
             boolean flag = true;
@@ -190,14 +191,15 @@ class GeneticAlgorithm {
 
         for (int ii = 0; ii < iterations; ii++) {
 
+            ArrayList<String> nextPopulationList = new ArrayList<>();
+//            for (int i = 0; i < populationList.size()/2; i++) {
 
-            for (int i = 0; i < populationList.size()/2; i++) {
-
+            while(nextPopulationList.size() < listSize){
                 // 1 select
                 List<Double> fitnessesList = getFitnesses(populationList,fitness);
 
 
-                if(i == 0 ){
+                if(nextPopulationList.size() == -1 ){
                     Collections.sort(populationList, (a, b) -> {
 
                         if (fitness.applyAsDouble(a)>fitness.applyAsDouble(b)) {
@@ -208,7 +210,7 @@ class GeneticAlgorithm {
 
                     });
 
-                    System.out.println("====  "+ i);
+                    System.out.println("====  "+ nextPopulationList.size());
                     populationList.stream().forEach(System.out::println);
                     System.out.println("====");
                     populationList.stream().map(s ->fitness.applyAsDouble(s)).forEach(System.out::println);
@@ -225,14 +227,24 @@ class GeneticAlgorithm {
                     String cro2 = selectArr[1];
                     String[] crossover = crossover(cro1, cro2);
 
-                    populationList.remove(cro1);
-                    populationList.remove(cro2);
+//                    populationList.remove(cro1);
+//                    populationList.remove(cro2);
 
                     String mutate0 = mutate(crossover[0], p_m);
                     String mutate1 = mutate(crossover[1], p_m);
 
-                    populationList.add(mutate0);
-                    populationList.add(mutate1);
+                    if(nextPopulationList.contains(mutate0)){
+                        // pass
+                    }else{
+                        nextPopulationList.add(mutate0);
+                    }
+
+                    if(nextPopulationList.contains(mutate1)){
+                        // pass
+                    }else{
+                        nextPopulationList.add(mutate1);
+                    }
+
                 }
 
                 // score
@@ -241,6 +253,11 @@ class GeneticAlgorithm {
 
                 // 4 loop
             }
+
+
+
+            // replace next generation !!
+            populationList = nextPopulationList;
 
             Collections.sort(populationList, (a, b) -> {
 
@@ -259,7 +276,7 @@ class GeneticAlgorithm {
             if(fit > rsFitness){
                 rsFitness = fit;
                 rsStr = populationList.get(0);
-                System.err.println(String.format("%s %s",rsStr,rsFitness));
+//                System.err.println(String.format("%s %s",rsStr,rsFitness));
             }
 
             if(fit == 1){
@@ -270,12 +287,13 @@ class GeneticAlgorithm {
 
         }
 
-        if(Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","01011000100110100011011100100111111","11111111111000000110010000010011010").contains(rsStr)){
-            System.err.println("FOUND!!");
-        }
+//        if(Arrays.asList("00110011101110101000011000011100011","10010000001101001001110110110011111","01011000100110100011011100100111111","11111111111000000110010000010011010").contains(rsStr)){
+//            System.err.println("FOUND!!");
+//        }
 
 
-        System.err.println(String.format("close : %s %s", rsStr,rsFitness));
+        System.out.println(String.format("close : %s %s", rsStr,rsFitness));
+
         return rsStr;
     }
 
@@ -570,7 +588,10 @@ public class TestGeneticAlgorithm {
 
     @Test
     public void testRunX() throws Exception {
-        String str = "00010001";
+//        String str = "00010001000001000100000000010011111";
+//        String str = "10011000111011100101100111010100110";
+//        String str = "1001100011101110";
+        String str = "00000000000000001000000000000000000";
         GeneticAlgorithm ga = new GeneticAlgorithm();
 
         long idealSum = ga.getSum(str);
@@ -589,15 +610,20 @@ public class TestGeneticAlgorithm {
         };
 
 
-        for (int i = 0; i < 1; i++) {
+        int foundTime = 0;
+        for (int i = 0; i < 100; i++) {
             String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,100);
             System.out.println(s);
 
             if(s.equals(str)){
-                System.err.printf("####### found   ##########   ");
+                System.err.printf("####### found   ##########   " +i );
+                ++foundTime;
+                break;
             }
 
         }
+
+        System.out.println(foundTime);
 
 
 
