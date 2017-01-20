@@ -297,11 +297,11 @@ class GeneticAlgorithm {
                 if(fit > rsFitness){
                     rsFitness = fit;
                     rsStr = populationList.get(0);
-                    System.err.println(String.format("%s %s",rsStr,rsFitness));
+//                    System.err.println(String.format("%s %s",rsStr,rsFitness));
                 }
 
                 if(fit == 1){
-                    System.err.println("for iii "+iii);
+//                    System.err.println("for iii "+iii);
                     return rsStr;
                 }
 
