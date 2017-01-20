@@ -157,12 +157,12 @@ class GeneticAlgorithm {
         for (int iii = 0; iii < iterations; iii++) {
 
 
-            int generationCnt = 100;
+            int generationCnt = 1000;
 
             // 0 init
 //        List<String> populationList = new LinkedList<String>();
             List<String> populationList = new ArrayList();
-            int listSize = 10;
+            int listSize = 20;
             for (int i = 0; i < listSize; i++) {
                 boolean flag = true;
                 while (flag){
@@ -192,7 +192,7 @@ class GeneticAlgorithm {
                 , "10110010001001010110101010101111011"
                 , "10110000011011010000011010001001001"
             );
-            populationList =  testList;
+//            populationList =  testList;
 
 
             for (int ii = 0; ii < generationCnt; ii++) {
@@ -624,7 +624,8 @@ public class TestGeneticAlgorithm {
     public void testRunX() throws Exception {
 //        String str = "00010001000001000100000000010011111";
 //        String str = "10011000111011100101100111010100110";
-        String str = "10110010010111011101001101111100010";
+//        String str = "10110010010111011101001101111100010";
+        String str = "1100000000000000000000000010000000";
 
 //        String str = "100111011001"; //36
         GeneticAlgorithm ga = new GeneticAlgorithm();
@@ -647,7 +648,7 @@ public class TestGeneticAlgorithm {
 
         int foundTime = 0;
         for (int i = 0; i < 1; i++) {
-            String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,1);
+            String s = ga.run(toDoubleFunction, str.length(), 0.6, 0.002,100);
 
             System.err.println(s);
             System.err.println("     ");
