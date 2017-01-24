@@ -19,6 +19,74 @@ import java.util.Stack;
 
     // solution
     public static String execute(String code, InputStream input) {
+
+
+        /*
+
+ss stn tnst nnn 1
+
+       1.s  stack
+       ss[num]
+       sts[num]
+       stn[num]
+       sns
+       snt
+       snn
+
+
+       2.ts math
+       tsss
+       tsst
+       tssn
+       tsts
+       tstt
+
+       3.tt  heap access
+       tts
+       ttt
+
+       4.tn in/ output
+       tnss
+       tnst
+       tnts
+       tntt
+
+       5.n  flow
+       nss[label]
+       nst[label]
+       nsn[label]
+       nts[label]
+       ntt[label]
+       ntn[label]
+       nnn
+
+
+       sign
+       t[num]n = -3
+       s[num]n = +3
+
+
+       number
+       sn = 0
+       tn = 0
+
+       tssn =  00
+       tssssn = 0000
+       ttstsn = 1010
+
+      label
+      tts
+      sssssss
+      ts
+
+
+         */
+
+
+        String unbleach = unbleach(code);
+        System.out.printf(unbleach);
+
+
         String output = "";
         Stack<Integer> stack = new Stack<>();
         Map<Integer,Integer> heap = new HashMap<>();
