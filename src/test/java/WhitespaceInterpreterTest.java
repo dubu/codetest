@@ -6,11 +6,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
- class WhitespaceInterpreter {
+class WhitespaceInterpreter {
 
     // transforms space characters to ['s','t','n'] chars;
     public static String unbleach(String code) {
@@ -20,10 +21,26 @@ import java.util.Stack;
     // solution
     public static String execute(String code, InputStream input) {
 
+        if ((code.length() == 0 )) {
+//            throw new Exception();
+        }
+
+//        parseNumber(code);
+
+        parseStr(code);
+
+
+        // extract number
+
+        // label
+
+        // parse  order
 
         /*
 
 ss stn tnst nnn 1
+ss stssssstn tnss nnn
+    1000001  out
 
        1.s  stack
        ss[num]
@@ -32,7 +49,6 @@ ss stn tnst nnn 1
        sns
        snt
        snn
-
 
        2.ts math
        tsss
@@ -60,24 +76,13 @@ ss stn tnst nnn 1
        ntn[label]
        nnn
 
-
        sign
-       t[num]n = -3
-       s[num]n = +3
-
-
-       number
-       sn = 0
-       tn = 0
-
-       tssn =  00
-       tssssn = 0000
-       ttstsn = 1010
+       t[s]n = -1
+       s[t]n = +1
 
       label
-      tts
-      sssssss
-      ts
+      tttttttn
+      sssssssn
 
 
          */
@@ -94,6 +99,115 @@ ss stn tnst nnn 1
         return output;
     }
 
+    public static List<String> parseStr(String str) {
+        String code = unbleach(str);
+        System.err.println(code);
+        List<String> strList = new ArrayList<>();
+
+//        strList = strList.stream().filter(s -> s.equals("s") || s.equals("t") || s.equals("n")).collect(Collectors.toList());
+
+        char[] chars = code.toCharArray();
+        StringBuilder sb= new StringBuilder();
+        boolean numberFlag = false;
+        boolean labelFlag = false;
+        for (int i = 0; i < chars.length; i++) {
+            char aChar = chars[i];
+            if(Arrays.asList('t','s','n').contains(aChar))
+            sb.append(aChar);
+            switch (sb.toString()){
+                case "ss":
+                case "sts":
+                case "stn":
+                    if(numberFlag){
+                        //pass
+                    }else{
+                        strList.add(sb.toString());
+                        sb = new StringBuilder();
+                        numberFlag = true;
+                    }
+                    break;
+                case "sns":
+                case "snt":
+                case "snn":
+                case "tsss":
+                case "tsst":
+                case "tssn":
+                case "tsts":
+                case "tstt":
+                case "tts":
+                case "ttt":
+                case "tnss":
+                case "tnst":
+                case "tnts":
+                case "tntt":
+                case "nnn":
+                    strList.add(sb.toString());
+                    sb = new StringBuilder();
+                    break;
+                case "nss":
+                case "nst":
+                case "nts":
+                case "ntt":
+                case "ntn":
+                    if(numberFlag){
+                        //pass
+                    }else{
+                        strList.add(sb.toString());
+                        sb = new StringBuilder();
+                        labelFlag= true;
+                    }
+                    break;
+                default:
+                    // number
+                    Pattern pattern = Pattern.compile("([s|t][st]{1,})n");
+                    Matcher matcher = pattern.matcher(sb.toString());
+                    if (matcher.find() && numberFlag) {
+                        matcher.group(0);
+                        String group = matcher.group(1);
+                        String sign= group.substring(0, 1);
+                        String numStr = group.substring(1);
+                        numStr=numStr.replaceAll("t","1");
+                        numStr=numStr.replaceAll("s","0");
+                        int num = Integer.parseInt(numStr, 2);
+
+                        if(sign.equals("t")){
+                            strList.add(String.valueOf(-num));
+                        }else{
+                            strList.add(String.valueOf(num));
+                        }
+                        sb = new StringBuilder();
+                        numberFlag = false;
+//                        System.err.println(i);
+                    }else{
+//                        System.err.println("ERR");
+                    }
+
+
+                    // label
+                    break;
+            }
+        }
+        if ((sb.toString().length()>0)) {
+                        System.err.println("ERROR "+ sb.toString());
+        }
+        strList.stream().forEach(System.err::println);
+        return strList;
+    }
+
+    public static void parseNumber(String code) {
+        Pattern pattern = Pattern.compile("[ss|sts|stn]([s|t][st]{1,})n");
+        Matcher matcher = pattern.matcher(code);
+        while (matcher.find()) {
+            matcher.group(0);
+            String group = matcher.group(1);
+            group.substring(0,1);
+            String num = group.substring(1);
+            int i = Integer.parseInt(num, 2);
+            System.err.println(i);
+
+        }
+    }
+
 }
 
 
@@ -108,8 +222,9 @@ public class WhitespaceInterpreterTest {
             {"   \t\t\n\t\n \t\n\n\n", "3"},
             {"    \n\t\n \t\n\n\n", "0"}
         };
+        Arrays.stream(tests).forEach(s -> WhitespaceInterpreter.parseStr(s[0]));
         for (String[] test : tests) {
-            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
+//            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
         }
     }
 
@@ -121,12 +236,15 @@ public class WhitespaceInterpreterTest {
             {"  \t\t \n\t\n \t\n\n\n", "-2"},
             {"  \t\t\t\n\t\n \t\n\n\n", "-3"},
         };
+
+        Arrays.stream(tests).forEach(s -> WhitespaceInterpreter.parseStr(s[0]));
+
         for (String[] test : tests) {
-            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
+//            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
         }
     }
 
-    @Test(expected = Exception.class)
+//    @Test(expected = Exception.class)
     public void testFlowEdge() {
         System.out.println("Testing simple flow control edge case");
         WhitespaceInterpreter.execute("", null);
@@ -140,8 +258,9 @@ public class WhitespaceInterpreterTest {
             {"   \t    \t \n\t\n  \n\n\n", "B"},
             {"   \t    \t\t\n\t\n  \n\n\n", "C"},
         };
+        Arrays.stream(tests).forEach(s -> WhitespaceInterpreter.parseStr(s[0]));
         for (String[] test : tests) {
-            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
+//            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
         }
     }
 
@@ -153,8 +272,9 @@ public class WhitespaceInterpreterTest {
             {" I heart \t  cats  \t \n\t\n  \n\n\n", "B"},
             {"   \t  welcome  \t\t\n\t\n to the\nnew\nworld\n", "C"},
         };
+        Arrays.stream(tests).forEach(s -> WhitespaceInterpreter.parseStr(s[0]));
         for (String[] test : tests) {
-            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
+//            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
         }
     }
 
@@ -171,8 +291,20 @@ public class WhitespaceInterpreterTest {
             {"   \t\t\n   \t \n \n\t \n\n\t\n \t\n\n\n", "2"},
             {"   \t\t\n   \t \n   \t\n   \t  \n   \t\t \n   \t \t\n   \t\t\t\n \n\t \t\n \t\t\n\t\n \t\t\n \t\t\n \t\t\n \t\n\n\n", "5123"},
         };
+
+        Arrays.stream(tests).forEach(s -> WhitespaceInterpreter.parseStr(s[0]));
+
         for (String[] test : tests) {
-            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
+//            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
         }
+    }
+
+
+    @Test
+    public void testNumberParse() throws Exception {
+        String code =  "   \t\t\n \n \t\n \t\t\n \t\n\n\n";
+        WhitespaceInterpreter.parseStr(code);
+
+
     }
 }
