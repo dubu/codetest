@@ -27,12 +27,17 @@ class WhitespaceInterpreter {
 
 //        parseNumber(code);
 
-        List<String> strList= parseStr(code);
+        String output = "";
+        Stack<Integer> stack = new Stack<>();
+        Map<Integer,Integer> heap = new HashMap<>();
 
+        List<String> strList= parseStr(code);
         for (int i = 0; i < strList.size(); i++) {
             String str = strList.get(i);
            switch (str){
                case "ss" :
+                   stack.push(Integer.valueOf(strList.get(i+1)));
+                   break;
                case "sts" :
                case "stn" :
                case "snt" :
@@ -48,7 +53,12 @@ class WhitespaceInterpreter {
                case "ttt" :
 
                case "tnss" :
+                   char a = (char) stack.pop().intValue();
+                   output = String.valueOf(a);
+                   break;
                case "tnst" :
+                   output= String.valueOf(stack.pop().intValue());
+                   break;
                case "tnts" :
                case "tntt" :
 
@@ -71,72 +81,11 @@ class WhitespaceInterpreter {
         }
 
 
-        // extract number
-
-        // label
-
-        // parse  order
-
-        /*
-
-
-ss stn tnst nnn 1
-ss stssssstn tnss nnn
-    1000001  out
-
-       1.s  stack
-       ss[num]
-       sts[num]
-       stn[num]
-       sns
-       snt
-       snn
-
-       2.ts math
-       tsss
-       tsst
-       tssn
-       tsts
-       tstt
-
-       3.tt  heap access
-       tts
-       ttt
-
-       4.tn in/ output
-       tnss
-       tnst
-       tnts
-       tntt
-
-       5.n  flow
-       nss[label]
-       nst[label]
-       nsn[label]
-       nts[label]
-       ntt[label]
-       ntn[label]
-       nnn
-
-       sign
-       t[s]n = -1
-       s[t]n = +1
-
-      label
-      tttttttn
-      sssssssn
-
-
-         */
-
-
         String unbleach = unbleach(code);
         System.out.printf(unbleach);
 
 
-        String output = "";
-        Stack<Integer> stack = new Stack<>();
-        Map<Integer,Integer> heap = new HashMap<>();
+
         // ... you code ...
         return output;
     }
@@ -275,7 +224,7 @@ public class WhitespaceInterpreterTest {
         };
         Arrays.stream(tests).forEach(s -> WhitespaceInterpreter.parseStr(s[0]));
         for (String[] test : tests) {
-//            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
+            assertEquals(test[1], WhitespaceInterpreter.execute(test[0], null));
         }
     }
 
