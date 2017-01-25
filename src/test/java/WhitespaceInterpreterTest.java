@@ -27,7 +27,48 @@ class WhitespaceInterpreter {
 
 //        parseNumber(code);
 
-        parseStr(code);
+        List<String> strList= parseStr(code);
+
+        for (int i = 0; i < strList.size(); i++) {
+            String str = strList.get(i);
+           switch (str){
+               case "ss" :
+               case "sts" :
+               case "stn" :
+               case "snt" :
+               case "snn" :
+
+               case "tsss" :
+               case "tsst" :
+               case "tssn" :
+               case "tsts" :
+               case "tstt" :
+
+               case "tts" :
+               case "ttt" :
+
+               case "tnss" :
+               case "tnst" :
+               case "tnts" :
+               case "tntt" :
+
+               case "nss" :
+               case "nts" :
+               case "nsn" :
+               case "ntt" :
+               case "ntn" :
+               case "nnn":
+
+                   break;
+               default:
+                  // number
+                   break;
+
+
+
+
+           }
+        }
 
 
         // extract number
@@ -37,6 +78,7 @@ class WhitespaceInterpreter {
         // parse  order
 
         /*
+
 
 ss stn tnst nnn 1
 ss stssssstn tnss nnn
@@ -114,6 +156,32 @@ ss stssssstn tnss nnn
             char aChar = chars[i];
             if(Arrays.asList('t','s','n').contains(aChar))
             sb.append(aChar);
+
+
+            // number
+            Pattern pattern = Pattern.compile("([s|t][st]{1,})n");
+            Matcher matcher = pattern.matcher(sb.toString());
+            if (matcher.find() && numberFlag) {
+                matcher.group(0);
+                String group = matcher.group(1);
+                String sign = group.substring(0, 1);
+                String numStr = group.substring(1);
+                numStr = numStr.replaceAll("t", "1");
+                numStr = numStr.replaceAll("s", "0");
+                int num = Integer.parseInt(numStr, 2);
+
+                if (sign.equals("t")) {
+                    strList.add(String.valueOf(-num));
+                } else {
+                    strList.add(String.valueOf(num));
+                }
+                sb = new StringBuilder();
+                numberFlag = false;
+//                        System.err.println(i);
+            } else {
+//                        System.err.println("ERR");
+            }
+
             switch (sb.toString()){
                 case "ss":
                 case "sts":
@@ -140,6 +208,13 @@ ss stssssstn tnss nnn
                 case "tnst":
                 case "tnts":
                 case "tntt":
+                    if(numberFlag){
+                        //pass
+                    }else {
+                        strList.add(sb.toString());
+                        sb = new StringBuilder();
+                    }
+                    break;
                 case "nnn":
                     strList.add(sb.toString());
                     sb = new StringBuilder();
@@ -157,33 +232,9 @@ ss stssssstn tnss nnn
                         labelFlag= true;
                     }
                     break;
+
                 default:
-                    // number
-                    Pattern pattern = Pattern.compile("([s|t][st]{1,})n");
-                    Matcher matcher = pattern.matcher(sb.toString());
-                    if (matcher.find() && numberFlag) {
-                        matcher.group(0);
-                        String group = matcher.group(1);
-                        String sign= group.substring(0, 1);
-                        String numStr = group.substring(1);
-                        numStr=numStr.replaceAll("t","1");
-                        numStr=numStr.replaceAll("s","0");
-                        int num = Integer.parseInt(numStr, 2);
-
-                        if(sign.equals("t")){
-                            strList.add(String.valueOf(-num));
-                        }else{
-                            strList.add(String.valueOf(num));
-                        }
-                        sb = new StringBuilder();
-                        numberFlag = false;
-//                        System.err.println(i);
-                    }else{
-//                        System.err.println("ERR");
-                    }
-
-
-                    // label
+//                    System.err.println("ERROR" + sb.toString());
                     break;
             }
         }
