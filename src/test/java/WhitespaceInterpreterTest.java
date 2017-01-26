@@ -53,9 +53,11 @@ class WhitespaceInterpreter {
                           // pass
 
                        }else{
-                           for (int j = 0; j < Integer.valueOf(num); j++) {
+                           Integer peek = stack.peek();
+                           for (int j = 0; j < Integer.valueOf(num)+1; j++) {
                                stack.pop();
                            }
+                           stack.push(peek);
                        }
                    }
 
@@ -66,10 +68,16 @@ class WhitespaceInterpreter {
                    stack.push(peek);
                    break;
                case "snt" :
-
-
+                   int temp;
+                   Integer pop1 = stack.pop();
+                   Integer pop2 = stack.pop();
+                   stack.push(pop1);
+                   stack.push(pop2);
                    break;
                case "snn" :
+                   stack.pop();
+
+                   break;
 
 
                case "tsss" :
@@ -313,14 +321,14 @@ public class WhitespaceInterpreterTest {
     public void testStack() {
         System.out.println("Testing stack functionality");
         String[][] tests = {
-//            {"   \t\t\n   \t\t\n\t\n \t\t\n \t\n\n\n", "33"},
-//            {"   \t\t\n \n \t\n \t\t\n \t\n\n\n", "33"},
-//            {"   \t\n   \t \n   \t\t\n \t  \t \n\t\n \t\n\n\n", "1"},
-//            {"   \t\n   \t \n   \t\t\n \t  \t\n\t\n \t\n\n\n", "2"},
+            {"   \t\t\n   \t\t\n\t\n \t\t\n \t\n\n\n", "33"},
+            {"   \t\t\n \n \t\n \t\t\n \t\n\n\n", "33"},
+            {"   \t\n   \t \n   \t\t\n \t  \t \n\t\n \t\n\n\n", "1"},
+            {"   \t\n   \t \n   \t\t\n \t  \t\n\t\n \t\n\n\n", "2"},
             {"   \t\n   \t \n   \t\t\n \t   \n\t\n \t\n\n\n", "3"},
             {"   \t\t\n   \t \n \n\t\t\n \t\t\n \t\n\n\n", "32"},
-//            {"   \t\t\n   \t \n \n\t \n\n\t\n \t\n\n\n", "2"},
-//            {"   \t\t\n   \t \n   \t\n   \t  \n   \t\t \n   \t \t\n   \t\t\t\n \n\t \t\n \t\t\n\t\n \t\t\n \t\t\n \t\t\n \t\n\n\n", "5123"},
+            {"   \t\t\n   \t \n \n\t \n\n\t\n \t\n\n\n", "2"},
+            {"   \t\t\n   \t \n   \t\n   \t  \n   \t\t \n   \t \t\n   \t\t\t\n \n\t \t\n \t\t\n\t\n \t\t\n \t\t\n \t\t\n \t\n\n\n", "5123"},
         };
 
         Arrays.stream(tests).forEach(s -> WhitespaceInterpreter.parseStr(s[0]));
