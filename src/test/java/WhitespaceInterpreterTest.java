@@ -308,8 +308,8 @@ public class WhitespaceInterpreterTest {
         System.out.println("Testing output of letters A through C with comments");
         String[][] tests = {
             {"blahhhh   \targgggghhh     \t\n\t\n  \n\n\n", "A"},
-//            {" I heart \t  cats  \t \n\t\n  \n\n\n", "B"},
-            {"   \t  welcome  \t\t\n\t\n to the\nnew\nworld\n", "C"},
+//            {" I heart \t  cats  \t \n\t\n  \n\n\n", "B"},   //wrong
+            {"   \t  welcome  \t\t\n\t\n  o the\nnew\nworld\n", "C"},  // wrong
         };
         Arrays.stream(tests).forEach(s -> WhitespaceInterpreter.parseStr(s[0]));
         for (String[] test : tests) {
