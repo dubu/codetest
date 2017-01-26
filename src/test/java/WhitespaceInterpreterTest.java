@@ -39,7 +39,8 @@ class WhitespaceInterpreter {
                    stack.push(Integer.valueOf(strList.get(i+1)));
                    break;
                case "sts" :
-
+                   Integer idx = stack.get(stack.size() - Integer.valueOf(strList.get(i + 1)) -1);
+                   stack.push(idx);
                    break;
                case "stn" :
                    //discard
@@ -60,8 +61,16 @@ class WhitespaceInterpreter {
 
 
                    break;
+               case "sns" :
+                   Integer peek = stack.peek();
+                   stack.push(peek);
+                   break;
                case "snt" :
+
+
+                   break;
                case "snn" :
+
 
                case "tsss" :
                case "tsst" :
@@ -69,15 +78,17 @@ class WhitespaceInterpreter {
                case "tsts" :
                case "tstt" :
 
+
                case "tts" :
                case "ttt" :
+
 
                case "tnss" :
                    char a = (char) stack.pop().intValue();
                    output = String.valueOf(a);
                    break;
                case "tnst" :
-                   output= String.valueOf((char)stack.pop().intValue());
+                   output= output + String.valueOf(stack.pop().intValue());
                    break;
                case "tnts" :
                case "tntt" :
@@ -302,12 +313,12 @@ public class WhitespaceInterpreterTest {
     public void testStack() {
         System.out.println("Testing stack functionality");
         String[][] tests = {
-            {"   \t\t\n   \t\t\n\t\n \t\t\n \t\n\n\n", "33"},
+//            {"   \t\t\n   \t\t\n\t\n \t\t\n \t\n\n\n", "33"},
 //            {"   \t\t\n \n \t\n \t\t\n \t\n\n\n", "33"},
 //            {"   \t\n   \t \n   \t\t\n \t  \t \n\t\n \t\n\n\n", "1"},
 //            {"   \t\n   \t \n   \t\t\n \t  \t\n\t\n \t\n\n\n", "2"},
-//            {"   \t\n   \t \n   \t\t\n \t   \n\t\n \t\n\n\n", "3"},
-//            {"   \t\t\n   \t \n \n\t\t\n \t\t\n \t\n\n\n", "32"},
+            {"   \t\n   \t \n   \t\t\n \t   \n\t\n \t\n\n\n", "3"},
+            {"   \t\t\n   \t \n \n\t\t\n \t\t\n \t\n\n\n", "32"},
 //            {"   \t\t\n   \t \n \n\t \n\n\t\n \t\n\n\n", "2"},
 //            {"   \t\t\n   \t \n   \t\n   \t  \n   \t\t \n   \t \t\n   \t\t\t\n \n\t \t\n \t\t\n\t\n \t\t\n \t\t\n \t\t\n \t\n\n\n", "5123"},
         };
