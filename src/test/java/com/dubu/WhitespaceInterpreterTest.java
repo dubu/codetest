@@ -1,4 +1,4 @@
-/**
+package com.dubu; /**
  * Created by rigel on 1/23/17.
  *
  *
@@ -444,11 +444,11 @@ public class WhitespaceInterpreterTest {
        String str = "ssstntnstnnn";
        String[] strArr = {"ssstntnstnnn"};
         String[] strNull = {};
-//       WhitespaceInterpreter.execute("ssttnsssnssstnssstsnsssttnnssntnstsnsnttsnnsnnnsssnnnn", null, null);
-//        assertEquals(1, WhitespaceInterpreter.execute(null, null, null));
-//        assertEquals(1, WhitespaceInterpreter.execute(str, null, null));
+//       com.dubu.WhitespaceInterpreter.execute("ssttnsssnssstnssstsnsssttnnssntnstsnsnttsnnsnnnsssnnnn", null, null);
+//        assertEquals(1, com.dubu.WhitespaceInterpreter.execute(null, null, null));
+//        assertEquals(1, com.dubu.WhitespaceInterpreter.execute(str, null, null));
 
-//        WhitespaceInterpreter.execute("nsssnssstntnstnnnntnnnn", null, null);
+//        com.dubu.WhitespaceInterpreter.execute("nsssnssstntnstnnnntnnnn", null, null);
         WhitespaceInterpreter.execute("ssstnssstnssstsnttsttttnstnssstnssstsnttstttnnn", null, null);
     }
 }
