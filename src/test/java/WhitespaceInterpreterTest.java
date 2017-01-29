@@ -17,7 +17,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+
+
+
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 class WhitespaceInterpreter {
+
 
     // transforms space characters to ['s','t','n'] chars;
     public static String unbleach(String code) {
@@ -26,7 +38,9 @@ class WhitespaceInterpreter {
 
     public static String execute(String code , InputStream input , OutputStream out){
 
+
         System.out.println(unbleach(code));
+
         try {
             int i;
             StringBuffer buffer = new StringBuffer();
@@ -38,22 +52,20 @@ class WhitespaceInterpreter {
             System.out.println(str);
         } catch (IOException e) {
 
-
-
 //            e.printStackTrace();
         }
 
         return String.valueOf(out);
     }
+
+
     // solution
-    public static String execute(String code, InputStream input)  {
+    public static String execute(String code, InputStream input) {
+
+
 
         if ((code.length() == 0 )) {
-            try {
-                throw new Exception();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            throw new ArrayIndexOutOfBoundsException();
         }
 
 //        parseNumber(code);
@@ -65,89 +77,89 @@ class WhitespaceInterpreter {
         List<String> strList= parseStr(code);
         for (int i = 0; i < strList.size(); i++) {
             String str = strList.get(i);
-           switch (str){
-               case "ss" :
-                   stack.push(Integer.valueOf(strList.get(i+1)));
-                   break;
-               case "sts" :
-                   Integer idx = stack.get(stack.size() - Integer.valueOf(strList.get(i + 1)) -1);
-                   stack.push(idx);
-                   break;
-               case "stn" :
-                   //discard
-                   if(strList.size() <= i || strList.size()< 0){
-                       stack.removeAllElements();
+            switch (str){
+                case "ss" :
+                    stack.push(Integer.valueOf(strList.get(i+1)));
+                    break;
+                case "sts" :
+                    Integer idx = stack.get(stack.size() - Integer.valueOf(strList.get(i + 1)) -1);
+                    stack.push(idx);
+                    break;
+                case "stn" :
+                    //discard
+                    if(strList.size() <= i || strList.size()< 0){
+                        stack.removeAllElements();
 
-                   }else{
-                       String num = strList.get(i+1);
-                       if(num.contains("t")||num.contains("s")||num.contains("n")){
-                          // pass
+                    }else{
+                        String num = strList.get(i+1);
+                        if(num.contains("t")||num.contains("s")||num.contains("n")){
+                            // pass
 
-                       }else{
-                           Integer peek = stack.peek();
-                           for (int j = 0; j < Integer.valueOf(num)+1; j++) {
-                               stack.pop();
-                           }
-                           stack.push(peek);
-                       }
-                   }
-
-
-                   break;
-               case "sns" :
-                   Integer peek = stack.peek();
-                   stack.push(peek);
-                   break;
-               case "snt" :
-                   int temp;
-                   Integer pop1 = stack.pop();
-                   Integer pop2 = stack.pop();
-                   stack.push(pop1);
-                   stack.push(pop2);
-                   break;
-               case "snn" :
-                   stack.pop();
-
-                   break;
+                        }else{
+                            Integer peek = stack.peek();
+                            for (int j = 0; j < Integer.valueOf(num)+1; j++) {
+                                stack.pop();
+                            }
+                            stack.push(peek);
+                        }
+                    }
 
 
-               case "tsss" :
-               case "tsst" :
-               case "tssn" :
-               case "tsts" :
-               case "tstt" :
+                    break;
+                case "sns" :
+                    Integer peek = stack.peek();
+                    stack.push(peek);
+                    break;
+                case "snt" :
+                    int temp;
+                    Integer pop1 = stack.pop();
+                    Integer pop2 = stack.pop();
+                    stack.push(pop1);
+                    stack.push(pop2);
+                    break;
+                case "snn" :
+                    stack.pop();
+
+                    break;
 
 
-               case "tts" :
-               case "ttt" :
+                case "tsss" :
+                case "tsst" :
+                case "tssn" :
+                case "tsts" :
+                case "tstt" :
 
 
-               case "tnss" :
-                   char a = (char) stack.pop().intValue();
-                   output = String.valueOf(a);
-                   break;
-               case "tnst" :
-                   output= output + String.valueOf(stack.pop().intValue());
-                   break;
-               case "tnts" :
-               case "tntt" :
-
-               case "nss" :
-               case "nts" :
-               case "nsn" :
-               case "ntt" :
-               case "ntn" :
-               case "nnn":
-
-                   break;
-               default:
-                  // number
-                   break;
+                case "tts" :
+                case "ttt" :
 
 
+                case "tnss" :
+                    char a = (char) stack.pop().intValue();
+                    output = String.valueOf(a);
+                    break;
+                case "tnst" :
+                    output= output + String.valueOf(stack.pop().intValue());
+                    break;
+                case "tnts" :
+                case "tntt" :
+
+                case "nss" :
+                case "nts" :
+                case "nsn" :
+                case "ntt" :
+                case "ntn" :
+                case "nnn":
+
+                    break;
+                default:
+                    // number
+                    break;
 
 
-           }
+
+
+            }
         }
 
 
@@ -174,7 +186,7 @@ class WhitespaceInterpreter {
         for (int i = 0; i < chars.length; i++) {
             char aChar = chars[i];
             if(Arrays.asList('t','s','n').contains(aChar))
-            sb.append(aChar);
+                sb.append(aChar);
 
 
             // number
@@ -258,7 +270,7 @@ class WhitespaceInterpreter {
             }
         }
         if ((sb.toString().length()>0)) {
-                        System.err.println("ERROR "+ sb.toString());
+            System.err.println("ERROR "+ sb.toString());
         }
         strList.stream().forEach(System.err::println);
         return strList;
