@@ -7,26 +7,13 @@
  */
 import org.junit.Test;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static org.junit.Assert.assertEquals;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-
-
-
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 class WhitespaceInterpreter {
 
@@ -46,26 +33,30 @@ class WhitespaceInterpreter {
             StringBuffer buffer = new StringBuffer();
             byte[] b = new byte[4096];
             while( (i = input.read(b)) != -1){
-                buffer.append(new String(b, 0, i));
+                String s = new String(b, 0, i);
+                System.out.println(s);
+                buffer.append(s);
             }
             String str = buffer.toString();
             System.out.println(str);
-        } catch (IOException e) {
+        } catch (Exception e) {
 
+            System.out.println("exception");
+//            throw new ArrayIndexOutOfBoundsException();
 //            e.printStackTrace();
         }
 
-        return String.valueOf(out);
+       return execute(code,null);
+//        return "dubu";
     }
 
 
     // solution
     public static String execute(String code, InputStream input) {
 
-
-
-        if ((code.length() == 0 )) {
+        if ((code == null || code == "")) {
             throw new ArrayIndexOutOfBoundsException();
+//            throw new Exception();
         }
 
 //        parseNumber(code);
@@ -82,8 +73,17 @@ class WhitespaceInterpreter {
                     stack.push(Integer.valueOf(strList.get(i+1)));
                     break;
                 case "sts" :
-                    Integer idx = stack.get(stack.size() - Integer.valueOf(strList.get(i + 1)) -1);
-                    stack.push(idx);
+                    // Duplicate the nth value from the top of the stack.
+
+                    Integer intVal= 0 ;
+                    int numValue =Integer.valueOf(strList.get(i + 1));
+                    if(numValue<0 ){
+                       intVal = stack.get(-numValue);
+                    }else{
+                        intVal = stack.get(stack.size() - numValue -1);
+                    }
+
+                    stack.push(intVal);
                     break;
                 case "stn" :
                     //discard
@@ -147,6 +147,8 @@ class WhitespaceInterpreter {
                 case "nss" :
                 case "nts" :
                 case "nsn" :
+
+                    break;
                 case "ntt" :
                 case "ntn" :
                 case "nnn":
@@ -416,6 +418,18 @@ public class WhitespaceInterpreterTest {
         InputStream input  = null;
         OutputStream stream = null;
         String output = WhitespaceInterpreter.execute("       ", input, stream);
+
+    }
+
+    @Test
+    public void testPass() throws Exception {
+
+       String str = "ssstntnstnnn";
+       String[] strArr = {"ssstntnstnnn"};
+        String[] strNull = {};
+       WhitespaceInterpreter.execute("ssttnsssnssstnssstsnsssttnnssntnstsnsnttsnnsnnnsssnnnn", null, null);
+//        assertEquals(1, WhitespaceInterpreter.execute(null, null, null));
+//        assertEquals(1, WhitespaceInterpreter.execute(str, null, null));
 
     }
 }
