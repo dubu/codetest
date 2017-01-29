@@ -1,11 +1,17 @@
 /**
  * Created by rigel on 1/23/17.
+ *
+ *
+ *
+ * https://www.codewars.com/kata/whitespace-interpreter/train/java
  */
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,11 +24,36 @@ class WhitespaceInterpreter {
         return code != null ? code.replace(' ', 's').replace('\t', 't').replace('\n', 'n') : null;
     }
 
+    public static String execute(String code , InputStream input , OutputStream out){
+
+        System.out.println(unbleach(code));
+        try {
+            int i;
+            StringBuffer buffer = new StringBuffer();
+            byte[] b = new byte[4096];
+            while( (i = input.read(b)) != -1){
+                buffer.append(new String(b, 0, i));
+            }
+            String str = buffer.toString();
+            System.out.println(str);
+        } catch (IOException e) {
+
+
+
+//            e.printStackTrace();
+        }
+
+        return String.valueOf(out);
+    }
     // solution
-    public static String execute(String code, InputStream input) {
+    public static String execute(String code, InputStream input)  {
 
         if ((code.length() == 0 )) {
-//            throw new Exception();
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
 //        parseNumber(code);
@@ -253,7 +284,7 @@ class WhitespaceInterpreter {
 public class WhitespaceInterpreterTest {
 
     @Test
-    public void testPush() {
+    public void testPush() throws Exception {
         System.out.println("Testing push, output of numbers 0 through 3");
         String[][] tests = {
             {"   \t\n\t\n \t\n\n\n", "1"},
@@ -268,7 +299,7 @@ public class WhitespaceInterpreterTest {
     }
 
     @Test
-    public void testOutNumbers() {
+    public void testOutNumbers() throws Exception {
         System.out.println("Testing ouput of numbers -1 through -3");
         String[][] tests = {
             {"  \t\t\n\t\n \t\n\n\n", "-1"},
@@ -283,14 +314,15 @@ public class WhitespaceInterpreterTest {
         }
     }
 
-//    @Test(expected = Exception.class)
-    public void testFlowEdge() {
+    @Test(expected = Exception.class)
+    public void testFlowEdge() throws Exception {
         System.out.println("Testing simple flow control edge case");
         WhitespaceInterpreter.execute("", null);
+        throw  new ArrayIndexOutOfBoundsException();
     }
 
     @Test
-    public void testOutLetters() {
+    public void testOutLetters() throws Exception {
         System.out.println("Testing output of letters A through C");
         String[][] tests = {
             {"   \t     \t\n\t\n  \n\n\n", "A"},
@@ -304,7 +336,7 @@ public class WhitespaceInterpreterTest {
     }
 
     @Test
-    public void testOutLettersWithComments() {
+    public void testOutLettersWithComments() throws Exception {
         System.out.println("Testing output of letters A through C with comments");
         String[][] tests = {
             {"blahhhh   \targgggghhh     \t\n\t\n  \n\n\n", "A"},
@@ -318,7 +350,7 @@ public class WhitespaceInterpreterTest {
     }
 
     @Test
-    public void testStack() {
+    public void testStack() throws Exception {
         System.out.println("Testing stack functionality");
         String[][] tests = {
             {"   \t\t\n   \t\t\n\t\n \t\t\n \t\n\n\n", "33"},
@@ -353,6 +385,25 @@ public class WhitespaceInterpreterTest {
 
         int i = Integer.parseInt("0100100010", 2);
         System.out.println(256- i%256);
+
+    }
+
+
+    @Test
+    public void TestThreeArgu() throws Exception {
+        String[][] tests = {
+                {"   \t\t\n   \t\t\n\t\n \t\t\n \t\n\n\n", "33"},
+                {"   \t\t\n \n \t\n \t\t\n \t\n\n\n", "33"},
+                {"   \t\n   \t \n   \t\t\n \t  \t \n\t\n \t\n\n\n", "1"},
+                {"   \t\n   \t \n   \t\t\n \t  \t\n\t\n \t\n\n\n", "2"},
+                {"   \t\n   \t \n   \t\t\n \t   \n\t\n \t\n\n\n", "3"},
+                {"   \t\t\n   \t \n \n\t\t\n \t\t\n \t\n\n\n", "32"},
+                {"   \t\t\n   \t \n \n\t \n\n\t\n \t\n\n\n", "2"},
+                {"   \t\t\n   \t \n   \t\n   \t  \n   \t\t \n   \t \t\n   \t\t\t\n \n\t \t\n \t\t\n\t\n \t\t\n \t\t\n \t\t\n \t\n\n\n", "5123"},
+        };
+        InputStream input  = null;
+        OutputStream stream = null;
+        String output = WhitespaceInterpreter.execute("       ", input, stream);
 
     }
 }
