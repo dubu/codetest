@@ -107,8 +107,12 @@ class WhitespaceInterpreter {
 
                     break;
                 case "sns" :
-                    Integer peek = stack.peek();
-                    stack.push(peek);
+                    if(stack.empty()){
+                       // pass
+                    }else{
+                        Integer peek = stack.peek();
+                        stack.push(peek);
+                    }
                     break;
                 case "snt" :
                     int temp;
@@ -145,6 +149,8 @@ class WhitespaceInterpreter {
                 case "tntt" :
 
                 case "nss" :
+                    //Mark a location in the program with label n.
+                    break;
                 case "nts" :
                 case "nsn" :
 
@@ -427,9 +433,10 @@ public class WhitespaceInterpreterTest {
        String str = "ssstntnstnnn";
        String[] strArr = {"ssstntnstnnn"};
         String[] strNull = {};
-       WhitespaceInterpreter.execute("ssttnsssnssstnssstsnsssttnnssntnstsnsnttsnnsnnnsssnnnn", null, null);
+//       WhitespaceInterpreter.execute("ssttnsssnssstnssstsnsssttnnssntnstsnsnttsnnsnnnsssnnnn", null, null);
 //        assertEquals(1, WhitespaceInterpreter.execute(null, null, null));
 //        assertEquals(1, WhitespaceInterpreter.execute(str, null, null));
 
+        WhitespaceInterpreter.execute("nsssnssstntnstnnnntnnnn", null, null);
     }
 }
