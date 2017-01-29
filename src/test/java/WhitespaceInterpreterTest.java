@@ -302,25 +302,12 @@ class WhitespaceInterpreter {
             }
         }
         if ((sb.toString().length()>0)) {
-            System.err.println("ERROR "+ sb.toString());
+//            System.err.println("ERROR "+ sb.toString());
         }
-        strList.stream().forEach(System.err::println);
+//        strList.stream().forEach(System.err::println);
         return strList;
     }
 
-    public static void parseNumber(String code) {
-        Pattern pattern = Pattern.compile("[ss|sts|stn]([s|t][st]{1,})n");
-        Matcher matcher = pattern.matcher(code);
-        while (matcher.find()) {
-            matcher.group(0);
-            String group = matcher.group(1);
-            group.substring(0,1);
-            String num = group.substring(1);
-            int i = Integer.parseInt(num, 2);
-            System.err.println(i);
-
-        }
-    }
 
 }
 
