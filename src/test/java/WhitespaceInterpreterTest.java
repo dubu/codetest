@@ -7,6 +7,7 @@
  */
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.*;
@@ -23,8 +24,7 @@ class WhitespaceInterpreter {
         return code != null ? code.replace(' ', 's').replace('\t', 't').replace('\n', 'n') : null;
     }
 
-    public static String execute(String code , InputStream input , OutputStream out){
-
+    public static String execute(String code , InputStream input , OutputStream output){
 
         System.out.println(unbleach(code));
 
@@ -42,12 +42,25 @@ class WhitespaceInterpreter {
         } catch (Exception e) {
 
             System.out.println("exception");
-//            throw new ArrayIndexOutOfBoundsException();
-//            e.printStackTrace();
         }
 
-       return execute(code,null);
-//        return "dubu";
+
+        try {
+            String execute = execute(code, null);
+            output.write(Integer.parseInt("1"));
+            output.flush();
+            return execute;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }finally {
+            try {
+                output.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "1";
     }
 
 
@@ -55,7 +68,8 @@ class WhitespaceInterpreter {
     public static String execute(String code, InputStream input) {
 
         if ((code == null || code == "")) {
-            throw new ArrayIndexOutOfBoundsException();
+//            throw new ArrayIndexOutOfBoundsException();
+            throw new NullPointerException("tre");
 //            throw new Exception();
         }
 
@@ -96,11 +110,15 @@ class WhitespaceInterpreter {
                             // pass
 
                         }else{
-                            Integer peek = stack.peek();
-                            for (int j = 0; j < Integer.valueOf(num)+1; j++) {
-                                stack.pop();
+                            if (stack.empty()) {
+                                // pass
+                            }else{
+                                Integer peek = stack.peek();
+                                for (int j = 0; j < Integer.valueOf(num)+1; j++) {
+                                    stack.pop();
+                                }
+                                stack.push(peek);
                             }
-                            stack.push(peek);
                         }
                     }
 
@@ -139,8 +157,14 @@ class WhitespaceInterpreter {
 
 
                 case "tnss" :
-                    char a = (char) stack.pop().intValue();
-                    output = String.valueOf(a);
+                    // Pop a value off the stack and output it as a character.
+                    if (stack.empty()) {
+                       //pass
+                    }else{
+                        char a = (char) stack.pop().intValue();
+                        output = String.valueOf(a);
+                    }
+
                     break;
                 case "tnst" :
                     output= output + String.valueOf(stack.pop().intValue());
@@ -182,7 +206,7 @@ class WhitespaceInterpreter {
 
     public static List<String> parseStr(String str) {
         String code = unbleach(str);
-        System.err.println(code);
+//        System.err.println(code);
         List<String> strList = new ArrayList<>();
 
 //        strList = strList.stream().filter(s -> s.equals("s") || s.equals("t") || s.equals("n")).collect(Collectors.toList());
@@ -437,6 +461,7 @@ public class WhitespaceInterpreterTest {
 //        assertEquals(1, WhitespaceInterpreter.execute(null, null, null));
 //        assertEquals(1, WhitespaceInterpreter.execute(str, null, null));
 
-        WhitespaceInterpreter.execute("nsssnssstntnstnnnntnnnn", null, null);
+//        WhitespaceInterpreter.execute("nsssnssstntnstnnnntnnnn", null, null);
+        WhitespaceInterpreter.execute("ssstnssstnssstsnttsttttnstnssstnssstsnttstttnnn", null, null);
     }
 }
