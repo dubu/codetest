@@ -37,10 +37,10 @@ public class IntegeregexTest {
 
 
 //        Float.MAX_VALUE
-        float cntTest = 0;
+        long cntTest = 0;
         String ex = "";
-        Float min = 0f;
-        Float max = 0f;
+        Long min = 0l;
+        Long max = 0l;
         for (int i = 0; i < lines.size(); i++) {
             String s = lines.get(i);
 
@@ -53,7 +53,6 @@ public class IntegeregexTest {
                 System.err.println(s);
             }
 
-
             if ((i == 0)) {
                 cntTest = Integer.valueOf(s);
                 continue;
@@ -65,10 +64,10 @@ public class IntegeregexTest {
                 System.out.printf("expression  : %s \n", ex);
 
                 int matchCnt = 0;
-                for (float j = min; j < max; j++) {
+                Pattern compile = Pattern.compile(ex);
+                for (long j = min; j < max; j++) {
 
-                    float intVal = j;
-                    Pattern compile = Pattern.compile(ex);
+                    long intVal = j;
                     Matcher matcher = compile.matcher(String.valueOf(intVal));
 
                     int flag = 0;
@@ -81,7 +80,7 @@ public class IntegeregexTest {
 //                    System.out.println(matcher.group(2));
                         flag = flag + 1;
                     }
-                    matchCnt = flag;
+                    matchCnt =  flag;
 
                 }
                 System.out.println("match cnt  : " + matchCnt );
@@ -89,8 +88,8 @@ public class IntegeregexTest {
 
             } else {
                 String[] minMax = s.split("\\s");
-                min = Float.valueOf(minMax[0]);
-                max = Float.valueOf(minMax[1]);
+                min = Long.valueOf(minMax[0]);
+                max = Long.valueOf(minMax[1]);
                 System.out.printf(" min : %s , minx : %s \n", min, max);
 
 
