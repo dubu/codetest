@@ -56,10 +56,10 @@ public class TreeTest {
 //        mRank = new int[7];
 
         mParent = new int[]{0, 1, 1, 1, 4, 4, 4, 6};
-        mRank =   new int[]{0, 0, 1, 1, 0, 1, 1, 2};
+        mRank =   new int[]{0, 1, 0, 0, 2, 0, 1, 0};
 
         int p = findSet(7);
-        int p2 = unionSet(1, 4);
+//        int p2 = unionSet(1, 4);
 
         for (int i = 1; i < mParent.length; i++) {
             int set = findSet(mParent[i]);
@@ -69,11 +69,26 @@ public class TreeTest {
 
         System.out.println("check sort");
 
+        // union
+        int p2 = unionSet(1, 7);
+        System.out.println("check sort");
     }
 
-    private int unionSet(int i, int i1) {
+    private int unionSet(int s1, int s2) {
 
-        return 0;
+        int set1 = findSet(s1);
+        int set2 = findSet(s2);
+
+        int deep1 =  mRank[set1];
+        int deep2 =  mRank[set2];
+
+        if(deep1 < deep2){
+            mParent[set1] = set2;
+            mRank[set1] = 1;
+            return set2;
+        }
+
+        return -1;
 
     }
 
@@ -92,6 +107,5 @@ public class TreeTest {
             return parentSet;
         }
     }
-
 
 }
