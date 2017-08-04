@@ -45,6 +45,25 @@ public class TreeTest {
 
         }
 
+        for (int i = 1; i < grids.length; i++) {
+            int[] rows = grids[i];
+            for (int j = 1; j < rows.length; j++) {
+                int col = rows[j];
+
+                int left = grids[i][j-1];
+                int up = grids[i-1][j];
+
+                if(left == 1){
+                    unionSet( i*rows.length +j,i*rows.length +j-1);
+                }else if(up == 1){
+                    unionSet( i*rows.length +j,(i-1)*rows.length +j);
+                }
+
+            }
+        }
+
+        // count(set)
+
     }
 
 
