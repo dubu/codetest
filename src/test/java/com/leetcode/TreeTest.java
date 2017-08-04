@@ -19,7 +19,7 @@ public class TreeTest {
     public void disJointSet() throws Exception {
 
         int[][] grids = new int[][]{
-            {1, 1, 1, 1, 0}
+              {1, 1, 1, 1, 0}
             , {1, 1, 0, 1, 0}
             , {1, 0, 0, 0, 0}
             , {1, 1, 0, 0, 0}
@@ -27,7 +27,7 @@ public class TreeTest {
         };
 
         int[][] grids2 = new int[][]{
-            {1, 1, 0, 0, 0}
+              {1, 1, 0, 0, 0}
             , {1, 1, 0, 0, 0}
             , {1, 0, 0, 0, 0}
             , {0, 0, 1, 0, 0}
@@ -47,6 +47,19 @@ public class TreeTest {
 
     }
 
+
+    @Test
+    public void unionTest ()  throws Exception {
+
+        mParent = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
+        mRank =   new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+
+        unionSet(1,3);
+        unionSet(3,4);
+        unionSet(3,5);
+
+        System.out.println("check");
+    }
 
     @Test
     public void uionFindTest() throws Exception {
@@ -82,10 +95,21 @@ public class TreeTest {
         int deep1 =  mRank[set1];
         int deep2 =  mRank[set2];
 
+        if(set1 == set2){
+            return  set1;
+        }
+
         if(deep1 < deep2){
             mParent[set1] = set2;
-            mRank[set1] = 1;
             return set2;
+        }else if(deep1 > deep2){
+            mParent[set2] = set1;
+            return set1;
+        }else if(deep1 ==  deep2){
+            mParent[set1] = set2;
+            mRank[set2] = 1;
+            return set2;
+
         }
 
         return -1;
