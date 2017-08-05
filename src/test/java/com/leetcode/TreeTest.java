@@ -2,6 +2,9 @@ package com.leetcode;
 
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by rigel on 8/4/17.
  */
@@ -64,8 +67,36 @@ public class TreeTest {
 
         // count(set)
 
+        Set countset = new HashSet<Integer>();
+
+        for (int i = 1; i < grids.length; i++) {
+            int[] rows = grids[i];
+            for (int j = 1; j < rows.length; j++) {
+                int col = rows[j];
+                int set = findSet(col);
+                countset.add(set);
+            }
+        }
+
+        System.out.println(countset);
+
+
     }
 
+
+    @Test
+    public void countSetTest() throws Exception {
+
+        Set set = new HashSet<Integer>();
+        set.add(1);
+        set.add(1);
+        set.add(2);
+        set.add(3);
+        set.add(3);
+
+
+        System.out.println(set.size());
+    }
 
     @Test
     public void unionTest ()  throws Exception {
