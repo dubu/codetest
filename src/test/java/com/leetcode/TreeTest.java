@@ -21,7 +21,20 @@ public class TreeTest {
     @Test
     public void disJointSet() throws Exception {
 
-        int[][] grids = new int[][]{
+        mParent = new int[]{ 1, 2, 3, 4, 5, 6, 7,8,9,10};
+        mRank =   new int[]{ 0, 0, 0, 0, 0, 0, 0,0,0,0};
+
+        int arrCnt = 25;
+        mParent = new int[arrCnt];
+        mRank = new int[arrCnt];
+
+
+        for (int i = 0; i < arrCnt; i++) {
+            mParent[i] = i;
+            mRank[i] = 0;
+        }
+
+        int[][] grids0 = new int[][]{
               {1, 1, 1, 1, 0}
             , {1, 1, 0, 1, 0}
             , {1, 0, 0, 0, 0}
@@ -29,7 +42,7 @@ public class TreeTest {
             , {0, 0, 0, 0, 0}
         };
 
-        int[][] grids2 = new int[][]{
+        int[][] grids = new int[][]{
               {1, 1, 0, 0, 0}
             , {1, 1, 0, 0, 0}
             , {1, 0, 0, 0, 0}
