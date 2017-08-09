@@ -42,7 +42,7 @@ public class TreeTest {
             , {0, 0, 0, 0, 0}
         };
 
-        int[][] grids = new int[][]{
+        int[][] grids1 = new int[][]{
               {1, 1, 0, 0, 0}
             , {1, 1, 0, 0, 0}
             , {1, 0, 0, 0, 0}
@@ -50,50 +50,77 @@ public class TreeTest {
             , {0, 0, 0, 1, 1}
         };
 
+
+        int[][] grids = new int[][]{
+              {1, 0, 1, 0, 1}
+            , {0, 1, 1, 1, 0}
+            , {1, 0, 1, 0, 1}
+            , {0, 1, 0, 1, 0}
+            , {1, 0, 1, 0, 1}
+        };
+
+//        for (int i = 0; i < grids.length; i++) {
+//            int[] rows = grids[i];
+//            for (int j = 0; j < rows.length; j++) {
+//                int col = rows[j];
+//                System.out.print(col);
+//
+//            }
+//            System.out.println("");
+//
+//        }
+
         for (int i = 0; i < grids.length; i++) {
             int[] rows = grids[i];
             for (int j = 0; j < rows.length; j++) {
-                int col = rows[j];
-                System.out.print(col);
-
-            }
-            System.out.println("");
-
-        }
-
-        for (int i = 1; i < grids.length; i++) {
-            int[] rows = grids[i];
-            for (int j = 1; j < rows.length; j++) {
+                int mynum = i*rows.length +j ;
                 int col = rows[j];
 
-                int left = grids[i][j-1];
-                int up = grids[i-1][j];
+                System.out.print(String.format("%d :  %d ",mynum,col));
 
-                if(left == 1){
-                    unionSet( i*rows.length +j,i*rows.length +j-1);
-                }else if(up == 1){
-                    unionSet( i*rows.length +j,(i-1)*rows.length +j);
+                int left = -1;
+                int up= -1;
+                if(j >0){
+                    left = grids[i][j - 1];
+                }
+                if(i > 0 ){
+                    up = grids[i - 1][j];
                 }
 
+                if(left == col){
+                    unionSet( i*rows.length +j,i*rows.length +j-1);
+                    System.out.print("LEFT");
+                }
+                if(up == col){
+                    unionSet( i*rows.length +j,(i-1)*rows.length +j);
+                    System.out.print("UP");
+                }
+                System.out.println(" ");
             }
+            System.out.println(" ");
         }
 
         // count(set)
 
         Set countset = new HashSet<Integer>();
 
-        for (int i = 1; i < grids.length; i++) {
-            int[] rows = grids[i];
-            for (int j = 1; j < rows.length; j++) {
-                int col = rows[j];
-                int set = findSet(col);
-                countset.add(set);
-            }
+//        for (int i = 1; i < grids.length; i++) {
+//            int[] rows = grids[i];
+//            for (int j = 1; j < rows.length; j++) {
+//                int col = rows[j];
+//                int set = findSet(col);
+//                countset.add(set);
+//            }
+//        }
+
+        for (int i = 0; i < mParent.length; i++) {
+            int i1 = mParent[i];
+            int set = findSet(i1);
+            countset.add(set);
+
         }
 
-        System.out.println(countset);
-
-
+        System.out.println("group is " +countset.size());
     }
 
 
