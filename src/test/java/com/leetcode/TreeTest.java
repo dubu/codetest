@@ -21,21 +21,10 @@ public class TreeTest {
     @Test
     public void disJointSet() throws Exception {
 
-        mParent = new int[]{ 1, 2, 3, 4, 5, 6, 7,8,9,10};
-        mRank =   new int[]{ 0, 0, 0, 0, 0, 0, 0,0,0,0};
-
-        int arrCnt = 25;
-        mParent = new int[arrCnt];
-        mRank = new int[arrCnt];
-
-
-        for (int i = 0; i < arrCnt; i++) {
-            mParent[i] = i;
-            mRank[i] = 0;
-        }
-
+//        mParent = new int[]{ 1, 2, 3, 4, 5, 6, 7,8,9,10};
+//        mRank =   new int[]{ 0, 0, 0, 0, 0, 0, 0,0,0,0};
         int[][] grids0 = new int[][]{
-              {1, 1, 1, 1, 0}
+            {1, 1, 1, 1, 0}
             , {1, 1, 0, 1, 0}
             , {1, 0, 0, 0, 0}
             , {1, 1, 0, 0, 0}
@@ -51,13 +40,46 @@ public class TreeTest {
         };
 
 
-        int[][] grids = new int[][]{
-              {1, 0, 1, 0, 1}
-            , {0, 1, 1, 1, 0}
-            , {1, 0, 1, 0, 1}
-            , {0, 1, 0, 1, 0}
-            , {1, 0, 1, 0, 1}
+        char[][] grids2 = new char[][]{
+              {'1' , '0' , '1' , '0' , '1'}
+            , {'0' , '1' , '1' , '1' , '0'}
+            , {'1' , '0' , '1' , '0' , '1'}
+            , {'0' , '1' , '0' , '1' , '0'}
+            , {'1' , '0' , '1' , '0' , '1'}
         };
+
+        char[][] grids = new char[][]{
+              {'1' , '1' , '1' , '1' , '0'}
+            , {'1' , '1' , '0' , '1' , '0'}
+            , {'1' , '1' , '0' , '0' , '0'}
+            , {'0' , '0' , '0' , '0' , '0'}
+        };
+
+//       ["11110","11010","11000","00000"]
+
+        int arrCnt = 25;
+
+        int rs= cal(grids);
+        System.out.println( rs);
+
+//        System.out.println("group is " +countset.size());
+    }
+
+    private int cal(char[][] grids) {
+        int arrCnt = 0;
+        if (grids.length > 0) {
+            arrCnt = grids.length * grids[0].length;
+        }
+        mParent = new int[arrCnt];
+        mRank = new int[arrCnt];
+
+
+        for (int i = 0; i < arrCnt; i++) {
+            mParent[i] = i;
+            mRank[i] = 0;
+        }
+
+
 
 //        for (int i = 0; i < grids.length; i++) {
 //            int[] rows = grids[i];
@@ -71,7 +93,7 @@ public class TreeTest {
 //        }
 
         for (int i = 0; i < grids.length; i++) {
-            int[] rows = grids[i];
+            char[] rows = grids[i];
             for (int j = 0; j < rows.length; j++) {
                 int mynum = i*rows.length +j ;
                 int col = rows[j];
@@ -120,7 +142,9 @@ public class TreeTest {
 
         }
 
-        System.out.println("group is " +countset.size());
+        return countset.size();
+
+
     }
 
 
@@ -133,6 +157,8 @@ public class TreeTest {
         set.add(2);
         set.add(3);
         set.add(3);
+
+
 
 
         System.out.println(set.size());
