@@ -11,14 +11,46 @@ public class BinarySearchTest {
     @Test
     public void findTest() throws Exception {
 
-        System.out.println("aa      ");
+        int[] arr = {1,22,23,24,35,46,57,68,69,610};
+        int rs  = binarySearch(arr, 24);
+        System.out.println(rs);
+
+    }
+
+
+    @Test
+    public void findLowTest() throws Exception {
 
 
         int[] arr = {1,22,23,24,35,46,57,68,69,610};
-        int rs  = binarySearch(arr, 24);
 
+        // find 30 보다 큰 수
+
+        int rs  = lowBound(arr, 30);
         System.out.println(rs);
 
+
+    }
+
+    private int lowBound(int[] arr, int key) {
+        int low = 0;
+        int high =  arr.length -1;
+
+        while(low <= high){
+            int mid = (low+high)/2;
+
+
+            if(arr[mid] < key){
+                low = mid +1 ;
+            }
+            else {
+                high = mid -1;
+            }
+//            else if(arr[mid] > key) {
+//               high =  high -1;
+//            }
+        }
+        return low;
     }
 
     private int binarySearch(int[] arr, int key) {
