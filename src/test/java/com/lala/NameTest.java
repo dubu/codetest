@@ -2,6 +2,7 @@ package com.lala;
 
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.Random;
 
 /**
@@ -66,6 +67,11 @@ public class NameTest {
 
     @Test
     public void nameGen() throws Exception {
+
+//        DateTime now = DateTime.now();
+        LocalDateTime timePoint = LocalDateTime.now(
+        );
+        System.out.println(timePoint);
 
         System.out.println("lala name ");
         String [] midNames = {"희","재","균","곤","중","기","배","규","준","은","성","집","견","보","용","원","범"};
