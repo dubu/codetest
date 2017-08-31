@@ -1,0 +1,20 @@
+##teamcity[enteredTheMatrix]
+##teamcity[suiteTreeNode name='NameTest.nameGen' locationHint='java:test://com.lala.NameTest.nameGen']
+##teamcity[treeEnded]
+##teamcity[rootName name = 'NameTest' comment = 'com.lala' location = 'java:suite://com.lala.NameTest']
+
+##teamcity[testStarted name='NameTest.nameGen' locationHint='java:test://com.lala.NameTest.nameGen']
+2017-08-30T16:51:27.988
+lala name 
+곽재철
+곽보열
+곽재감
+곽집천
+곽곤종
+곽중재
+곽희람
+곽보강
+곽규권
+곽중권
+
+##teamcity[testFinished name='NameTest.nameGen' duration='48']
