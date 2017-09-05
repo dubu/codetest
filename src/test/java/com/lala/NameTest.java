@@ -32,6 +32,11 @@ import java.util.Random;
  토 부수
  희 재 균 곤 중 기 배 규 준 은 성 집 견 보 용 원 범
 
+ 喆 밝을 철, 쌍길 철
+ 基 터 기
+ 在 있을 재
+
+
  중간 돌림자
  "희","재","균","곤","중","기","배","규","준","은","성","집","견","보","용","원","범"
  마지막 이름
@@ -75,7 +80,8 @@ public class NameTest {
         System.out.println(timePoint);
 
         System.out.println("lala name ");
-        String [] midNames = {"희","재","균","곤","중","기","배","규","준","성","집","견","보","원","범"};
+//        String [] midNames = {"희","재","균","곤","중","기","배","규","성","집","견","보","원","범","용","요"};
+        String [] midNames = {"재","기","철"};
         String [] lstNames= {"혁","건","권","곤","감","구","궁","강","목","남","담","달","덕","동","람","록","량","론","류","민","망","명","목","무","봉","상","수","성","송","수","우","열","양","재","중","철","천","종","탁","택"};
         int times =  10;
 
@@ -85,8 +91,8 @@ public class NameTest {
 //            System.out.print(rndMid.nextInt(midNames.length-1));
 //            System.out.println(rndLst.nextInt(lstNames.length-1));
 
-            String mid = midNames[rndMid.nextInt(midNames.length-1)];
-            String lst = lstNames[rndLst.nextInt(lstNames.length-1)];
+            String mid = midNames[rndMid.nextInt(midNames.length)];
+            String lst = lstNames[rndLst.nextInt(lstNames.length)];
 
             System.out.print("곽");
             System.out.print(mid);
@@ -158,6 +164,12 @@ public class NameTest {
      곽규상 奎祥 좋은 상서로운 별
      奎相 서로 따르는 별
      奎常 떳떳한 별
+
+     곽성강
+     곽규강
+
+     곽성천
+
 
      */
 
