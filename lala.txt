@@ -38,3 +38,23 @@ lala name
 곽성철
 
 ##teamcity[testFinished name='NameTest.nameGen' duration='48']
+##teamcity[enteredTheMatrix]
+##teamcity[suiteTreeNode name='NameTest.nameGen' locationHint='java:test://com.lala.NameTest.nameGen']
+##teamcity[treeEnded]
+##teamcity[rootName name = 'NameTest' comment = 'com.lala' location = 'java:suite://com.lala.NameTest']
+
+##teamcity[testStarted name='NameTest.nameGen' locationHint='java:test://com.lala.NameTest.nameGen']
+2017-09-01T16:48:00.733
+lala name 
+곽기목
+곽은류
+곽재망
+곽중감
+곽은민
+곽기남
+곽은수
+곽중명
+곽중중
+곽곤망
+
+##teamcity[testFinished name='NameTest.nameGen' duration='48']
