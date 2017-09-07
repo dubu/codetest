@@ -81,7 +81,9 @@ public class NameTest {
 
         System.out.println("lala name ");
 //        String [] midNames = {"희","재","균","곤","중","기","배","규","성","집","견","보","원","범","용","요"};
-        String [] midNames = {"재","기","철"};
+//        String [] midNames = {"재","기","철"};
+//        String [] midNames = {"재","기"};
+        String [] midNames = {"재"};
         String [] lstNames= {"혁","건","권","곤","감","구","궁","강","목","남","담","달","덕","동","람","록","량","론","류","민","망","명","목","무","봉","상","수","성","송","수","우","열","양","재","중","철","천","종","탁","택"};
         int times =  10;
 
@@ -165,12 +167,32 @@ public class NameTest {
      奎相 서로 따르는 별
      奎常 떳떳한 별
 
-     곽성강
-     곽규강
+     곽재열(郭在烈)
+     http://www.erumy.com/nameAnalyze/eDefault.aspx?name=%EA%B3%BD%EC%9E%AC%EC%97%B4
+     https://ko-kr.facebook.com/public/?query=%EA%B3%BD%EC%9E%AC%EC%97%B4
 
-     곽성천
+     곽재담
+     곽재덕
+     곽재중
+     곽재건
+
+     곽재원181  在源 在垣 在元
+
+     곽재학2131 在學 곽재간0 在簡 곽재협6729 在恊 , 在協
+
+     곽재로在魯 곽재창4895 在昌 곽재현182 在顯 곽재풍3 在豐
+
+     곽재후2121 在厚 곽재철1297 在澈
+
+     곽재중2541 在中
 
 
+     곽재협
+     곽재창
+     곽재철
+     곽재중
      */
+
+
 
 }
