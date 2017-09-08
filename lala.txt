@@ -58,3 +58,43 @@ lala name
 곽곤망
 
 ##teamcity[testFinished name='NameTest.nameGen' duration='48']
+##teamcity[enteredTheMatrix]
+##teamcity[suiteTreeNode name='NameTest.nameGen' locationHint='java:test://com.lala.NameTest.nameGen']
+##teamcity[treeEnded]
+##teamcity[rootName name = 'NameTest' comment = 'com.lala' location = 'java:suite://com.lala.NameTest']
+
+##teamcity[testStarted name='NameTest.nameGen' locationHint='java:test://com.lala.NameTest.nameGen']
+2017-09-06T16:48:01.272
+lala name 
+곽보봉
+곽기성
+곽배무
+곽규탁
+곽재목
+곽은우
+곽용철
+곽준람
+곽기망
+곽원권
+
+##teamcity[testFinished name='NameTest.nameGen' duration='61']
+##teamcity[enteredTheMatrix]
+##teamcity[suiteTreeNode name='NameTest.nameGen' locationHint='java:test://com.lala.NameTest.nameGen']
+##teamcity[treeEnded]
+##teamcity[rootName name = 'NameTest' comment = 'com.lala' location = 'java:suite://com.lala.NameTest']
+
+##teamcity[testStarted name='NameTest.nameGen' locationHint='java:test://com.lala.NameTest.nameGen']
+2017-09-07T16:48:01.030
+lala name 
+곽원목
+곽은달
+곽집담
+곽희수
+곽균록
+곽규류
+곽준수
+곽은우
+곽용탁
+곽배상
+
+##teamcity[testFinished name='NameTest.nameGen' duration='52']
