@@ -7,6 +7,7 @@ import org.junit.Test;
  *
  */
 public class DynamicTest {
+    private int maxSum =0;
 
     /**
      *
@@ -70,5 +71,47 @@ public class DynamicTest {
     }
 
 
+    /**
+     * https://leetcode.com/problems/maximum-subarray/description/
+     */
+    @Test
+    public void maxSubArray() {
 
+
+
+        int[] ints = {-2,1,-3,4,-1,2,1,-5,4};
+        maxSubArray(ints);
+    }
+
+    public int maxSubArray(int[] nums) {
+
+
+
+        // 몬든 경우에 수를 판으로 조사
+
+        int sum = 0;
+        int bSum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+
+            if(i == 0 ){
+                bSum = nums[i];
+            }
+
+            sum = sum + nums[i];
+
+            if(sum > bSum){
+                bSum=  sum;
+            }else{
+                break;
+            }
+
+            if(sum > maxSum){
+                maxSum=  sum;
+            }
+//            System.out.printf(String.valueOf(nums[i]));
+        }
+
+        return  0 ;
+    }
 }
