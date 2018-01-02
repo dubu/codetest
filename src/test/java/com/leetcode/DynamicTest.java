@@ -77,13 +77,36 @@ public class DynamicTest {
     @Test
     public void maxSubArray() {
 
-//        int[] ints = {-2,1,-3,4,-1,2,1,-5,4};
+        int[] ints = {-2,1,-3,4,-1,2,1,-5,4};
 //        int[] ints = {1};
-        int[] ints = {-2,1};
-        maxSubArray(ints);
+//        int[] ints = {-2,1};
+
+//        [8,-19,5,-4,20]
+        System.out.println(maxSubArray2(ints));
     }
 
-    public int maxSubArray(int[] nums) {
+
+
+//    public int maxSubArray(int[] nums) {
+//
+//        if(nums.length ==0 ){
+//            return 0;
+//        }
+//
+//        int res = nums[0];
+//        int sum = nums[0];
+//
+//        for (int i = 0; i <nums.length; i++) {
+//            sum = Math.max(sum+nums[i],nums[i]);
+//            res =  Math.max(res,sum);
+//
+//        }
+//        return res;
+//    }
+
+
+    public int maxSubArray2(int[] nums) {
+        // if minus 이면 다시 시작.
 
         // 4,-1,2,1, = 6
 
@@ -116,10 +139,15 @@ public class DynamicTest {
                     Max= Math.max(subSum,Max);
                 }
 
+                if(subSum < n1){
+                    subSum =  n1;
+                    i = j-1;
+                    break;
+                }
+
             }
 
         }
-
 
         return  Max ;
     }
