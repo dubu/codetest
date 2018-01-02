@@ -121,7 +121,6 @@ public class DynamicTest {
         }
 
 
-        System.out.println(Max);
         return  Max ;
     }
 }
