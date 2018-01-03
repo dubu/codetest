@@ -88,4 +88,43 @@ public class HashTableTest {
     }
 
 
+    @Test
+    public void toSumTest() {
+
+//        int[] nums = {2,7,11,15};
+        int[] nums0 = new int[]{2,7,11,15};
+        int[] ints = twoSum(new int[]{2, 7, 11, 15}, 9);
+        System.out.println(ints);
+
+    }
+
+
+    public int[] twoSum(int[] nums, int target) {
+
+
+        List<Integer> ansList = new ArrayList();
+        for (int i = 0; i <nums.length; i++) {
+
+            int num = nums[i];
+
+            if (ansList.contains(num)) {
+                System.out.println(num);
+                System.out.printf("빙고");
+
+               return new int[]{ansList.indexOf(num) , i} ;
+
+            }
+
+            int abs = Math.abs(target - num);
+
+            if(target > num){
+                ansList.add( abs);
+            }else{
+                ansList.add(- abs);
+            }
+        }
+
+        return ansList.stream().mapToInt(i->i).toArray();
+    }
+
 }
