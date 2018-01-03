@@ -7,7 +7,6 @@ import org.junit.Test;
  *
  */
 public class DynamicTest {
-    private int maxSum =0;
 
     /**
      *
@@ -106,7 +105,7 @@ public class DynamicTest {
 
 
     public int maxSubArray2(int[] nums) {
-        // if minus 이면 다시 시작.
+        // if minus 이면 다시 시작!
 
         // 4,-1,2,1, = 6
 
@@ -151,4 +150,64 @@ public class DynamicTest {
 
         return  Max ;
     }
+
+
+    /**
+     * 516
+     * https://leetcode.com/problems/longest-palindromic-subsequence/description/
+     * 409
+     * https://leetcode.com/problems/longest-palindrome/description/
+     */
+    @Test
+    public void longPaliWord() {
+
+//        "bbbab" 4
+//        "cbbd" 2
+
+        String s = "bbbab";
+        System.out.println(longestPalindromeSubseq(s));
+
+
+    }
+
+    public int longestPalindromeSubseq(String s) {
+
+        if (s.length()==0) {
+            return 0;
+        }
+
+
+
+        return -9;
+
+    }
+
+    /**
+     *
+     *
+     * abccccdd   =  dccaccd 7
+     *
+     */
+    @Test
+    public void longPalWord() {
+
+
+        // mod 짝수 , max 홀 앤 , 나머지는 버림.
+
+        String s = "abccccdd";
+        longestPalindrome(s);
+
+
+    }
+    public int longestPalindrome(String s) {
+
+        if (s.length()==0) {
+            return 0;
+        }
+
+
+
+        return -9;
+    }
+
 }
