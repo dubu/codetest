@@ -12,10 +12,6 @@ public class GreekTree {
      * tree size
      * https://www.geeksforgeeks.org/write-a-c-program-to-calculate-size-of-a-tree/
      *
-     *
-     *
-     *
-     *
      */
     @Test
     public void treeTest() {
