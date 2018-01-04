@@ -2,6 +2,8 @@ package com.leetcode;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * Created by rigel on 8/3/17.
  *
@@ -155,8 +157,6 @@ public class DynamicTest {
     /**
      * 516
      * https://leetcode.com/problems/longest-palindromic-subsequence/description/
-     * 409
-     * https://leetcode.com/problems/longest-palindrome/description/
      */
     @Test
     public void longPaliWord() {
@@ -263,4 +263,40 @@ public class DynamicTest {
         return L[0][n-1];
     }
 
+    /**
+     * 446 https://leetcode.com/problems/arithmetic-slices-ii-subsequence/description/
+     *
+     * Input: [2, 4, 6, 8, 10]
+
+     Output: 7
+
+     Explanation:
+     All arithmetic subsequence slices are:
+     [2,4,6]
+     [4,6,8]
+     [6,8,10]
+     [2,4,6,8]
+     [4,6,8,10]
+     [2,4,6,8,10]
+     [2,6,10]
+     */
+    @Test
+    public void numberOfArithmeticSlicesTest() {
+
+        int[] a = new int[]{2, 4, 6, 8, 10};
+        numberOfArithmeticSlices(a);
+        
+    }
+    public int numberOfArithmeticSlices(int[] A) {
+
+        Arrays.sort(A);
+
+
+
+
+
+
+
+        return -9;
+    }
 }
