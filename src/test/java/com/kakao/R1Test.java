@@ -49,15 +49,73 @@ public class R1Test {
 
         // *3
         // +1
-        int n = 10;
+        int n = 15;
 
-        solution(n);
+        //41
+        // **++++*++
+        // *+**+++++
+        // (+ (* (* 1 3) 3) 1) = 41
+        // 3으로 나누어 지는가 ? 3보다 큰가?
+        // 아니면 1을 뺀다.
+
+        System.out.println(solution(n));
 
     }
 
     int solution(int n) {
         int answer = 0;
 
+        List re = new ArrayList();
+
+        while(n != 1 && n !=2 && n !=3 ) {
+
+            if (n % 3 == 0) {
+                re.add(n -1);
+                n  = n/3;
+            }else{
+                n = n -1;
+            }
+
+            if(n == 1 || n ==2  || n==3){
+                answer = answer +1;
+                if(re.size() ==  0){
+                    break;
+                }
+                n = (int) re.remove(0);
+            }
+        }
+
+        return answer;
+    }
+
+
+    @Test
+    public void colorBookTest() {
+
+        //6	4	[[1, 1, 1, 0], [1, 2, 2, 0], [1, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 3], [0, 0, 0, 3]]	[4, 5]
+        int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
+        int[] rs = colorBook(6, 4, picture);
+
+
+    }
+
+    public int[] colorBook(int m, int n, int[][] picture) {
+        int numberOfArea = 0;
+        int maxSizeOfOneArea = 0;
+
+
+        List checkTable =  new ArrayList();
+        for (int i = 0; i < m; i++) {
+
+            for (int j = 0; j < n; j++) {
+
+            }
+        }
+
+
+        int[] answer = new int[2];
+        answer[0] = numberOfArea;
+        answer[1] = maxSizeOfOneArea;
         return answer;
     }
 }
