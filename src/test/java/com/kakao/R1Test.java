@@ -117,7 +117,12 @@ public class R1Test {
         }
 
         while (checkTable.size() >0){
-            int simbol = (int) checkTable.remove(0);
+            int[]  pos = (int[]) checkTable.remove(0);
+
+            int x=  pos[0];
+            int y=  pos[1];
+
+
 
         }
 
