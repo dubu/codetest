@@ -40,19 +40,19 @@ public class GreekTree {
                 return 0;
             }
 
-
             int sum = 1;
             Node n = root;
 
-            while(n != null){
 
-                Node l = n.left;
-                Node r = n.right;
+            if(n.left != null){
+                sum =  sum + countNode(n);
+            }
 
-                if(l != null){
-                   sum = sum+ countNode(l);
-                }
-                n =r;
+            while (n.right != null){
+
+                sum =  sum + countNode(n.right);
+                n = n.right;
+
             }
 
 //            System.out.printf(sum);
