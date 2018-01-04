@@ -5,6 +5,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * https://programmers.co.kr/learn/challenges/591?language=java
+ */
 public class R1Test {
 
 
