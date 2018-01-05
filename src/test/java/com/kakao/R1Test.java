@@ -15,12 +15,11 @@ public class R1Test {
 
 
     /**
-     *
      * n1	8
-     g1	[[3, 1], [5, 7], [8, 7], [2, 3], [3, 6], [1, 5], [4, 3]]
-     n2	9
-     g2	[[1, 5], [5, 6], [3, 7], [3, 1], [7, 4], [7, 2], [9, 8], [5, 9]]
-     answer	7
+     * g1	[[3, 1], [5, 7], [8, 7], [2, 3], [3, 6], [1, 5], [4, 3]]
+     * n2	9
+     * g2	[[1, 5], [5, 6], [3, 7], [3, 1], [7, 4], [7, 2], [9, 8], [5, 9]]
+     * answer	7
      */
     @Test
     public void AsomeObj() {
@@ -30,7 +29,7 @@ public class R1Test {
         int n2 = 9;
         int[][] g2 = new int[][]{{1, 5}, {5, 6}, {3, 7}, {3, 1}, {7, 4}, {7, 2}, {9, 8}, {5, 9}};
 //        solution(n1,g1,n2,g2);
-        asomeObjSolve(8,g1,9,g2);
+        asomeObjSolve(8, g1, 9, g2);
 
 
 //        BinaryTree tree = new BinaryTree();
@@ -73,18 +72,18 @@ public class R1Test {
 
         List re = new ArrayList();
 
-        while(n != 1 && n !=2 && n !=3 ) {
+        while (n != 1 && n != 2 && n != 3) {
 
             if (n % 3 == 0) {
-                re.add(n -1);
-                n  = n/3;
-            }else{
-                n = n -1;
+                re.add(n - 1);
+                n = n / 3;
+            } else {
+                n = n - 1;
             }
 
-            if(n == 1 || n ==2  || n==3){
-                answer = answer +1;
-                if(re.size() ==  0){
+            if (n == 1 || n == 2 || n == 3) {
+                answer = answer + 1;
+                if (re.size() == 0) {
                     break;
                 }
                 n = (int) re.remove(0);
@@ -102,7 +101,7 @@ public class R1Test {
         int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
         int[] rs = colorBook(6, 4, picture);
 
-        System.out.println(rs);
+//        System.out.println(rs);
 
     }
 
@@ -111,14 +110,11 @@ public class R1Test {
         int numberOfArea = 0;
         int maxSizeOfOneArea = 0;
 
+        Map map = new HashMap();
 
-        Map map =  new HashMap();
-
-        List checkTable =  new ArrayList();
         for (int i = 0; i < m; i++) {
 
             for (int j = 0; j < n; j++) {
-//                checkTable.add(new int[]{i,j});
 
                 int x = i;
                 int y = j;
@@ -135,21 +131,44 @@ public class R1Test {
                 if (x + 1 < m) right = picture[x + 1][y];
 
 //                if (symbol == up || symbol == down || symbol == left || symbol == right) {
-                    if (symbol == up  || symbol == left ) {
+                if (symbol == up || symbol == left) {
 
-                    map.put(symbol, (int) (map.get(symbol))+ 1);
+                    map.put(symbol, (int) (map.get(symbol)) + 1);
                 } else {
-                        numberOfArea = numberOfArea +1 ;
-                        map.put(symbol, 1);
+                    numberOfArea = numberOfArea + 1;
+
+                    if (map.get(symbol) != null) {
+                        maxSizeOfOneArea = Math.max(maxSizeOfOneArea, (Integer) map.get(symbol));
+                    }
+                    map.put(symbol, 1);
                 }
             }
+        }
 
+        for (Object o : map.values()) {
+
+            maxSizeOfOneArea = Math.max(maxSizeOfOneArea, (Integer) o);
 
         }
+
 
         int[] answer = new int[2];
         answer[0] = numberOfArea;
         answer[1] = maxSizeOfOneArea;
+
+
+
+        // debug
+        for (int[] ints : picture) {
+            for (int anInt : ints) {
+
+                System.out.print(anInt);
+            }
+            System.out.println("");
+        }
+
+
+        System.out.println(String.format("%s %s",answer[0], answer[1]));
         return answer;
     }
 
@@ -158,38 +177,38 @@ public class R1Test {
         int maxSizeOfOneArea = 0;
 
 
-        Map map =  new HashMap();
+        Map map = new HashMap();
 
-        List checkTable =  new ArrayList();
+        List checkTable = new ArrayList();
         for (int i = 0; i < m; i++) {
 
             for (int j = 0; j < n; j++) {
-                checkTable.add(new int[]{i,j});
+                checkTable.add(new int[]{i, j});
             }
         }
 
-        while (checkTable.size() >0){
-            int[]  pos = (int[]) checkTable.remove(0);
+        while (checkTable.size() > 0) {
+            int[] pos = (int[]) checkTable.remove(0);
 
-            int x=  pos[0];
-            int y=  pos[1];
+            int x = pos[0];
+            int y = pos[1];
 
             int symbol = picture[x][y];
-            if (map.get(symbol)==null) {
-                map.put(symbol,1);
-            }else{
+            if (map.get(symbol) == null) {
+                map.put(symbol, 1);
+            } else {
                 // check up, down, left, right
 
-                int up = 0, down = 0,left = 0,right = 0;
+                int up = 0, down = 0, left = 0, right = 0;
 
-                if(y !=0 ) up = picture[x][y - 1];
-                if(y+1 <n) down = picture[x][y + 1];
-                if(x !=0 )left = picture[x - 1][y];
-                if(x+1 < m)right = picture[x + 1][y];
+                if (y != 0) up = picture[x][y - 1];
+                if (y + 1 < n) down = picture[x][y + 1];
+                if (x != 0) left = picture[x - 1][y];
+                if (x + 1 < m) right = picture[x + 1][y];
 
-                if(symbol == up || symbol == down || symbol == left || symbol ==right){
+                if (symbol == up || symbol == down || symbol == left || symbol == right) {
 
-                    map.put(symbol,(int)(map.get(symbol))+1);
+                    map.put(symbol, (int) (map.get(symbol)) + 1);
                 }
 
             }
