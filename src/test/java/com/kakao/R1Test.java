@@ -123,10 +123,38 @@ public class R1Test {
 
 //        System.out.println(rs);
 
+
+
+
     }
 
 
+
     public int[] colorBook(int m, int n, int[][] picture) {
+
+        int numberOfArea = 0;
+        int maxSizeOfOneArea = 0;
+
+
+        int[] answer = new int[2];
+        answer[0] = numberOfArea;
+        answer[1] = maxSizeOfOneArea;
+
+        // debug
+        for (int[] ints : picture) {
+            for (int anInt : ints) {
+
+                System.out.print(anInt);
+            }
+            System.out.println("");
+        }
+
+
+        System.out.println(String.format("%s %s",answer[0], answer[1]));
+        return answer;
+    }
+
+    public int[] colorBook3(int m, int n, int[][] picture) {
         int numberOfArea = 0;
         int maxSizeOfOneArea = 0;
 
@@ -155,6 +183,7 @@ public class R1Test {
 
                     if (map.get(symbol) == null) {
 
+                        numberOfArea = numberOfArea + 1;
                         map.put(symbol,  1);
                     }else{
 
