@@ -3,7 +3,9 @@ package com.kakao;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -100,6 +102,7 @@ public class R1Test {
         int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
         int[] rs = colorBook(6, 4, picture);
 
+        System.out.println(rs);
 
     }
 
@@ -107,6 +110,8 @@ public class R1Test {
         int numberOfArea = 0;
         int maxSizeOfOneArea = 0;
 
+
+        Map map =  new HashMap();
 
         List checkTable =  new ArrayList();
         for (int i = 0; i < m; i++) {
@@ -122,7 +127,25 @@ public class R1Test {
             int x=  pos[0];
             int y=  pos[1];
 
+            int symbol = picture[x][y];
+            if (map.get(symbol)==null) {
+                map.put(symbol,1);
+            }else{
+                // check up, down, left, right
 
+                int up = 0, down = 0,left = 0,right = 0;
+
+                if(y !=0 ) up = picture[x][y - 1];
+                if(y+1 <n) down = picture[x][y + 1];
+                if(x !=0 )left = picture[x - 1][y];
+                if(x+1 < m)right = picture[x + 1][y];
+
+                if(symbol == up || symbol == down || symbol == left || symbol ==right){
+
+                    map.put(symbol,(int)(map.get(symbol))+1);
+                }
+
+            }
 
         }
 
