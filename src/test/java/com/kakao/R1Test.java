@@ -98,8 +98,28 @@ public class R1Test {
     public void colorBookTest() {
 
         //6	4	[[1, 1, 1, 0], [1, 2, 2, 0], [1, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 3], [0, 0, 0, 3]]	[4, 5]
-        int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
-        int[] rs = colorBook(6, 4, picture);
+//        int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
+//        int[] rs = colorBook(6, 4, picture);
+
+
+        int[][] picture = {
+              {0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0}
+            , {0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0}
+            , {0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0}
+            , {0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0}
+            , {0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0}
+            , {0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0}
+            , {0,1,1,1,1,0,1,1,1,1,0,1,1,1,1,0}
+            , {0,1,1,1,0,1,0,1,1,0,1,0,1,1,1,0}
+            , {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0}
+            , {0,1,2,2,2,1,1,1,1,1,1,2,2,2,1,0}
+            , {0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0}
+            , {0,0,1,1,1,1,1,0,0,1,1,1,1,1,0,0}
+            , {0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0}
+            , {0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0}
+        };
+        int[] rs = colorBook(16, 14, picture);
+
 
 //        System.out.println(rs);
 
@@ -118,22 +138,28 @@ public class R1Test {
 
                 int x = i;
                 int y = j;
-                int symbol = picture[x][y];
+                int symbol = picture[y][x];
                 if (symbol == 0) {
                     continue;
                 }
 
                 int up = 0, down = 0, left = 0, right = 0;
 
-                if (y != 0) up = picture[x][y - 1];
-                if (y + 1 < n) down = picture[x][y + 1];
-                if (x != 0) left = picture[x - 1][y];
-                if (x + 1 < m) right = picture[x + 1][y];
+                if (x != 0) up = picture[y][x - 1];
+                if (x + 1 < m) down = picture[y][x + 1];
+                if (y != 0) left = picture[y - 1][x];
+                if (y + 1 < n) right = picture[y + 1][x];
 
-//                if (symbol == up || symbol == down || symbol == left || symbol == right) {
-                if (symbol == up || symbol == left) {
+                if (symbol == up || symbol == down || symbol == left || symbol == right) {
+//                if (symbol == up || symbol == left) {
 
-                    map.put(symbol, (int) (map.get(symbol)) + 1);
+                    if (map.get(symbol) == null) {
+
+                        map.put(symbol,  1);
+                    }else{
+
+                        map.put(symbol, (int) (map.get(symbol)) + 1);
+                    }
                 } else {
                     numberOfArea = numberOfArea + 1;
 
