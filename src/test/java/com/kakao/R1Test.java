@@ -136,6 +136,16 @@ public class R1Test {
         int maxSizeOfOneArea = 0;
 
 
+
+        for (int i = 0; i < m; i++) {
+
+            for (int j = 0; j < n; j++) {
+
+                int [] pos = new int []{i,j};
+
+            }
+        }
+
         int[] answer = new int[2];
         answer[0] = numberOfArea;
         answer[1] = maxSizeOfOneArea;
