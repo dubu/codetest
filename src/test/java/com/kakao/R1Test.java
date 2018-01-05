@@ -106,7 +106,54 @@ public class R1Test {
 
     }
 
+
     public int[] colorBook(int m, int n, int[][] picture) {
+        int numberOfArea = 0;
+        int maxSizeOfOneArea = 0;
+
+
+        Map map =  new HashMap();
+
+        List checkTable =  new ArrayList();
+        for (int i = 0; i < m; i++) {
+
+            for (int j = 0; j < n; j++) {
+//                checkTable.add(new int[]{i,j});
+
+                int x = i;
+                int y = j;
+                int symbol = picture[x][y];
+                if (symbol == 0) {
+                    continue;
+                }
+
+                int up = 0, down = 0, left = 0, right = 0;
+
+                if (y != 0) up = picture[x][y - 1];
+                if (y + 1 < n) down = picture[x][y + 1];
+                if (x != 0) left = picture[x - 1][y];
+                if (x + 1 < m) right = picture[x + 1][y];
+
+//                if (symbol == up || symbol == down || symbol == left || symbol == right) {
+                    if (symbol == up  || symbol == left ) {
+
+                    map.put(symbol, (int) (map.get(symbol))+ 1);
+                } else {
+                        numberOfArea = numberOfArea +1 ;
+                        map.put(symbol, 1);
+                }
+            }
+
+
+        }
+
+        int[] answer = new int[2];
+        answer[0] = numberOfArea;
+        answer[1] = maxSizeOfOneArea;
+        return answer;
+    }
+
+    public int[] colorBook2(int m, int n, int[][] picture) {
         int numberOfArea = 0;
         int maxSizeOfOneArea = 0;
 
