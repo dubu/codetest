@@ -145,11 +145,15 @@ public class R1Test {
         //recursive
 
 
-        while(checkList.size() != 0){
+        List<int []> exp = new ArrayList();
+        while(checkList.size() != 0 || exp.size() !=0){
 
-            int[] point = (int[]) checkList.get(0);
-            int [][]  color = new int[0][];
-            int[][] rList = chk(color);
+            int[] point;
+            if(exp.size() != 0){
+                point = exp.get(0);
+            }else{
+                point = (int[]) checkList.get(0);
+            }
 
             int x = point[0];
             int y = point[1];
@@ -170,18 +174,12 @@ public class R1Test {
                     rsMap.put(symbol,  1);
 
 
-                    List exp = new ArrayList();
-                    if (symbol == up) exp.add(up);
-                    if (symbol == down) exp.add(up);
-                    if (symbol == left) exp.add(up);
-                    if (symbol == right) exp.add(up);
+                    if (symbol == up && checkList.contains(up)) exp.add(new int []{up,x});
+                    if (symbol == down && checkList.contains(up)) exp.add(new int []{down,x});
+                    if (symbol == left && checkList.contains(up)) exp.add(new int []{y,left});
+                    if (symbol == right && checkList.contains(up)) exp.add(new int []{y,right});
 
-
-                    List expAdded = cheExp(exp);
                     //expendable ?
-
-
-
 
 
                 }else{
@@ -212,23 +210,6 @@ public class R1Test {
 
         System.out.println(String.format("%s %s",answer[0], answer[1]));
         return answer;
-    }
-
-    private List cheExp(List exp) {
-
-
-
-
-
-
-
-        return  exp;
-    }
-
-    private int[][] chk(int[][] color) {
-
-
-        return  color;
     }
 
     public int[] colorBook3(int m, int n, int[][] picture) {
