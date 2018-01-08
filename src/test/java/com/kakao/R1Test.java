@@ -152,7 +152,7 @@ public class R1Test {
             if(exp.size() != 0){
                 point = exp.get(0);
             }else{
-                point = (int[]) checkList.get(0);
+                point = (int[]) checkList.remove(0);
             }
 
             int x = point[0];
