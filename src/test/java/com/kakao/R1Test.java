@@ -97,7 +97,7 @@ public class R1Test {
     @Test
     public void colorBookTest() {
 
-        //6	4	[[1, 1, 1, 0], [1, 2, 2, 0], [1, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 3], [0, 0, 0, 3]]	[4, 5]
+        //	[[1, 1, 1, 0], [1, 2, 2, 0], [1, 0, 0, 1], [0, 0, 0, 1], [0, 0, 0, 3], [0, 0, 0, 3]]	[4, 5]
 //        int[][] picture = {{1, 1, 1, 0}, {1, 2, 2, 0}, {1, 0, 0, 1}, {0, 0, 0, 1}, {0, 0, 0, 3}, {0, 0, 0, 3}};
 //        int[] rs = colorBook(6, 4, picture);
 
@@ -118,7 +118,7 @@ public class R1Test {
             , {0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0}
             , {0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0}
         };
-        int[] rs = colorBook(16, 14, picture);
+        int[] rs = colorBook(14, 16, picture);
 
 //        System.out.println(rs);
     }
@@ -130,14 +130,25 @@ public class R1Test {
         int numberOfArea = 0;
         int maxSizeOfOneArea = 0;
 
+
+        int [][] delPicture =  new int[m][n];
+
         List checkList = new ArrayList();
         Map rsMap = new HashMap();
-        for (int i = 0; i < m; i++) {
+        for (int j = 0; j < m; j++) {
 
-            for (int j = 0; j < n; j++) {
+            for (int i = 0; i < n; i++) {
 
-                int [] pos = new int []{i,j};
+                int [] pos = new int []{j,i};
+
+                if (picture[j][i] == 0) {
+                    delPicture[j][i]=0;
+                    continue;
+                }
+
+                delPicture[j][i]=1;
                 checkList.add(pos);
+
 
             }
         }
@@ -150,23 +161,51 @@ public class R1Test {
 
             int[] point;
             if(exp.size() != 0){
-                point = exp.get(0);
+                point = exp.remove(0);
             }else{
+//                maxSizeOfOneArea = maxSizeOfOneArea +1;
                 point = (int[]) checkList.remove(0);
+                int y = point[0];
+                int x = point[1];
+
+                int symbol = picture[y][x];
+                if (rsMap.get(symbol) != null) {
+                    maxSizeOfOneArea = Math.max(maxSizeOfOneArea, (Integer) rsMap.get(symbol));
+                    rsMap.put(symbol,null);
+                }
             }
 
-            int x = point[0];
-            int y = point[1];
+            int y = point[0];
+            int x = point[1];
+
+            if(delPicture[y][x] ==0){
+                continue;
+            }else{
+
+                delPicture[y][x]= 0;
+            }
+
+
+
+
             int symbol = picture[y][x];
 
+            if (symbol == 0) {
+                continue;
+            }
             int up = 0, down = 0, left = 0, right = 0;
 
-            if (x != 0) up = picture[y][x - 1];
-            if (x + 1 < m) down = picture[y][x + 1];
-            if (y != 0) left = picture[y - 1][x];
-            if (y + 1 < n) right = picture[y + 1][x];
+            if (y != 0) up = picture[y-1][x];
+            if (y + 1 < m) down = picture[y+1][x];
+            if (x != 0) left = picture[y][x-1];
+            if (x + 1 < n) right = picture[y][x+1];
 
             if (symbol == up || symbol == down || symbol == left || symbol == right) {
+
+                if (symbol == up && delPicture[y-1][x] == 1) exp.add(new int []{y-1,x});
+                if (symbol == down && delPicture[y+1][x] == 1) exp.add(new int []{y+1,x});
+                if (symbol == left && delPicture[y][x-1] == 1) exp.add(new int []{y,x-1});
+                if (symbol == right && delPicture[y][x+1] == 1) exp.add(new int []{y,x+1});
 
                 if (rsMap.get(symbol) == null) {
 
@@ -174,25 +213,24 @@ public class R1Test {
                     rsMap.put(symbol,  1);
 
 
-                    if (symbol == up && checkList.contains(up)) exp.add(new int []{up,x});
-                    if (symbol == down && checkList.contains(up)) exp.add(new int []{down,x});
-                    if (symbol == left && checkList.contains(up)) exp.add(new int []{y,left});
-                    if (symbol == right && checkList.contains(up)) exp.add(new int []{y,right});
+//                    if (symbol == up && checkList.contains(new int []{up,x})) exp.add(new int []{up,x});
+//                    if (symbol == down && checkList.contains(new int []{down,x})) exp.add(new int []{down,x});
+//                    if (symbol == left && checkList.contains(new int []{y,left})) exp.add(new int []{y,left});
+//                    if (symbol == right && checkList.contains(new int []{y,right})) exp.add(new int []{y,right});
+
+
 
                     //expendable ?
 
 
                 }else{
 
+
                     rsMap.put(symbol, (int) (rsMap.get(symbol)) + 1);
                 }
             }
 
         }
-
-
-
-
 
         int[] answer = new int[2];
         answer[0] = numberOfArea;
@@ -333,5 +371,27 @@ public class R1Test {
         answer[0] = numberOfArea;
         answer[1] = maxSizeOfOneArea;
         return answer;
+    }
+
+
+    @Test
+    public void contaionTest() {
+
+        int m = 2, n=2;
+
+        List checkList = new ArrayList();
+        Map rsMap = new HashMap();
+        for (int i = 0; i < m; i++) {
+
+            for (int j = 0; j < n; j++) {
+
+                int [] pos = new int []{j,i};
+                checkList.add(pos);
+
+            }
+        }
+
+
+
     }
 }
