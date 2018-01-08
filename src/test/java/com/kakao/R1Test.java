@@ -145,34 +145,55 @@ public class R1Test {
         //recursive
 
 
+        while(checkList.size() != 0){
+
+            int[] point = (int[]) checkList.get(0);
+            int [][]  color = new int[0][];
+            int[][] rList = chk(color);
+
+            int x = point[0];
+            int y = point[1];
+            int symbol = picture[y][x];
+
+            int up = 0, down = 0, left = 0, right = 0;
+
+            if (x != 0) up = picture[y][x - 1];
+            if (x + 1 < m) down = picture[y][x + 1];
+            if (y != 0) left = picture[y - 1][x];
+            if (y + 1 < n) right = picture[y + 1][x];
+
+            if (symbol == up || symbol == down || symbol == left || symbol == right) {
+
+                if (rsMap.get(symbol) == null) {
+
+                    numberOfArea = numberOfArea + 1;
+                    rsMap.put(symbol,  1);
 
 
-        int[] point = (int[]) checkList.get(0);
-        int [][]  color = new int[0][];
-        int[][] rList = chk(color);
+                    List exp = new ArrayList();
+                    if (symbol == up) exp.add(up);
+                    if (symbol == down) exp.add(up);
+                    if (symbol == left) exp.add(up);
+                    if (symbol == right) exp.add(up);
 
-        int x = point[0];
-        int y = point[1];
-        int symbol = picture[y][x];
 
-        int up = 0, down = 0, left = 0, right = 0;
+                    List expAdded = cheExp(exp);
+                    //expendable ?
 
-        if (x != 0) up = picture[y][x - 1];
-        if (x + 1 < m) down = picture[y][x + 1];
-        if (y != 0) left = picture[y - 1][x];
-        if (y + 1 < n) right = picture[y + 1][x];
 
-        if (symbol == up || symbol == down || symbol == left || symbol == right) {
 
-            if (rsMap.get(symbol) == null) {
 
-                numberOfArea = numberOfArea + 1;
-                rsMap.put(symbol,  1);
-            }else{
 
-                rsMap.put(symbol, (int) (rsMap.get(symbol)) + 1);
+                }else{
+
+                    rsMap.put(symbol, (int) (rsMap.get(symbol)) + 1);
+                }
             }
+
         }
+
+
+
 
 
         int[] answer = new int[2];
@@ -191,6 +212,17 @@ public class R1Test {
 
         System.out.println(String.format("%s %s",answer[0], answer[1]));
         return answer;
+    }
+
+    private List cheExp(List exp) {
+
+
+
+
+
+
+
+        return  exp;
     }
 
     private int[][] chk(int[][] color) {
