@@ -396,12 +396,30 @@ public class R1Test {
 
 
     @Test
-    public void walkTest() {
+    public void walkTest() throws Exception {
 
         int MOD = 20170805;
 
-        int[][] cityMap = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
-        walk(3,6,cityMap);
+
+
+        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
+        if (walk(3,3,cityMap)==6) {
+
+        }else{
+            throw new Exception("fail");
+        }
+
+        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
+        if (walk(3,6,cityMap2) == 2) {
+
+        }else{
+            throw new Exception("fail2");
+        }
+
+
+
+
+
     }
 
 
@@ -435,11 +453,12 @@ public class R1Test {
                     markTable[i][j]= 'X';
                 }else if (pos ==2){
                     if((up == 'U' || up == 'W') && (left == 'L' || left == 'W'))  markTable[i][j]= 'W';
+                    else if(upVal == 0  && leftVal == 0)  markTable[i][j]= 'W';
                     else if((up == 'U' || up == 'W') )  markTable[i][j]= 'U';
                     else if((left == 'L' || left == 'W') )  markTable[i][j]= 'L';
                     else markTable[i][j]= 'X';
                 }else if (pos == 0){
-                    if((up == 'U' || up == 'W') && (left == 'L' || left == 'W')) markTable[i][j]= 'W';
+                    if((up == 'U' || up == 'W' || (up == 'L' && upVal ==0 )) && (left == 'L' || left == 'W'|| (left == 'U' && leftVal ==0 ) )) markTable[i][j]= 'W';
                     else if(up == 'U'  || up == 'W' || (up == 'L' && upVal ==0 )) markTable[i][j]= 'U';
                     else if(left == 'L'|| left == 'W' || (left == 'U' && leftVal ==0 ))  markTable[i][j]= 'L';
                     else markTable[i][j]= 'X';
