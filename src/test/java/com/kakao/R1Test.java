@@ -408,7 +408,7 @@ public class R1Test {
     public int walk(int m, int n, int[][] cityMap) {
 
 
-        int[][] markTable = new int[m][n];
+        char[][] markTable = new char[m][n];
 
         // 세로
         for (int i = 0; i <m; i++) {
@@ -417,11 +417,12 @@ public class R1Test {
             for (int j = 0; j <n; j++) {
 
                 if (i == 0 && j == 0) {
+                    markTable[i][j]= 'W';
                     continue;
                 }
 
                 int pos =  cityMap[i][j];
-                System.out.print(pos);
+//                System.out.print(pos);
 
 //                int up, down, left , right = -1;
 //                if(j != 0) left = cityMap[i][j-1];
@@ -429,26 +430,50 @@ public class R1Test {
 //                if(i != 0) up = cityMap[i-1][j];
 //                if(i != 0) down = cityMap[i+1][j];
 
-                int up = -1, left = -1;
-                if(j != 0) left = cityMap[i][j-1];
-                if(i != 0) up = cityMap[i-1][j];
+                int up = 'X', left = 'X';
+                if(j != 0) left = markTable[i][j-1];
+                if(i != 0) up = markTable[i-1][j];
 
                 if(pos == 1 ){
                     markTable[i][j]= 'X';
                 }else if (pos ==2){
-                    if(up == 'U' && left == 'L' )  markTable[i][j]= 'W';
-                    if(up == 'U' && left != 'L' )  markTable[i][j]= 'U';
-                    if(up != 'U' && left == 'L' )  markTable[i][j]= 'L';
+                    if((up == 'U' || up == 'W') && (left == 'L' || left == 'W'))  markTable[i][j]= 'W';
+                    else if((up == 'U' || up == 'W') )  markTable[i][j]= 'U';
+                    else if((left == 'L' || left == 'W') )  markTable[i][j]= 'L';
+                    else markTable[i][j]= 'X';
                 }else if (pos == 0){
-                    if(up == 'U' || up == 'W' )  markTable[i][j]= 'W';
-
-                }
-
+                    if(up != 'X' && left != 'X')  markTable[i][j]= 'W';
+                    else if(up == 'U'  || up == 'W')  markTable[i][j]= 'U';
+                    else if(left == 'L'|| left == 'W')  markTable[i][j]= 'L';
+                    else markTable[i][j]= 'X';
+                }else markTable[i][j]= 'X';
 
             }
-            System.out.println("");
-
         }
+
+
+        // debug
+
+        for (int i = 0; i <m; i++) {
+            for (int j = 0; j < n; j++) {
+
+                System.out.print(cityMap[i][j]);
+            }
+            System.out.println("");
+        }
+
+
+
+        for (int i = 0; i <m; i++) {
+            for (int j = 0; j < n; j++) {
+
+                System.out.print(markTable[i][j]);
+            }
+            System.out.println("");
+        }
+
+
+
 
         int answer = 0;
         return answer;
