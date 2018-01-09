@@ -163,7 +163,7 @@ public class R1Test {
             if(exp.size() != 0){
                 point = exp.remove(0);
             }else{
-//                maxSizeOfOneArea = maxSizeOfOneArea +1;
+//                numberOfArea = numberOfArea + 1;
                 point = (int[]) checkList.remove(0);
                 int y = point[0];
                 int x = point[1];
@@ -228,6 +228,8 @@ public class R1Test {
 
                     rsMap.put(symbol, (int) (rsMap.get(symbol)) + 1);
                 }
+            }else if(exp.size() == 0){
+                numberOfArea = numberOfArea + 1;
             }
 
         }
