@@ -431,8 +431,12 @@ public class R1Test {
 //                if(i != 0) down = cityMap[i+1][j];
 
                 int up = 'X', left = 'X';
+                int upVal = 'X', leftVal = 'X';
                 if(j != 0) left = markTable[i][j-1];
                 if(i != 0) up = markTable[i-1][j];
+
+                if(j != 0) leftVal = cityMap[i][j-1];
+                if(i != 0) upVal = cityMap[i-1][j];
 
                 if(pos == 1 ){
                     markTable[i][j]= 'X';
@@ -442,12 +446,11 @@ public class R1Test {
                     else if((left == 'L' || left == 'W') )  markTable[i][j]= 'L';
                     else markTable[i][j]= 'X';
                 }else if (pos == 0){
-                    if(up != 'X' && left != 'X')  markTable[i][j]= 'W';
-                    else if(up == 'U'  || up == 'W')  markTable[i][j]= 'U';
-                    else if(left == 'L'|| left == 'W')  markTable[i][j]= 'L';
+                    if((up == 'U' || up == 'W') && (left == 'L' || left == 'W')) markTable[i][j]= 'W';
+                    else if(up == 'U'  || up == 'W' || (up == 'L' && upVal ==0 )) markTable[i][j]= 'U';
+                    else if(left == 'L'|| left == 'W' || (left == 'U' && leftVal ==0 ))  markTable[i][j]= 'L';
                     else markTable[i][j]= 'X';
                 }else markTable[i][j]= 'X';
-
             }
         }
 
