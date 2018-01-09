@@ -422,13 +422,6 @@ public class R1Test {
                 }
 
                 int pos =  cityMap[i][j];
-//                System.out.print(pos);
-
-//                int up, down, left , right = -1;
-//                if(j != 0) left = cityMap[i][j-1];
-//                if(j+1 < n) right= cityMap[i][j+1];
-//                if(i != 0) up = cityMap[i-1][j];
-//                if(i != 0) down = cityMap[i+1][j];
 
                 int up = 'X', left = 'X';
                 int upVal = 'X', leftVal = 'X';
@@ -455,8 +448,42 @@ public class R1Test {
         }
 
 
-        // debug
+        // reverse find
+        int answer = 0;
 
+        List<int[]>  storePath = new ArrayList();
+
+        storePath.add(new int[]{m-1, n-1});
+
+
+        while (storePath.size() != 0) {
+
+            int [] store = storePath.remove(0);
+            int i = store[0];
+            int j = store[1];
+            if (i == 0 && j == 0) {
+                answer = answer + 1;
+            }
+
+            char mark = markTable[i][j];
+
+            if (mark == 'L') {
+                if (j != 0 )storePath.add(new int[]{i, j-1});
+            } else if (mark == 'U') {
+                if (i != 0 )storePath.add(new int[]{i-1, j});
+            } else if (mark == 'W') {
+                if (i != 0 ) storePath.add(new int[]{i-1, j});
+                if (j != 0 ) storePath.add(new int[]{i, j - 1});
+
+            } else if (mark == 'X') {
+//                storePath.remove(0);
+            }
+
+
+        }
+
+
+        // debug
         for (int i = 0; i <m; i++) {
             for (int j = 0; j < n; j++) {
 
@@ -464,8 +491,6 @@ public class R1Test {
             }
             System.out.println("");
         }
-
-
 
         for (int i = 0; i <m; i++) {
             for (int j = 0; j < n; j++) {
@@ -476,10 +501,8 @@ public class R1Test {
         }
 
 
-
-
-        int answer = 0;
-        return answer;
+        System.out.println("answer == " + answer % 20170805);
+        return answer % 20170805;
     }
 
 }
