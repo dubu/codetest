@@ -392,8 +392,66 @@ public class R1Test {
 
             }
         }
-
-
-
     }
+
+
+    @Test
+    public void walkTest() {
+
+        int MOD = 20170805;
+
+        int[][] cityMap = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
+        walk(3,6,cityMap);
+    }
+
+
+    public int walk(int m, int n, int[][] cityMap) {
+
+
+        int[][] markTable = new int[m][n];
+
+        // 세로
+        for (int i = 0; i <m; i++) {
+
+            // 가로
+            for (int j = 0; j <n; j++) {
+
+                if (i == 0 && j == 0) {
+                    continue;
+                }
+
+                int pos =  cityMap[i][j];
+                System.out.print(pos);
+
+//                int up, down, left , right = -1;
+//                if(j != 0) left = cityMap[i][j-1];
+//                if(j+1 < n) right= cityMap[i][j+1];
+//                if(i != 0) up = cityMap[i-1][j];
+//                if(i != 0) down = cityMap[i+1][j];
+
+                int up = -1, left = -1;
+                if(j != 0) left = cityMap[i][j-1];
+                if(i != 0) up = cityMap[i-1][j];
+
+                if(pos == 1 ){
+                    markTable[i][j]= 'X';
+                }else if (pos ==2){
+                    if(up == 'U' && left == 'L' )  markTable[i][j]= 'W';
+                    if(up == 'U' && left != 'L' )  markTable[i][j]= 'U';
+                    if(up != 'U' && left == 'L' )  markTable[i][j]= 'L';
+                }else if (pos == 0){
+                    if(up == 'U' || up == 'W' )  markTable[i][j]= 'W';
+
+                }
+
+
+            }
+            System.out.println("");
+
+        }
+
+        int answer = 0;
+        return answer;
+    }
+
 }
