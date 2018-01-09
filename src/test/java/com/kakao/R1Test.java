@@ -400,8 +400,6 @@ public class R1Test {
 
         int MOD = 20170805;
 
-
-
         int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
         if (walk(3,3,cityMap)==6) {
 
@@ -458,7 +456,7 @@ public class R1Test {
                     else if((left == 'L' || left == 'W') )  markTable[i][j]= 'L';
                     else markTable[i][j]= 'X';
                 }else if (pos == 0){
-                    if((up == 'U' || up == 'W' || (up == 'L' && upVal ==0 )) && (left == 'L' || left == 'W'|| (left == 'U' && leftVal ==0 ) )) markTable[i][j]= 'W';
+                    if((up == 'U' || (up == 'W' && upVal ==0) || (up == 'L' && upVal ==0 )) && (left == 'L' || (left == 'W' && leftVal == 2 )|| (left == 'U' && leftVal ==0 ) )) markTable[i][j]= 'W';
                     else if(up == 'U'  || up == 'W' || (up == 'L' && upVal ==0 )) markTable[i][j]= 'U';
                     else if(left == 'L'|| left == 'W' || (left == 'U' && leftVal ==0 ))  markTable[i][j]= 'L';
                     else markTable[i][j]= 'X';
