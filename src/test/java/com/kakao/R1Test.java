@@ -477,54 +477,44 @@ public class R1Test {
 
                 int pos = cityMap[i][j];
 
-                int up = 'X', left = 'X', down = 'X', right = 'X';
+                int up = 'X', left = 'X';
                 int upVal = '1', downVal = '1', leftVal = '1', rightVal = '1';
                 if (j != 0) left = markTable[i][j - 1];
                 if (i != 0) up = markTable[i - 1][j];
 
                 if (j != 0) leftVal = cityMap[i][j - 1];
-                if (j + 1 != n) rightVal = cityMap[i][j + 1];
                 if (i != 0) upVal = cityMap[i - 1][j];
-                if (i + 1 != m) downVal = cityMap[i + 1][j];
 
                 if (pos == 1) {
                     markTable[i][j] = 'X';
-                } else if (pos == 2) {
-
+                } else if (pos == 2 || pos ==0) {
 
                     boolean upable = false;
                     boolean leftable = false;
 
-                    if ((up == 'U' || (up == 'W' && i != m - 1 && downVal != 1)) || (up == 'L' && upVal == 0))
-                        upable = true;
-                    if ((left == 'L' || (left == 'W' && j != n - 1 && rightVal != 1)) || (left == 'U' && leftVal == 0))
-                        leftable = true;
+//                    if ((up == 'U' || (up == 'W' && i != m - 1 && downVal != 1)) || (up == 'L' && upVal == 0))
+//                        upable = true;
+//                    if ((left == 'L' || (left == 'W' && j != n - 1 && rightVal != 1)) || (left == 'U' && leftVal == 0))
+//                        leftable = true;
+                    //  W L U X
+                    //  0 1 2
+                    //  W 0 2 , L 0 , U 0,2 ,
+                    // 가장자리 맨바닥 체크
+
+                    // W 0 2 , L 0 2 , U 0 ,
+                    if( (up == 'W' && upVal !=1) || (up == 'L' && upVal ==0 ) || (up == 'U' && upVal !=1) ) upable = true;
+                    if( (left == 'W' && leftVal !=1) || (left == 'L' && leftVal ==0 ) || (left == 'U' && leftVal !=1) ) upable = true;
+
 
                     if (upable && leftable) {
                         markTable[i][j] = 'W';
+                        if(j == n-1) markTable[i][j] = 'U';
+                        if(i == m-1) markTable[i][j] = 'L';
                     } else if (upable && !leftable) {
                         markTable[i][j] = 'U';
                     } else if (!upable && leftable) {
                         markTable[i][j] = 'L';
                     } else markTable[i][j] = 'X';
-
-                } else if (pos == 0) {
-                    boolean upable = false;
-                    boolean leftable = false;
-
-                    if ((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W' && upVal == 0)|| (up == 'W' && upVal == 2) || (up == 'L' && upVal == 0))
-                        upable = true;
-                    if ((left == 'L' && (leftVal == 2 || leftVal == 0)) || (left == 'W' && leftVal == 0) || (left == 'W' && leftVal == 2)  || (left == 'U' && leftVal == 0))
-                        leftable = true;
-
-                    if (upable && leftable) {
-                        markTable[i][j] = 'W';
-                    } else if (upable && !leftable) {
-                        markTable[i][j] = 'U';
-                    } else if (!upable && leftable) {
-                        markTable[i][j] = 'L';
-                    } else markTable[i][j] = 'X';
-
 
                 } else markTable[i][j] = 'X';
             }
