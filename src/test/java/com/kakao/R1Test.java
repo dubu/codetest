@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 /**
@@ -391,26 +392,61 @@ public class R1Test {
 
 
     @Test
-    public void walkTest() throws Exception {
+    public void getCaseTest() {
 
-        int MOD = 20170805;
+        // test genertation
+        Random random = new Random(10);
 
-        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
-        if (walk(3,3,cityMap)==6) {
+        random.nextInt(10);
 
-        }else{
-            throw new Exception("fail");
+        for (int i = 0; i < 100; i++) {
+            System.out.print(random.nextInt(3));
+
         }
-
-        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
-        if (walk(3, 6, cityMap2) == 2) {
-
-        } else {
-            throw new Exception("fail2");
-        }
-
 
     }
+
+    @Test
+    public void walkTest() throws Exception {
+
+        Random random = new Random();
+        int MOD = 20170805;
+
+//        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
+//        if (walk(3,3,cityMap)==6) {
+//
+//        }else{
+//            throw new Exception("fail");
+//        }
+//
+//        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
+//        if (walk(3, 6, cityMap2) == 2) {
+//
+//        } else {
+//            throw new Exception("fail2");
+//        }
+
+
+        int m = 10;
+        int n =  random.nextInt(10);
+        n = 500;
+
+        int[][] cityMap3 = new int[m][n];
+        for (int i = 0; i < m; i++) {
+
+            // 가로
+            for (int j = 0; j < n; j++) {
+
+//                cityMap3[i][j] = random.nextInt(3);
+                cityMap3[i][j] = 0;
+
+            }
+        }
+
+        walk(m, n, cityMap3);
+
+    }
+
 
 
     public int walk(int m, int n, int[][] cityMap) {
@@ -502,7 +538,7 @@ public class R1Test {
         storePath.add(new int[]{m - 1, n - 1});
 
 
-        while (storePath.size() != 0) {
+        while (storePath.size() > 0) {
 
             int[] store = storePath.remove(0);
             int i = store[0];
