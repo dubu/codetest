@@ -412,24 +412,24 @@ public class R1Test {
         Random random = new Random();
         int MOD = 20170805;
 
-        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
-        if (walk(3,3,cityMap)==6) {
+//        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
+//        if (walk(3,3,cityMap)==6) {
+//
+//        }else{
+//            throw new Exception("fail");
+//        }
+//
+//        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
+//        if (walk(3, 6, cityMap2) == 2) {
+//
+//        } else {
+//            throw new Exception("fail2");
+//        }
 
-        }else{
-            throw new Exception("fail");
-        }
 
-        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
-        if (walk(3, 6, cityMap2) == 2) {
-
-        } else {
-            throw new Exception("fail2");
-        }
-
-
-        int m = 100;
+        int m = 10;
         int n =  random.nextInt(10);
-        n = 500;
+        n = 10;
 
         int[][] cityMap3 = new int[m][n];
         for (int i = 0; i < m; i++) {
@@ -442,6 +442,13 @@ public class R1Test {
 
             }
         }
+
+        for (int i = 0; i <  random.nextInt(10); i++) {
+
+            cityMap3[random.nextInt(m)][random.nextInt(m)] = 1;
+            cityMap3[random.nextInt(m)][random.nextInt(m)] = 2;
+        }
+
 
         walk(m, n, cityMap3);
 
@@ -464,6 +471,9 @@ public class R1Test {
                     markTable[i][j] = 'W';
                     continue;
                 }
+
+
+                // 이하 다시 짜야 할듯.. ;;
 
                 int pos = cityMap[i][j];
 
@@ -502,9 +512,9 @@ public class R1Test {
                     boolean upable = false;
                     boolean leftable = false;
 
-                    if ((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W' && upVal == 0) || (up == 'L' && upVal == 0))
+                    if ((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W' && upVal == 0)|| (up == 'W' && upVal == 2) || (up == 'L' && upVal == 0))
                         upable = true;
-                    if ((left == 'L' && (leftVal == 2 || leftVal == 0)) || (left == 'W' && leftVal == 0) || (left == 'U' && leftVal == 0))
+                    if ((left == 'L' && (leftVal == 2 || leftVal == 0)) || (left == 'W' && leftVal == 0) || (left == 'W' && leftVal == 2)  || (left == 'U' && leftVal == 0))
                         leftable = true;
 
                     if (upable && leftable) {
@@ -579,6 +589,14 @@ public class R1Test {
             for (int j = 0; j < n; j++) {
 
                 System.out.print(markTable[i][j]);
+            }
+            System.out.println("");
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+
+                System.out.print(pointTable[i][j]+",");
             }
             System.out.println("");
         }
