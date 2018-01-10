@@ -412,38 +412,38 @@ public class R1Test {
         Random random = new Random();
         int MOD = 20170805;
 
-//        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
-//        if (walk(3,3,cityMap)==6) {
-//
-//        }else{
-//            throw new Exception("fail");
-//        }
-//
-//        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
-//        if (walk(3, 6, cityMap2) == 2) {
-//
-//        } else {
-//            throw new Exception("fail2");
-//        }
+        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
+        if (walk(3,3,cityMap)==6) {
 
-
-        int m = 10;
-        int n =  random.nextInt(10);
-        n = 500;
-
-        int[][] cityMap3 = new int[m][n];
-        for (int i = 0; i < m; i++) {
-
-            // 가로
-            for (int j = 0; j < n; j++) {
-
-//                cityMap3[i][j] = random.nextInt(3);
-                cityMap3[i][j] = 0;
-
-            }
+        }else{
+            throw new Exception("fail");
         }
 
-        walk(m, n, cityMap3);
+        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
+        if (walk(3, 6, cityMap2) == 2) {
+
+        } else {
+            throw new Exception("fail2");
+        }
+
+
+//        int m = 10;
+//        int n =  random.nextInt(10);
+//        n = 500;
+//
+//        int[][] cityMap3 = new int[m][n];
+//        for (int i = 0; i < m; i++) {
+//
+//            // 가로
+//            for (int j = 0; j < n; j++) {
+//
+////                cityMap3[i][j] = random.nextInt(3);
+//                cityMap3[i][j] = 0;
+//
+//            }
+//        }
+//
+//        walk(m, n, cityMap3);
 
     }
 
@@ -480,11 +480,7 @@ public class R1Test {
                 if (pos == 1) {
                     markTable[i][j] = 'X';
                 } else if (pos == 2) {
-//                    if((up == 'U' || (up == 'W' && i != m-1)) && (left == 'L' || (left == 'W'&& j != n-1)))  markTable[i][j]= 'W';
-//                    else if(upVal == 0  && leftVal == 0)  markTable[i][j]= 'W';
-//                    else if((up == 'U' || up == 'W') )  markTable[i][j]= 'U';
-//                    else if((left == 'L' || left == 'W') )  markTable[i][j]= 'L';
-//                    else markTable[i][j]= 'X';
+
 
                     boolean upable = false;
                     boolean leftable = false;
@@ -508,7 +504,6 @@ public class R1Test {
 
                     if ((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W' && upVal == 0) || (up == 'L' && upVal == 0))
                         upable = true;
-//                    if(( left == 'L' && (leftVal== 2 || leftVal == 0)) ||(left == 'W' && j != n-1 && rightVal != 1) || (left == 'U' && leftVal ==0 )) leftable = true;
                     if ((left == 'L' && (leftVal == 2 || leftVal == 0)) || (left == 'W' && leftVal == 0) || (left == 'U' && leftVal == 0))
                         leftable = true;
 
@@ -520,11 +515,7 @@ public class R1Test {
                         markTable[i][j] = 'L';
                     } else markTable[i][j] = 'X';
 
-//                    if((up == 'U' || (up == 'W' && upVal ==0) || (up == 'L' && upVal ==0 )) && (left == 'L' || (left == 'W' && leftVal == 2 )|| (left == 'U' && leftVal ==0 ) )) markTable[i][j]= 'W';
-//                    if((up == 'U' && (upVal < 2)) || (up == 'W')  || (up == 'L') && (upVal == 0)       )  markTable[i][j]= 'W';
-//                    else if(up == 'U'  || up == 'W' || (up == 'L' && upVal ==0 )) markTable[i][j]= 'U';
-//                    else if(left == 'L'|| left == 'W' || (left == 'U' && leftVal ==0 ))  markTable[i][j]= 'L';
-//                    else markTable[i][j]= 'X';
+
                 } else markTable[i][j] = 'X';
             }
         }
@@ -533,54 +524,52 @@ public class R1Test {
         // reverse find
         int answer = 0;
 
-        List<int[]> storePath = new ArrayList();
-
-        storePath.add(new int[]{m - 1, n - 1});
-
-
-        while (storePath.size() > 0) {
-
-            int[] store = storePath.remove(0);
-            int i = store[0];
-            int j = store[1];
-            if (i == 0 && j == 0) {
-                answer = answer + 1;
-            }
-
-            while (!(i == 0 && j == 0)) {
-                char mark = markTable[i][j];
-
-                if (mark == 'L') {
-//                if (j != 0 )storePath.add(new int[]{i, j-1});
-                    if (j != 0 )  j = j - 1;
-                } else if (mark == 'U') {
-//                if (i != 0 )storePath.add(new int[]{i-1, j});
-                    if (i != 0 ) i = i - 1;
-                } else if (mark == 'W') {
-                    if (i != 0) storePath.add(new int[]{i - 1, j});
-                    if (j != 0) storePath.add(new int[]{i, j - 1});
-                    break;
-
-                } else if (mark == 'X') {
-                    break;
-//                storePath.remove(0);
-                }else{
-                    break;
-                }
-
-                if (i == 0 && j == 0) {
-                    answer = answer + 1;
-                }
-            }
-
-
-        }
-
-
-        // debug
+        int[][] pointTable = new int[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
 
+                int s = markTable[i][j];
+                if(i == 0 && j ==0){
+                    pointTable[i][j]=1;
+                    continue;
+                }
+
+                int left = 0;
+                int up = 0;
+                if (j != 0) left = pointTable[i][j - 1];
+                if (i != 0) up = pointTable[i - 1][j];
+
+
+                switch (s) {
+                    case 'U':
+                        pointTable[i][j] = up;
+                        break;
+                    case 'L':
+                        pointTable[i][j] = left;
+                        break;
+                    case 'W':
+                        pointTable[i][j] = up + left;
+                        break;
+                    case 'X':
+                        pointTable[i][j] = 0;
+                        break;
+                    default:
+
+                        break;
+                }
+
+
+            }
+            System.out.println("");
+        }
+
+        // debug
+
+        answer = pointTable[m-1][n-1];
+
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 System.out.print(cityMap[i][j]);
             }
             System.out.println("");
