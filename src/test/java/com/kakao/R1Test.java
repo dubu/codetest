@@ -103,26 +103,25 @@ public class R1Test {
 
 
         int[][] picture = {
-              {0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0}
-            , {0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0}
-            , {0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0}
-            , {0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0}
-            , {0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0}
-            , {0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0}
-            , {0,1,1,1,1,3,1,1,1,1,3,1,1,1,1,0}
-            , {0,1,1,1,3,1,3,1,1,3,1,3,1,1,1,0}
-            , {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0}
-            , {0,1,2,2,2,1,1,1,1,1,1,2,2,2,1,0}
-            , {0,1,1,1,1,1,3,1,1,3,1,1,1,1,1,0}
-            , {0,0,1,1,1,1,1,3,3,1,1,1,1,1,0,0}
-            , {0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0}
-            , {0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0}
+            {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0}
+            , {0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0}
+            , {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}
+            , {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}
+            , {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}
+            , {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0}
+            , {0, 1, 1, 1, 1, 3, 1, 1, 1, 1, 3, 1, 1, 1, 1, 0}
+            , {0, 1, 1, 1, 3, 1, 3, 1, 1, 3, 1, 3, 1, 1, 1, 0}
+            , {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+            , {0, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 0}
+            , {0, 1, 1, 1, 1, 1, 3, 1, 1, 3, 1, 1, 1, 1, 1, 0}
+            , {0, 0, 1, 1, 1, 1, 1, 3, 3, 1, 1, 1, 1, 1, 0, 0}
+            , {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}
+            , {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0}
         };
         int[] rs = colorBook(14, 16, picture);
 
 //        System.out.println(rs);
     }
-
 
 
     public int[] colorBook(int m, int n, int[][] picture) {
@@ -131,7 +130,7 @@ public class R1Test {
         int maxSizeOfOneArea = 0;
 
 
-        int [][] delPicture =  new int[m][n];
+        int[][] delPicture = new int[m][n];
 
         List checkList = new ArrayList();
         Map rsMap = new HashMap();
@@ -139,14 +138,14 @@ public class R1Test {
 
             for (int i = 0; i < n; i++) {
 
-                int [] pos = new int []{j,i};
+                int[] pos = new int[]{j, i};
 
                 if (picture[j][i] == 0) {
-                    delPicture[j][i]=0;
+                    delPicture[j][i] = 0;
                     continue;
                 }
 
-                delPicture[j][i]=1;
+                delPicture[j][i] = 1;
                 checkList.add(pos);
 
 
@@ -156,13 +155,13 @@ public class R1Test {
         //recursive
 
 
-        List<int []> exp = new ArrayList();
-        while(checkList.size() != 0 || exp.size() !=0){
+        List<int[]> exp = new ArrayList();
+        while (checkList.size() != 0 || exp.size() != 0) {
 
             int[] point;
-            if(exp.size() != 0){
+            if (exp.size() != 0) {
                 point = exp.remove(0);
-            }else{
+            } else {
 //                numberOfArea = numberOfArea + 1;
                 point = (int[]) checkList.remove(0);
                 int y = point[0];
@@ -171,21 +170,19 @@ public class R1Test {
                 int symbol = picture[y][x];
                 if (rsMap.get(symbol) != null) {
                     maxSizeOfOneArea = Math.max(maxSizeOfOneArea, (Integer) rsMap.get(symbol));
-                    rsMap.put(symbol,null);
+                    rsMap.put(symbol, null);
                 }
             }
 
             int y = point[0];
             int x = point[1];
 
-            if(delPicture[y][x] ==0){
+            if (delPicture[y][x] == 0) {
                 continue;
-            }else{
+            } else {
 
-                delPicture[y][x]= 0;
+                delPicture[y][x] = 0;
             }
-
-
 
 
             int symbol = picture[y][x];
@@ -195,22 +192,22 @@ public class R1Test {
             }
             int up = 0, down = 0, left = 0, right = 0;
 
-            if (y != 0) up = picture[y-1][x];
-            if (y + 1 < m) down = picture[y+1][x];
-            if (x != 0) left = picture[y][x-1];
-            if (x + 1 < n) right = picture[y][x+1];
+            if (y != 0) up = picture[y - 1][x];
+            if (y + 1 < m) down = picture[y + 1][x];
+            if (x != 0) left = picture[y][x - 1];
+            if (x + 1 < n) right = picture[y][x + 1];
 
             if (symbol == up || symbol == down || symbol == left || symbol == right) {
 
-                if (symbol == up && delPicture[y-1][x] == 1) exp.add(new int []{y-1,x});
-                if (symbol == down && delPicture[y+1][x] == 1) exp.add(new int []{y+1,x});
-                if (symbol == left && delPicture[y][x-1] == 1) exp.add(new int []{y,x-1});
-                if (symbol == right && delPicture[y][x+1] == 1) exp.add(new int []{y,x+1});
+                if (symbol == up && delPicture[y - 1][x] == 1) exp.add(new int[]{y - 1, x});
+                if (symbol == down && delPicture[y + 1][x] == 1) exp.add(new int[]{y + 1, x});
+                if (symbol == left && delPicture[y][x - 1] == 1) exp.add(new int[]{y, x - 1});
+                if (symbol == right && delPicture[y][x + 1] == 1) exp.add(new int[]{y, x + 1});
 
                 if (rsMap.get(symbol) == null) {
 
                     numberOfArea = numberOfArea + 1;
-                    rsMap.put(symbol,  1);
+                    rsMap.put(symbol, 1);
 
 
 //                    if (symbol == up && checkList.contains(new int []{up,x})) exp.add(new int []{up,x});
@@ -219,16 +216,15 @@ public class R1Test {
 //                    if (symbol == right && checkList.contains(new int []{y,right})) exp.add(new int []{y,right});
 
 
-
                     //expendable ?
 
 
-                }else{
+                } else {
 
 
                     rsMap.put(symbol, (int) (rsMap.get(symbol)) + 1);
                 }
-            }else if(exp.size() == 0){
+            } else if (exp.size() == 0) {
                 numberOfArea = numberOfArea + 1;
             }
 
@@ -248,7 +244,7 @@ public class R1Test {
         }
 
 
-        System.out.println(String.format("%s %s",answer[0], answer[1]));
+        System.out.println(String.format("%s %s", answer[0], answer[1]));
         return answer;
     }
 
@@ -282,8 +278,8 @@ public class R1Test {
                     if (map.get(symbol) == null) {
 
                         numberOfArea = numberOfArea + 1;
-                        map.put(symbol,  1);
-                    }else{
+                        map.put(symbol, 1);
+                    } else {
 
                         map.put(symbol, (int) (map.get(symbol)) + 1);
                     }
@@ -310,7 +306,6 @@ public class R1Test {
         answer[1] = maxSizeOfOneArea;
 
 
-
         // debug
         for (int[] ints : picture) {
             for (int anInt : ints) {
@@ -321,7 +316,7 @@ public class R1Test {
         }
 
 
-        System.out.println(String.format("%s %s",answer[0], answer[1]));
+        System.out.println(String.format("%s %s", answer[0], answer[1]));
         return answer;
     }
 
@@ -379,7 +374,7 @@ public class R1Test {
     @Test
     public void contaionTest() {
 
-        int m = 2, n=2;
+        int m = 2, n = 2;
 
         List checkList = new ArrayList();
         Map rsMap = new HashMap();
@@ -387,7 +382,7 @@ public class R1Test {
 
             for (int j = 0; j < n; j++) {
 
-                int [] pos = new int []{j,i};
+                int[] pos = new int[]{j, i};
                 checkList.add(pos);
 
             }
@@ -408,14 +403,11 @@ public class R1Test {
         }
 
         int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
-        if (walk(3,6,cityMap2) == 2) {
+        if (walk(3, 6, cityMap2) == 2) {
 
-        }else{
+        } else {
             throw new Exception("fail2");
         }
-
-
-
 
 
     }
@@ -427,31 +419,31 @@ public class R1Test {
         char[][] markTable = new char[m][n];
 
         // 세로
-        for (int i = 0; i <m; i++) {
+        for (int i = 0; i < m; i++) {
 
             // 가로
-            for (int j = 0; j <n; j++) {
+            for (int j = 0; j < n; j++) {
 
                 if (i == 0 && j == 0) {
-                    markTable[i][j]= 'W';
+                    markTable[i][j] = 'W';
                     continue;
                 }
 
-                int pos =  cityMap[i][j];
+                int pos = cityMap[i][j];
 
                 int up = 'X', left = 'X', down = 'X', right = 'X';
-                int upVal = '1', downVal = '1' , leftVal = '1' , rightVal = '1';
-                if(j != 0) left = markTable[i][j-1];
-                if(i != 0) up = markTable[i-1][j];
+                int upVal = '1', downVal = '1', leftVal = '1', rightVal = '1';
+                if (j != 0) left = markTable[i][j - 1];
+                if (i != 0) up = markTable[i - 1][j];
 
-                if(j != 0) leftVal = cityMap[i][j-1];
-                if(j+1 != n) rightVal = cityMap[i][j+1];
-                if(i != 0) upVal = cityMap[i-1][j];
-                if(i+1 != m) downVal = cityMap[i+1][j];
+                if (j != 0) leftVal = cityMap[i][j - 1];
+                if (j + 1 != n) rightVal = cityMap[i][j + 1];
+                if (i != 0) upVal = cityMap[i - 1][j];
+                if (i + 1 != m) downVal = cityMap[i + 1][j];
 
-                if(pos == 1 ){
-                    markTable[i][j]= 'X';
-                }else if (pos ==2){
+                if (pos == 1) {
+                    markTable[i][j] = 'X';
+                } else if (pos == 2) {
 //                    if((up == 'U' || (up == 'W' && i != m-1)) && (left == 'L' || (left == 'W'&& j != n-1)))  markTable[i][j]= 'W';
 //                    else if(upVal == 0  && leftVal == 0)  markTable[i][j]= 'W';
 //                    else if((up == 'U' || up == 'W') )  markTable[i][j]= 'U';
@@ -461,39 +453,43 @@ public class R1Test {
                     boolean upable = false;
                     boolean leftable = false;
 
-                    if((up == 'U' || (up == 'W' && i != m-1  && downVal != 1))  ||  (up == 'L' && upVal == 0)) upable = true;
-                    if((left == 'L' || (left == 'W'&& j != n-1 && rightVal != 1 ))  || (left == 'U' && leftVal ==0 )) leftable = true;
+                    if ((up == 'U' || (up == 'W' && i != m - 1 && downVal != 1)) || (up == 'L' && upVal == 0))
+                        upable = true;
+                    if ((left == 'L' || (left == 'W' && j != n - 1 && rightVal != 1)) || (left == 'U' && leftVal == 0))
+                        leftable = true;
 
-                    if(upable && leftable){
-                        markTable[i][j]= 'W';
-                    }else if(upable && !leftable){
-                        markTable[i][j]= 'U';
-                    }else if(!upable && leftable){
-                        markTable[i][j]= 'L';
-                    }else markTable[i][j]= 'X';
+                    if (upable && leftable) {
+                        markTable[i][j] = 'W';
+                    } else if (upable && !leftable) {
+                        markTable[i][j] = 'U';
+                    } else if (!upable && leftable) {
+                        markTable[i][j] = 'L';
+                    } else markTable[i][j] = 'X';
 
-                }else if (pos == 0){
+                } else if (pos == 0) {
                     boolean upable = false;
                     boolean leftable = false;
 
-                    if((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W' && upVal ==0 )  || (up == 'L' && upVal == 0)) upable = true;
+                    if ((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W' && upVal == 0) || (up == 'L' && upVal == 0))
+                        upable = true;
 //                    if(( left == 'L' && (leftVal== 2 || leftVal == 0)) ||(left == 'W' && j != n-1 && rightVal != 1) || (left == 'U' && leftVal ==0 )) leftable = true;
-                    if(( left == 'L' && (leftVal== 2 || leftVal == 0)) ||(left == 'W' && leftVal == 0 ) || (left == 'U' && leftVal ==0 )) leftable = true;
+                    if ((left == 'L' && (leftVal == 2 || leftVal == 0)) || (left == 'W' && leftVal == 0) || (left == 'U' && leftVal == 0))
+                        leftable = true;
 
-                    if(upable && leftable){
-                        markTable[i][j]= 'W';
-                    }else if(upable && !leftable){
-                        markTable[i][j]= 'U';
-                    }else if(!upable && leftable){
-                        markTable[i][j]= 'L';
-                    }else markTable[i][j]= 'X';
+                    if (upable && leftable) {
+                        markTable[i][j] = 'W';
+                    } else if (upable && !leftable) {
+                        markTable[i][j] = 'U';
+                    } else if (!upable && leftable) {
+                        markTable[i][j] = 'L';
+                    } else markTable[i][j] = 'X';
 
 //                    if((up == 'U' || (up == 'W' && upVal ==0) || (up == 'L' && upVal ==0 )) && (left == 'L' || (left == 'W' && leftVal == 2 )|| (left == 'U' && leftVal ==0 ) )) markTable[i][j]= 'W';
 //                    if((up == 'U' && (upVal < 2)) || (up == 'W')  || (up == 'L') && (upVal == 0)       )  markTable[i][j]= 'W';
 //                    else if(up == 'U'  || up == 'W' || (up == 'L' && upVal ==0 )) markTable[i][j]= 'U';
 //                    else if(left == 'L'|| left == 'W' || (left == 'U' && leftVal ==0 ))  markTable[i][j]= 'L';
 //                    else markTable[i][j]= 'X';
-                }else markTable[i][j]= 'X';
+                } else markTable[i][j] = 'X';
             }
         }
 
@@ -501,32 +497,44 @@ public class R1Test {
         // reverse find
         int answer = 0;
 
-        List<int[]>  storePath = new ArrayList();
+        List<int[]> storePath = new ArrayList();
 
-        storePath.add(new int[]{m-1, n-1});
+        storePath.add(new int[]{m - 1, n - 1});
 
 
         while (storePath.size() != 0) {
 
-            int [] store = storePath.remove(0);
+            int[] store = storePath.remove(0);
             int i = store[0];
             int j = store[1];
             if (i == 0 && j == 0) {
                 answer = answer + 1;
             }
 
-            char mark = markTable[i][j];
+            while (!(i == 0 && j == 0)) {
+                char mark = markTable[i][j];
 
-            if (mark == 'L') {
-                if (j != 0 )storePath.add(new int[]{i, j-1});
-            } else if (mark == 'U') {
-                if (i != 0 )storePath.add(new int[]{i-1, j});
-            } else if (mark == 'W') {
-                if (i != 0 ) storePath.add(new int[]{i-1, j});
-                if (j != 0 ) storePath.add(new int[]{i, j - 1});
+                if (mark == 'L') {
+//                if (j != 0 )storePath.add(new int[]{i, j-1});
+                    if (j != 0 )  j = j - 1;
+                } else if (mark == 'U') {
+//                if (i != 0 )storePath.add(new int[]{i-1, j});
+                    if (i != 0 ) i = i - 1;
+                } else if (mark == 'W') {
+                    if (i != 0) storePath.add(new int[]{i - 1, j});
+                    if (j != 0) storePath.add(new int[]{i, j - 1});
+                    break;
 
-            } else if (mark == 'X') {
+                } else if (mark == 'X') {
+                    break;
 //                storePath.remove(0);
+                }else{
+                    break;
+                }
+
+                if (i == 0 && j == 0) {
+                    answer = answer + 1;
+                }
             }
 
 
@@ -534,7 +542,7 @@ public class R1Test {
 
 
         // debug
-        for (int i = 0; i <m; i++) {
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
 
                 System.out.print(cityMap[i][j]);
@@ -542,7 +550,7 @@ public class R1Test {
             System.out.println("");
         }
 
-        for (int i = 0; i <m; i++) {
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
 
                 System.out.print(markTable[i][j]);
