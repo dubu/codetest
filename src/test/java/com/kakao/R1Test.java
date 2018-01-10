@@ -476,8 +476,9 @@ public class R1Test {
                     boolean upable = false;
                     boolean leftable = false;
 
-                    if((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W'&& i != m-1  && downVal != 1)  || (up == 'L' && upVal == 0)) upable = true;
-                    if((left == 'L' && (leftVal== 2 || leftVal == 0)) || (left == 'W'&& j != n-1 && rightVal != 1 ) || (left == 'U' && leftVal ==0 )) leftable = true;
+                    if((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W' && upVal ==0 )  || (up == 'L' && upVal == 0)) upable = true;
+//                    if(( left == 'L' && (leftVal== 2 || leftVal == 0)) ||(left == 'W' && j != n-1 && rightVal != 1) || (left == 'U' && leftVal ==0 )) leftable = true;
+                    if(( left == 'L' && (leftVal== 2 || leftVal == 0)) ||(left == 'W' && leftVal == 0 ) || (left == 'U' && leftVal ==0 )) leftable = true;
 
                     if(upable && leftable){
                         markTable[i][j]= 'W';
