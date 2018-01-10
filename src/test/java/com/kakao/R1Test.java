@@ -427,23 +427,23 @@ public class R1Test {
         }
 
 
-//        int m = 10;
-//        int n =  random.nextInt(10);
-//        n = 500;
-//
-//        int[][] cityMap3 = new int[m][n];
-//        for (int i = 0; i < m; i++) {
-//
-//            // 가로
-//            for (int j = 0; j < n; j++) {
-//
-////                cityMap3[i][j] = random.nextInt(3);
-//                cityMap3[i][j] = 0;
-//
-//            }
-//        }
-//
-//        walk(m, n, cityMap3);
+        int m = 100;
+        int n =  random.nextInt(10);
+        n = 500;
+
+        int[][] cityMap3 = new int[m][n];
+        for (int i = 0; i < m; i++) {
+
+            // 가로
+            for (int j = 0; j < n; j++) {
+
+//                cityMap3[i][j] = random.nextInt(3);
+                cityMap3[i][j] = 0;
+
+            }
+        }
+
+        walk(m, n, cityMap3);
 
     }
 
@@ -522,9 +522,9 @@ public class R1Test {
 
 
         // reverse find
-        int answer = 0;
+        long answer = 0;
 
-        int[][] pointTable = new int[m][n];
+        long[][] pointTable = new long[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
 
@@ -534,8 +534,8 @@ public class R1Test {
                     continue;
                 }
 
-                int left = 0;
-                int up = 0;
+                long left = 0;
+                long up = 0;
                 if (j != 0) left = pointTable[i][j - 1];
                 if (i != 0) up = pointTable[i - 1][j];
 
@@ -585,7 +585,8 @@ public class R1Test {
 
 
         System.out.println("answer == " + answer % 20170805);
-        return answer % 20170805;
+        return (int) (answer % 20170805);
+
     }
 
 }
