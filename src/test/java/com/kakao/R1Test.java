@@ -400,12 +400,12 @@ public class R1Test {
 
         int MOD = 20170805;
 
-//        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
-//        if (walk(3,3,cityMap)==6) {
-//
-//        }else{
-//            throw new Exception("fail");
-//        }
+        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
+        if (walk(3,3,cityMap)==6) {
+
+        }else{
+            throw new Exception("fail");
+        }
 
         int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
         if (walk(3,6,cityMap2) == 2) {
@@ -439,28 +439,45 @@ public class R1Test {
 
                 int pos =  cityMap[i][j];
 
-                int up = 'X', left = 'X';
-                int upVal = 'X', leftVal = 'X';
+                int up = 'X', left = 'X', down = 'X', right = 'X';
+                int upVal = '1', downVal = '1' , leftVal = '1' , rightVal = '1';
                 if(j != 0) left = markTable[i][j-1];
                 if(i != 0) up = markTable[i-1][j];
 
                 if(j != 0) leftVal = cityMap[i][j-1];
+                if(j+1 != n) rightVal = cityMap[i][j+1];
                 if(i != 0) upVal = cityMap[i-1][j];
+                if(i+1 != m) downVal = cityMap[i+1][j];
 
                 if(pos == 1 ){
                     markTable[i][j]= 'X';
                 }else if (pos ==2){
-                    if((up == 'U' || (up == 'W' && i != m-1)) && (left == 'L' || (left == 'W'&& j != n-1)))  markTable[i][j]= 'W';
-                    else if(upVal == 0  && leftVal == 0)  markTable[i][j]= 'W';
-                    else if((up == 'U' || up == 'W') )  markTable[i][j]= 'U';
-                    else if((left == 'L' || left == 'W') )  markTable[i][j]= 'L';
-                    else markTable[i][j]= 'X';
+//                    if((up == 'U' || (up == 'W' && i != m-1)) && (left == 'L' || (left == 'W'&& j != n-1)))  markTable[i][j]= 'W';
+//                    else if(upVal == 0  && leftVal == 0)  markTable[i][j]= 'W';
+//                    else if((up == 'U' || up == 'W') )  markTable[i][j]= 'U';
+//                    else if((left == 'L' || left == 'W') )  markTable[i][j]= 'L';
+//                    else markTable[i][j]= 'X';
+
+                    boolean upable = false;
+                    boolean leftable = false;
+
+                    if((up == 'U' || (up == 'W' && i != m-1  && downVal != 1))  ||  (up == 'L' && upVal == 0)) upable = true;
+                    if((left == 'L' || (left == 'W'&& j != n-1 && rightVal != 1 ))  || (left == 'U' && leftVal ==0 )) leftable = true;
+
+                    if(upable && leftable){
+                        markTable[i][j]= 'W';
+                    }else if(upable && !leftable){
+                        markTable[i][j]= 'U';
+                    }else if(!upable && leftable){
+                        markTable[i][j]= 'L';
+                    }else markTable[i][j]= 'X';
+
                 }else if (pos == 0){
                     boolean upable = false;
                     boolean leftable = false;
 
-                    if((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W')  || (up == 'L' && upVal == 0)) upable = true;
-                    if((left == 'L' && (leftVal== 2 || leftVal == 0)) || (left == 'W') || (left == 'U' && leftVal ==0 )) leftable = true;
+                    if((up == 'U' && (upVal == 2 || upVal == 0)) || (up == 'W'&& i != m-1  && downVal != 1)  || (up == 'L' && upVal == 0)) upable = true;
+                    if((left == 'L' && (leftVal== 2 || leftVal == 0)) || (left == 'W'&& j != n-1 && rightVal != 1 ) || (left == 'U' && leftVal ==0 )) leftable = true;
 
                     if(upable && leftable){
                         markTable[i][j]= 'W';
