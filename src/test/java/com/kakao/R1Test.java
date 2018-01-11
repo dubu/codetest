@@ -413,21 +413,6 @@ public class R1Test {
         Random random = new Random();
         int MOD = 20170805;
 
-        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
-        if (walk(3,3,cityMap)==6) {
-
-        }else{
-            throw new Exception("fail");
-        }
-
-        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
-        if (walk(3, 6, cityMap2) == 2) {
-
-        } else {
-            throw new Exception("fail2");
-        }
-
-
         int m = 10;
         int n =  random.nextInt(10);
         n = 10;
@@ -443,14 +428,16 @@ public class R1Test {
 
             }
         }
-
         for (int i = 0; i <  random.nextInt(10); i++) {
 
             cityMap3[random.nextInt(m)][random.nextInt(m)] = 1;
             cityMap3[random.nextInt(m)][random.nextInt(m)] = 2;
         }
 
-        walk(m, n, cityMap3);
+//        walk(m, n, cityMap3);
+
+        Assert.assertEquals(6, walk(3,3, new int[][]{{0,0,0}, {0,0,0}, {0,0,0}}));
+        Assert.assertEquals(2, walk(3,6 , new int[][]{{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}}));
 
         Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
         Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
@@ -458,8 +445,11 @@ public class R1Test {
         Assert.assertEquals(0, walk(2, 2, new int[][]{{0, 2}, {2, 0}}));
 
 
-        Assert.assertEquals(52, walk(5,5, new int[][]{{0,0,0,0,0},{0,0,0,0,0},{0,0,2,0,0},{0,0,0,0,0},{0,0,0,0,0} }));
-        Assert.assertEquals(74, walk(5,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,2,0,0},{0,0,1,1,0,0,0},{2,0,0,0,0,0,0}}));
+
+//        Assert.assertEquals(52, walk(5,5, new int[][]{{0,0,0,0,0},{0,0,0,0,0},{0,0,2,0,0},{0,0,0,0,0},{0,0,0,0,0} }));
+        Assert.assertEquals(74, walk(5,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,2,2,2,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0}}));
+
+
 
     }
 
@@ -575,8 +565,21 @@ public class R1Test {
                 if (j != 0) left = pointTable[i][j - 1];
 
 
-                if (i > 1 &&  markTable[i-1][j] == 'W' && cityMap[i-1][j] ==2 ) up = pointTable[i - 2][j];
-                if (j > 1 &&  markTable[i][j-1] == 'W' && cityMap[i][j-1] ==2 ) left = pointTable[i][j-2];
+                if (i > 1 &&  markTable[i-1][j] == 'W' && cityMap[i-1][j] ==2 ) {
+                    int ii =  i-1;
+                    while(ii -1 ==2){
+                        ii = ii -1;
+                    }
+                    up = pointTable[ii - 1][j];
+                }
+
+                if (j > 1 &&  markTable[i][j-1] == 'W' && cityMap[i][j-1] ==2 ) {
+                    int jj =  j -1;
+                    while(jj -1 ==2){
+                        jj = jj -1;
+                    }
+                    left = pointTable[i][jj-2];
+                }
 
 
                 switch (s) {
