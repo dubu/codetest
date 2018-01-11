@@ -1,5 +1,6 @@
 package com.kakao;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -449,8 +450,16 @@ public class R1Test {
             cityMap3[random.nextInt(m)][random.nextInt(m)] = 2;
         }
 
+        walk(m, n, cityMap3);
 
-//        walk(m, n, cityMap3);
+        Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
+        Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
+        Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 0}, {2, 0}}));
+        Assert.assertEquals(0, walk(2, 2, new int[][]{{0, 2}, {2, 0}}));
+
+
+        Assert.assertEquals(52, walk(5,5, new int[][]{{0,0,0,0,0},{0,0,0,0,0},{0,0,2,0,0},{0,0,0,0,0},{0,0,0,0,0} }));
+        Assert.assertEquals(74, walk(5,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,2,0,0},{0,0,1,1,0,0,0},{2,0,0,0,0,0,0}}));
 
     }
 
@@ -503,12 +512,30 @@ public class R1Test {
 //                        leftable = true;
                     //  W L U X
                     //  0 1 2
-                    //  W 0 2 , L 0 , U 0,2 ,
+                    //  W 0 2 , L 0 , U 0,2 , 2이면 위에 값이 있어야 한다.
+
                     // 가장자리 맨바닥 체크
 
                     // W 0 2 , L 0 2 , U 0 ,
-                    if( (up == 'W' && upVal !=1) || (up == 'L' && upVal ==0 ) || (up == 'U' && upVal !=1) ) upable = true;
-                    if( (left == 'W' && leftVal !=1) || (left == 'L' && leftVal !=1 ) || (left == 'U' && leftVal ==0) ) leftable = true;
+                    if( (up == 'W' && upVal !=1) || (up == 'L' && upVal ==0 ) || (up == 'U' && upVal !=1) ){
+                        upable = true;
+
+                        if(upVal ==2){
+                            char uup = 'X';
+                            if (i > 1) uup = markTable[i - 2][j];
+                            if(uup == 'X') upable = false;
+                        }
+                    }
+
+                    if( (left == 'W' && leftVal !=1) || (left == 'L' && leftVal !=1 ) || (left == 'U' && leftVal ==0) ) {
+                        leftable = true;
+                        if(leftVal ==2){
+                            char lleft = 'X';
+                            if (j >1 ) lleft = markTable[i][j-2];
+                            if(lleft == 'X') leftable = false;
+
+                        }
+                    }
 
 
                     if (upable && leftable) {
@@ -542,8 +569,8 @@ public class R1Test {
                     continue;
                 }
 
-                long left = 0;
-                long up = 0;
+                long left = -1000000000;
+                long up = -1000000000;
                 if (i != 0) up = pointTable[i - 1][j];
                 if (j != 0) left = pointTable[i][j - 1];
 
@@ -572,14 +599,12 @@ public class R1Test {
 
 
             }
-            System.out.println("");
         }
 
-        // debug
 
         answer = pointTable[m-1][n-1];
 
-
+        // debug
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 System.out.print(cityMap[i][j]);
@@ -605,7 +630,14 @@ public class R1Test {
 
 
         System.out.println("answer == " + answer % 20170805);
+
+
+        /// debug
+
+
         return (int) (answer % 20170805);
+
+
 
     }
 
