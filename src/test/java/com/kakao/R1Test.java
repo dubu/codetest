@@ -687,6 +687,74 @@ public class R1Test {
 
         long answer = 0;
 
+
+        int[][] v = new int[m][n];
+        int[][] h = new int[m][n];
+
+        // 세로
+        for (int i = 0; i < m; i++) {
+
+            // 가로
+            for (int j = 0; j < n; j++) {
+
+                if(i == 0 && j ==0){
+                    v[0][0]=1;
+                    h[0][0]=1;
+                    continue;
+                }
+
+                int pos = cityMap[i][j];
+
+                if(pos ==1){
+                    v[i][j] = 0;
+                    h[i][j] = 0;
+                }else if(pos ==0){
+
+                    if(j == 0){
+                        v[i][j] = 0;
+                    }else{
+                        v[i][j] = (v[i][j-1]+h[i][j-1]%MOD);
+                    }
+
+                    if(i == 0){
+                        h[i][j] = 0;
+                    }else{
+                        h[i][j] = (h[i-1][j]+v[i-1][j]%MOD);
+                    }
+
+                }else if(pos ==2 ){
+                    v[i][j] = v[i][j-1];
+                    h[i][j] = h[i-1][j];
+                }
+
+
+
+            }
+        }
+
+
+
+        // debug
+
+        // 세로
+        for (int i = 0; i < m; i++) {
+
+            // 가로
+            for (int j = 0; j < n; j++) {
+
+                int count = v[i][j]+h[i][j];
+                System.out.print(count);
+
+
+//                System.out.print(v[i][j]);
+//                System.out.print(h[i][j]);
+
+
+            }
+            System.out.println("");
+        }
+
+        answer = v[m-1][n-1] + h[m-1][n-1];
         return (int) (answer % MOD);
     }
 
