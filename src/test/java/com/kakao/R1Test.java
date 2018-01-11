@@ -407,6 +407,16 @@ public class R1Test {
 
     }
 
+
+    @Test
+    public void modTest() {
+
+
+        int answer =20170806 ;
+        System.out.println(answer % 20170805);
+
+    }
+
     @Test
     public void walkTest() throws Exception {
 
@@ -428,38 +438,51 @@ public class R1Test {
 
             }
         }
-        for (int i = 0; i <  random.nextInt(10); i++) {
+        for (int i = 0; i <  random.nextInt(20); i++) {
 
             cityMap3[random.nextInt(m)][random.nextInt(m)] = 1;
             cityMap3[random.nextInt(m)][random.nextInt(m)] = 2;
         }
 
-//        walk(m, n, cityMap3);
+        cityMap3[0][0]=0;
+        cityMap3[m-1][n-1]=0;
 
-//        Assert.assertEquals(6, walk(3,3, new int[][]{{0,0,0}, {0,0,0}, {0,0,0}}));
-//        Assert.assertEquals(2, walk(3,6 , new int[][]{{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}}));
-//        Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
-//        Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
-//        Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 0}, {2, 0}}));
-//        Assert.assertEquals(0, walk(2, 2, new int[][]{{0, 2}, {2, 0}}));
+
+
+        Assert.assertEquals(6, walk(3,3, new int[][]{{0,0,0}, {0,0,0}, {0,0,0}}));
+        Assert.assertEquals(2, walk(3,6 , new int[][]{{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}}));
+        Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
+        Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
+        Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 0}, {2, 0}}));
+        Assert.assertEquals(0, walk(2, 2, new int[][]{{0, 2}, {2, 0}}));
 
 
 
 //        Assert.assertEquals(52, walk(5,5, new int[][]{{0,0,0,0,0},{0,0,0,0,0},{0,0,2,0,0},{0,0,0,0,0},{0,0,0,0,0} }));
 
 
-//        Assert.assertEquals(105, walk(5,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,2,2,2,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0}}));
-        Assert.assertEquals(105, walk(6,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,0,0,0,0}}));
+        Assert.assertEquals(105, walk(5,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,2,2,2,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0}}));
+        Assert.assertEquals(271, walk(6,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,0,0,0,0}}));
 
+
+
+
+                walk(m, n, cityMap3);
+    }
+
+
+    @Test
+    public void walk2Test() {
+
+        Assert.assertEquals(91, walk(5,9, new int[][]{{0,0,0,0,2,0,2,0,0},{0,0,0,1,0,0,0,0,0},{1,1,0,2,0,0,0,0,0},{1,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}}));
 
 
     }
 
-
-
     public int walk(int m, int n, int[][] cityMap) {
 
 
+        int MOD = 20170805;
         char[][] markTable = new char[m][n];
 
         // 세로
@@ -586,13 +609,13 @@ public class R1Test {
 
                 switch (s) {
                     case 'U':
-                        pointTable[i][j] = up;
+                        pointTable[i][j] = up % MOD;
                         break;
                     case 'L':
-                        pointTable[i][j] = left;
+                        pointTable[i][j] = left % MOD;
                         break;
                     case 'W':
-                        pointTable[i][j] = up + left;
+                        pointTable[i][j] = (up + left) % MOD;
                         break;
                     case 'X':
                         pointTable[i][j] = 0;
@@ -634,16 +657,38 @@ public class R1Test {
         }
 
 
-        System.out.println("answer == " + answer % 20170805);
+        System.out.println("answer == " + answer % MOD);
 
 
         /// debug
 
 
-        return (int) (answer % 20170805);
-
+        return (int) (answer % MOD);
 
 
     }
+
+
+    @Test
+    public void rewalkTest() {
+
+
+        Assert.assertEquals(6, rewalk(3,3, new int[][]{{0,0,0}, {0,0,0}, {0,0,0}}));
+        Assert.assertEquals(2, rewalk(3,6 , new int[][]{{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}}));
+        Assert.assertEquals(1, rewalk(2, 2, new int[][]{{0, 2}, {0, 0}}));
+        Assert.assertEquals(1, rewalk(2, 2, new int[][]{{0, 2}, {0, 0}}));
+        Assert.assertEquals(1, rewalk(2, 2, new int[][]{{0, 0}, {2, 0}}));
+        Assert.assertEquals(0, rewalk(2, 2, new int[][]{{0, 2}, {2, 0}}));
+
+    }
+
+    public int rewalk(int m, int n, int[][] cityMap) {
+        int MOD = 20170805;
+
+        long answer = 0;
+
+        return (int) (answer % MOD);
+    }
+
 
 }
