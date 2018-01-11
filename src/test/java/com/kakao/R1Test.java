@@ -412,19 +412,19 @@ public class R1Test {
         Random random = new Random();
         int MOD = 20170805;
 
-//        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
-//        if (walk(3,3,cityMap)==6) {
-//
-//        }else{
-//            throw new Exception("fail");
-//        }
-//
-//        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
-//        if (walk(3, 6, cityMap2) == 2) {
-//
-//        } else {
-//            throw new Exception("fail2");
-//        }
+        int[][] cityMap = {{0, 0, 0},{0, 0, 0},{0, 0, 0}};
+        if (walk(3,3,cityMap)==6) {
+
+        }else{
+            throw new Exception("fail");
+        }
+
+        int[][] cityMap2 = {{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}};
+        if (walk(3, 6, cityMap2) == 2) {
+
+        } else {
+            throw new Exception("fail2");
+        }
 
 
         int m = 10;
@@ -450,7 +450,7 @@ public class R1Test {
         }
 
 
-        walk(m, n, cityMap3);
+//        walk(m, n, cityMap3);
 
     }
 
@@ -471,6 +471,11 @@ public class R1Test {
                     markTable[i][j] = 'W';
                     continue;
                 }
+
+//                if (i == m-1 && j == n-1) {
+//                    markTable[i][j] = 'W';
+//                    continue;
+//                }
 
 
                 // 이하 다시 짜야 할듯.. ;;
@@ -503,13 +508,16 @@ public class R1Test {
 
                     // W 0 2 , L 0 2 , U 0 ,
                     if( (up == 'W' && upVal !=1) || (up == 'L' && upVal ==0 ) || (up == 'U' && upVal !=1) ) upable = true;
-                    if( (left == 'W' && leftVal !=1) || (left == 'L' && leftVal ==0 ) || (left == 'U' && leftVal !=1) ) upable = true;
+                    if( (left == 'W' && leftVal !=1) || (left == 'L' && leftVal !=1 ) || (left == 'U' && leftVal ==0) ) leftable = true;
 
 
                     if (upable && leftable) {
                         markTable[i][j] = 'W';
-                        if(j == n-1) markTable[i][j] = 'U';
-                        if(i == m-1) markTable[i][j] = 'L';
+
+                        if(pos == 2){
+                            if(j == n-1) markTable[i][j] = 'U';
+                            if(i == m-1) markTable[i][j] = 'L';
+                        }
                     } else if (upable && !leftable) {
                         markTable[i][j] = 'U';
                     } else if (!upable && leftable) {
@@ -536,8 +544,12 @@ public class R1Test {
 
                 long left = 0;
                 long up = 0;
-                if (j != 0) left = pointTable[i][j - 1];
                 if (i != 0) up = pointTable[i - 1][j];
+                if (j != 0) left = pointTable[i][j - 1];
+
+
+                if (i > 1 &&  markTable[i-1][j] == 'W' && cityMap[i-1][j] ==2 ) up = pointTable[i - 2][j];
+                if (j > 1 &&  markTable[i][j-1] == 'W' && cityMap[i][j-1] ==2 ) left = pointTable[i][j-2];
 
 
                 switch (s) {
