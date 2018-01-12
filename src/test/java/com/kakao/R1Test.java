@@ -731,8 +731,8 @@ public class R1Test {
                     h[i][j] = 0;
                 }else if(pos ==0){
 
-                    v[i][j] = (v[i][j]+ v[i][j-1]+h[i-1][j]%MOD);
-                    h[i][j] = (h[i][j]+h[i-1][j]+v[i][j-1]%MOD);
+                    v[i][j] = (v[i][j]+ v[i][j-1]+h[i-1][j])%MOD;
+                    h[i][j] = (h[i][j]+h[i-1][j]+v[i][j-1])%MOD;
 
                 }else if(pos ==2 ){
                     v[i][j] = v[i][j-1];
@@ -781,36 +781,44 @@ public class R1Test {
     @Test
     public void resultDiffTest() {
 
-        Random random = new Random();
-        int m =  random.nextInt(10);
-        int n =  500;
 
-        int[][] cityMap3 = new int[m][n];
-        for (int i = 0; i < m; i++) {
+        for (int k = 0; k <1000; k++) {
 
-            // 가로
-            for (int j = 0; j < n; j++) {
 
-                cityMap3[i][j] = 0;
+            Random random = new Random();
+            int m =  random.nextInt(10);
+            int n =  500;
 
+            m = 10;
+            n = 10;
+
+            int[][] cityMap3 = new int[m][n];
+            for (int i = 0; i < m; i++) {
+
+                // 가로
+                for (int j = 0; j < n; j++) {
+
+                    cityMap3[i][j] = 0;
+
+                }
             }
+
+
+            int defactSize = (int) (m*n*0.1);
+
+            for (int i = 0; i <  random.nextInt(defactSize); i++) {
+
+                cityMap3[random.nextInt(m)][random.nextInt(m)] = 1;
+                cityMap3[random.nextInt(m)][random.nextInt(m)] = 2;
+            }
+
+            cityMap3[0][0]=0;
+            cityMap3[m-1][n-1]=0;
+
+
+            Assert.assertEquals(rewalk(m, n, cityMap3),walk(m, n, cityMap3));
         }
 
-
-        int defactSize = (int) (m*n*0.005);
-
-        for (int i = 0; i <  random.nextInt(defactSize); i++) {
-
-            cityMap3[random.nextInt(m)][random.nextInt(m)] = 1;
-            cityMap3[random.nextInt(m)][random.nextInt(m)] = 2;
-        }
-
-        cityMap3[0][0]=0;
-        cityMap3[m-1][n-1]=0;
-
-
-        walk(m, n, cityMap3);
-        Assert.assertEquals(rewalk(m, n, cityMap3),walk(m, n, cityMap3));
 
     }
 }
