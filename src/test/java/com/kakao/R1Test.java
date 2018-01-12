@@ -458,7 +458,7 @@ public class R1Test {
 
 
 
-//        Assert.assertEquals(52, walk(5,5, new int[][]{{0,0,0,0,0},{0,0,0,0,0},{0,0,2,0,0},{0,0,0,0,0},{0,0,0,0,0} }));
+        Assert.assertEquals(52, walk(5,5, new int[][]{{0,0,0,0,0},{0,0,0,0,0},{0,0,2,0,0},{0,0,0,0,0},{0,0,0,0,0} }));
 
 
         Assert.assertEquals(105, walk(5,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,2,2,2,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0}}));
@@ -680,6 +680,14 @@ public class R1Test {
         Assert.assertEquals(1, rewalk(2, 2, new int[][]{{0, 0}, {2, 0}}));
         Assert.assertEquals(0, rewalk(2, 2, new int[][]{{0, 2}, {2, 0}}));
 
+
+
+        Assert.assertEquals(52, walk(5,5, new int[][]{{0,0,0,0,0},{0,0,0,0,0},{0,0,2,0,0},{0,0,0,0,0},{0,0,0,0,0} }));
+
+
+        Assert.assertEquals(105, walk(5,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,2,2,2,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0}}));
+        Assert.assertEquals(271, walk(6,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,0,0,0,0}}));
+
     }
 
     public int rewalk(int m, int n, int[][] cityMap) {
@@ -687,40 +695,45 @@ public class R1Test {
 
         long answer = 0;
 
+        int[][] cityMap2 = new int[500][500];
+        int[][] v = new int[m+1][n+1];
+        int[][] h = new int[m+1][n+1];
 
-        int[][] v = new int[m][n];
-        int[][] h = new int[m][n];
-
-        // 세로
-        for (int i = 0; i < m; i++) {
+        // ext 0 set
+        for (int i = 0; i < m+1; i++) {
 
             // 가로
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < n+1; j++) {
 
-                if(i == 0 && j ==0){
-                    v[0][0]=1;
-                    h[0][0]=1;
-                    continue;
+
+                if(i == 0 || j ==0){
+                    cityMap2[i][j] = 0;
+                }else{
+                    cityMap2[i][j] = cityMap[i-1][j-1];
                 }
 
-                int pos = cityMap[i][j];
+            }
+        }
+
+
+        v[1][1]=1;
+        h[1][1]=1;
+
+        // 세로
+        for (int i = 1; i <= m; i++) {
+
+            // 가로
+            for (int j = 1; j <= n; j++) {
+
+                int pos = cityMap2[i][j];
 
                 if(pos ==1){
                     v[i][j] = 0;
                     h[i][j] = 0;
                 }else if(pos ==0){
 
-                    if(j == 0){
-                        v[i][j] = 0;
-                    }else{
-                        v[i][j] = (v[i][j-1]+h[i][j-1]%MOD);
-                    }
-
-                    if(i == 0){
-                        h[i][j] = 0;
-                    }else{
-                        h[i][j] = (h[i-1][j]+v[i-1][j]%MOD);
-                    }
+                    v[i][j] = (v[i][j]+ v[i][j-1]+h[i-1][j]%MOD);
+                    h[i][j] = (h[i][j]+h[i-1][j]+v[i][j-1]%MOD);
 
                 }else if(pos ==2 ){
                     v[i][j] = v[i][j-1];
@@ -736,25 +749,32 @@ public class R1Test {
 
         // debug
 
-        // 세로
-        for (int i = 0; i < m; i++) {
 
-            // 가로
-            for (int j = 0; j < n; j++) {
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
 
-                int count = v[i][j]+h[i][j];
-                System.out.print(count);
-
-
-//                System.out.print(v[i][j]);
-//                System.out.print(h[i][j]);
-
-
+                System.out.print(cityMap2[i][j]);
             }
             System.out.println("");
         }
 
-        answer = v[m-1][n-1] + h[m-1][n-1];
+
+        System.out.println("=====");
+
+
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+//                System.out.print(v[i][j-1] + h[i-1][j]);
+                System.out.print(v[i][j]);
+//                System.out.print(h[i][j]);
+            }
+            System.out.println("");
+        }
+
+
+
+
+        answer = v[m][n-1] + h[m-1][n];
         return (int) (answer % MOD);
     }
 
