@@ -412,7 +412,7 @@ public class R1Test {
     public void modTest() {
 
 
-        int answer =20170806 ;
+        int answer = 20170806;
         System.out.println(answer % 20170805);
 
     }
@@ -424,7 +424,7 @@ public class R1Test {
         int MOD = 20170805;
 
         int m = 10;
-        int n =  random.nextInt(10);
+        int n = random.nextInt(10);
         n = 10;
 
         int[][] cityMap3 = new int[m][n];
@@ -437,43 +437,39 @@ public class R1Test {
 
             }
         }
-        for (int i = 0; i <  random.nextInt(20); i++) {
+        for (int i = 0; i < random.nextInt(20); i++) {
 
             cityMap3[random.nextInt(m)][random.nextInt(m)] = 1;
             cityMap3[random.nextInt(m)][random.nextInt(m)] = 2;
         }
 
-        cityMap3[0][0]=0;
-        cityMap3[m-1][n-1]=0;
+        cityMap3[0][0] = 0;
+        cityMap3[m - 1][n - 1] = 0;
 
 
-
-        Assert.assertEquals(6, walk(3,3, new int[][]{{0,0,0}, {0,0,0}, {0,0,0}}));
-        Assert.assertEquals(2, walk(3,6 , new int[][]{{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}}));
+        Assert.assertEquals(6, walk(3, 3, new int[][]{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}));
+        Assert.assertEquals(2, walk(3, 6, new int[][]{{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}}));
         Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
         Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 2}, {0, 0}}));
         Assert.assertEquals(1, walk(2, 2, new int[][]{{0, 0}, {2, 0}}));
         Assert.assertEquals(0, walk(2, 2, new int[][]{{0, 2}, {2, 0}}));
 
 
-
-        Assert.assertEquals(52, walk(5,5, new int[][]{{0,0,0,0,0},{0,0,0,0,0},{0,0,2,0,0},{0,0,0,0,0},{0,0,0,0,0} }));
-
-
-        Assert.assertEquals(105, walk(5,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,2,2,2,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0}}));
-        Assert.assertEquals(271, walk(6,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,0,0,0,0}}));
+        Assert.assertEquals(52, walk(5, 5, new int[][]{{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 2, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}}));
 
 
+        Assert.assertEquals(105, walk(5, 7, new int[][]{{0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 2, 2, 2, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}));
+        Assert.assertEquals(271, walk(6, 7, new int[][]{{0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 2, 0, 0, 0}, {0, 0, 0, 2, 0, 0, 0}, {0, 0, 0, 2, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}));
 
 
-                walk(m, n, cityMap3);
+        walk(m, n, cityMap3);
     }
 
 
     @Test
     public void walk2Test() {
 
-        Assert.assertEquals(91, walk(5,9, new int[][]{{0,0,0,0,2,0,2,0,0},{0,0,0,1,0,0,0,0,0},{1,1,0,2,0,0,0,0,0},{1,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}}));
+        Assert.assertEquals(91, walk(5, 9, new int[][]{{0, 0, 0, 0, 2, 0, 2, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 0, 0}, {1, 1, 0, 2, 0, 0, 0, 0, 0}, {1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0}}));
 
 
     }
@@ -515,7 +511,7 @@ public class R1Test {
 
                 if (pos == 1) {
                     markTable[i][j] = 'X';
-                } else if (pos == 2 || pos ==0) {
+                } else if (pos == 2 || pos == 0) {
 
                     boolean upable = false;
                     boolean leftable = false;
@@ -531,22 +527,22 @@ public class R1Test {
                     // 가장자리 맨바닥 체크
 
                     // W 0 2 , L 0 2 , U 0 ,
-                    if( (up == 'W' && upVal !=1) || (up == 'L' && upVal ==0 ) || (up == 'U' && upVal !=1) ){
+                    if ((up == 'W' && upVal != 1) || (up == 'L' && upVal == 0) || (up == 'U' && upVal != 1)) {
                         upable = true;
 
-                        if(upVal ==2){
+                        if (upVal == 2) {
                             char uup = 'X';
                             if (i > 1) uup = markTable[i - 2][j];
-                            if(uup == 'X') upable = false;
+                            if (uup == 'X') upable = false;
                         }
                     }
 
-                    if( (left == 'W' && leftVal !=1) || (left == 'L' && leftVal !=1 ) || (left == 'U' && leftVal ==0) ) {
+                    if ((left == 'W' && leftVal != 1) || (left == 'L' && leftVal != 1) || (left == 'U' && leftVal == 0)) {
                         leftable = true;
-                        if(leftVal ==2){
+                        if (leftVal == 2) {
                             char lleft = 'X';
-                            if (j >1 ) lleft = markTable[i][j-2];
-                            if(lleft == 'X') leftable = false;
+                            if (j > 1) lleft = markTable[i][j - 2];
+                            if (lleft == 'X') leftable = false;
 
                         }
                     }
@@ -555,9 +551,9 @@ public class R1Test {
                     if (upable && leftable) {
                         markTable[i][j] = 'W';
 
-                        if(pos == 2){
-                            if(j == n-1) markTable[i][j] = 'U';
-                            if(i == m-1) markTable[i][j] = 'L';
+                        if (pos == 2) {
+                            if (j == n - 1) markTable[i][j] = 'U';
+                            if (i == m - 1) markTable[i][j] = 'L';
                         }
                     } else if (upable && !leftable) {
                         markTable[i][j] = 'U';
@@ -578,8 +574,8 @@ public class R1Test {
             for (int j = 0; j < n; j++) {
 
                 int s = markTable[i][j];
-                if(i == 0 && j ==0){
-                    pointTable[i][j]=1;
+                if (i == 0 && j == 0) {
+                    pointTable[i][j] = 1;
                     continue;
                 }
 
@@ -589,20 +585,20 @@ public class R1Test {
                 if (j != 0) left = pointTable[i][j - 1];
 
 
-                if (i > 1 &&  markTable[i][j] == 'W' && cityMap[i-1][j] ==2 ) {
-                    int ii =  i;
-                    while(cityMap[ii-1][j]  ==2){
-                        ii = ii -1;
+                if (i > 1 && markTable[i][j] == 'W' && cityMap[i - 1][j] == 2) {
+                    int ii = i;
+                    while (cityMap[ii - 1][j] == 2) {
+                        ii = ii - 1;
                     }
                     up = pointTable[ii - 1][j];
                 }
 
-                if (j > 1 &&  markTable[i][j] == 'W' && cityMap[i][j-1] ==2 ) {
-                    int jj =  j ;
-                    while( cityMap[i][jj-1] ==2){
-                        jj = jj -1;
+                if (j > 1 && markTable[i][j] == 'W' && cityMap[i][j - 1] == 2) {
+                    int jj = j;
+                    while (cityMap[i][jj - 1] == 2) {
+                        jj = jj - 1;
                     }
-                    left = pointTable[i][jj-1];
+                    left = pointTable[i][jj - 1];
                 }
 
 
@@ -629,7 +625,7 @@ public class R1Test {
         }
 
 
-        answer = pointTable[m-1][n-1];
+        answer = pointTable[m - 1][n - 1];
 
         // debug
         for (int i = 0; i < m; i++) {
@@ -650,7 +646,7 @@ public class R1Test {
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
 
-                System.out.print(pointTable[i][j]+",");
+                System.out.print(pointTable[i][j] + ",");
             }
             System.out.println("");
         }
@@ -672,20 +668,19 @@ public class R1Test {
     public void rewalkTest() {
 
 
-        Assert.assertEquals(6, rewalk(3,3, new int[][]{{0,0,0}, {0,0,0}, {0,0,0}}));
-        Assert.assertEquals(2, rewalk(3,6 , new int[][]{{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}}));
+        Assert.assertEquals(6, rewalk(3, 3, new int[][]{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}));
+        Assert.assertEquals(2, rewalk(3, 6, new int[][]{{0, 2, 0, 0, 0, 2}, {0, 0, 2, 0, 1, 0}, {1, 0, 0, 2, 2, 0}}));
         Assert.assertEquals(1, rewalk(2, 2, new int[][]{{0, 2}, {0, 0}}));
         Assert.assertEquals(1, rewalk(2, 2, new int[][]{{0, 2}, {0, 0}}));
         Assert.assertEquals(1, rewalk(2, 2, new int[][]{{0, 0}, {2, 0}}));
         Assert.assertEquals(0, rewalk(2, 2, new int[][]{{0, 2}, {2, 0}}));
 
 
+        Assert.assertEquals(52, rewalk(5, 5, new int[][]{{0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 2, 0, 0}, {0, 0, 0, 0, 0}, {0, 0, 0, 0, 0}}));
 
-        Assert.assertEquals(52, rewalk(5,5, new int[][]{{0,0,0,0,0},{0,0,0,0,0},{0,0,2,0,0},{0,0,0,0,0},{0,0,0,0,0} }));
 
-
-        Assert.assertEquals(105, rewalk(5,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,2,2,2,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0}}));
-        Assert.assertEquals(271, rewalk(6,7, new int[][]{{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,2,0,0,0},{0,0,0,0,0,0,0}}));
+        Assert.assertEquals(105, rewalk(5, 7, new int[][]{{0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 2, 2, 2, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}));
+        Assert.assertEquals(271, rewalk(6, 7, new int[][]{{0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 2, 0, 0, 0}, {0, 0, 0, 2, 0, 0, 0}, {0, 0, 0, 2, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}}));
 
     }
 
@@ -695,28 +690,28 @@ public class R1Test {
         long answer = 0;
 
         int[][] cityMap2 = new int[501][501];
-        int[][] v = new int[m+1][n+1];
-        int[][] h = new int[m+1][n+1];
+        int[][] v = new int[m + 1][n + 1];
+        int[][] h = new int[m + 1][n + 1];
 
         // ext 0 set
-        for (int i = 0; i < m+1; i++) {
+        for (int i = 0; i < m + 1; i++) {
 
             // 가로
-            for (int j = 0; j < n+1; j++) {
+            for (int j = 0; j < n + 1; j++) {
 
 
-                if(i == 0 || j ==0){
+                if (i == 0 || j == 0) {
                     cityMap2[i][j] = 0;
-                }else{
-                    cityMap2[i][j] = cityMap[i-1][j-1];
+                } else {
+                    cityMap2[i][j] = cityMap[i - 1][j - 1];
                 }
 
             }
         }
 
 
-        v[1][1]=1;
-        h[1][1]=1;
+        v[1][1] = 1;
+        h[1][1] = 1;
 
         // 세로
         for (int i = 1; i <= m; i++) {
@@ -726,24 +721,22 @@ public class R1Test {
 
                 int pos = cityMap2[i][j];
 
-                if(pos ==1){
+                if (pos == 1) {
                     v[i][j] = 0;
                     h[i][j] = 0;
-                }else if(pos ==0){
+                } else if (pos == 0) {
 
-                    v[i][j] = (v[i][j]+ v[i][j-1]+h[i-1][j])%MOD;
-                    h[i][j] = (h[i][j]+h[i-1][j]+v[i][j-1])%MOD;
+                    v[i][j] = (v[i][j] + v[i][j - 1] + h[i - 1][j]) % MOD;
+                    h[i][j] = (h[i][j] + h[i - 1][j] + v[i][j - 1]) % MOD;
 
-                }else if(pos ==2 ){
-                    v[i][j] = v[i][j-1];
-                    h[i][j] = h[i-1][j];
+                } else if (pos == 2) {
+                    v[i][j] = v[i][j - 1];
+                    h[i][j] = h[i - 1][j];
                 }
-
 
 
             }
         }
-
 
 
         // debug
@@ -771,9 +764,7 @@ public class R1Test {
         }
 
 
-
-
-        answer = v[m][n-1] + h[m-1][n];
+        answer = v[m][n - 1] + h[m - 1][n];
         return (int) (answer % MOD);
     }
 
@@ -781,18 +772,16 @@ public class R1Test {
     @Test
     public void resultDiffTest() {
 
+        // walk 는 틀렸다. 왜 틀렸는지 설명하고, 고치시요~
 
+        Assert.assertEquals(0, walk(4, 5, new int[][]{{0, 0, 0, 0, 0}, {0, 0, 0, 0, 1}, {0, 0, 0, 2, 0}, {0, 0, 0, 0, 0}}));
 
-       // walk 는 틀렸다. 왜 틀렸는지 설명하고, 고치시요~
-
-        Assert.assertEquals(0, walk(4,5, new int[][]{{0,0,0,0,0},{0,0,0,0,1},{0,0,0,2,0},{0,0,0,0,0}}));
-
-        for (int k = 0; k <1; k++) {
+        for (int k = 0; k < 1; k++) {
 
 
             Random random = new Random();
-            int m =  random.nextInt(10);
-            int n =  500;
+            int m = random.nextInt(10);
+            int n = 500;
 
             m = 10;
             n = 10;
@@ -809,22 +798,90 @@ public class R1Test {
             }
 
 
-            int defactSize = (int) (m*n*0.1);
+            int defactSize = (int) (m * n * 0.1);
 
-            for (int i = 0; i <  random.nextInt(defactSize); i++) {
+            for (int i = 0; i < random.nextInt(defactSize); i++) {
 
                 cityMap3[random.nextInt(m)][random.nextInt(m)] = 1;
                 cityMap3[random.nextInt(m)][random.nextInt(m)] = 2;
             }
 
-            cityMap3[0][0]=0;
-            cityMap3[m-1][n-1]=0;
+            cityMap3[0][0] = 0;
+            cityMap3[m - 1][n - 1] = 0;
+        }
+
+    }
 
 
+    @Test
+    public void campTest() {
+
+//        4	[[0, 0], [1, 1], [0, 2], [2, 0]] = 3
+        Assert.assertEquals(3, camp(4, new int[][]{{0, 0}, {1, 1}, {0, 2}, {2, 0}}));
+
+    }
+
+    public int camp(int n, int[][] data) {
+        int answer = 0;
+
+        if (n > 2 && n <= 5000) {
+            // pass
+        } else {
+            return -1;
         }
 
 
+        return answer;
+    }
+
+    @Test
+    public void asTest() {
+
+        Assert.assertEquals("HELLO WORLD", ad("HaEaLaLaObWORLDb"));
+//        Assert.assertEquals("SIGONG JOA", ad("SpIpGpOpNpGJqOqA"));
+//        Assert.assertEquals("invalid", ad("AxAxAxAoBoBoB"));
+    }
+
+    public String ad(String sentence) {
+
+        int[] stat  = new int[123];
+        for (int i = 0; i <123 ; i++) {
+           stat[i]= 0;
+        }
+
+        char[] arrs = sentence.toCharArray();
+
+        for (char arr : arrs) {
+//            System.out.println(((int)arr));
+
+            if (arr >= 'a' && arr <= 'z') {
+                // ad char
+                // 97 a
+                // 122 z
+
+                stat[arr] = stat[arr]+1;
+//                System.out.println(arr);
+            }
+        }
+
+        // debug
+        for (int i = (int)'a'; i <= (int)'z' ; i++) {
+
+            if(stat[i] !=0){
+                System.out.println(String.format("%c %d",(char)i,stat[i]));
+            }
+        }
+
+        String answer = "";
+        return answer;
+    }
 
 
+    @Test
+    public void charTest() {
+        System.out.println((int)'a');
+        System.out.println((int)'z');
     }
 }
+
+
