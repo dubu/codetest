@@ -782,7 +782,12 @@ public class R1Test {
     public void resultDiffTest() {
 
 
-        for (int k = 0; k <1000; k++) {
+
+       // walk 는 틀렸다. 왜 틀렸는지 설명하고, 고치시요~
+
+        Assert.assertEquals(0, walk(4,5, new int[][]{{0,0,0,0,0},{0,0,0,0,1},{0,0,0,2,0},{0,0,0,0,0}}));
+
+        for (int k = 0; k <1; k++) {
 
 
             Random random = new Random();
@@ -816,8 +821,9 @@ public class R1Test {
             cityMap3[m-1][n-1]=0;
 
 
-            Assert.assertEquals(rewalk(m, n, cityMap3),walk(m, n, cityMap3));
         }
+
+
 
 
     }
