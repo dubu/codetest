@@ -1,8 +1,18 @@
 package com.kakao;
 
+import com.Conf;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.LongSerializationPolicy;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -916,6 +926,37 @@ public class R1Test {
     public void charTest() {
         System.out.println((int)'a');
         System.out.println((int)'z');
+    }
+
+
+    @Test
+    public void jsonsFileParseTest() {
+
+
+        Reader reader = null;
+        try {
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.setLongSerializationPolicy( LongSerializationPolicy.STRING );
+
+            reader = new FileReader("/Users/rigel/workspace/kozazz/codetest/conf.json");
+            Gson gson = gsonBuilder.create();
+            Conf conf = gson.fromJson(reader, Conf.class);
+//            System.out.println(Long.valueOf(map.get("status").toString()).intValue());
+//            System.out.println(map.get("count"));
+//            System.out.println(map.get("name"));
+            System.out.println(conf.getCount());
+            System.out.println(conf.getCount());
+            System.out.println(conf.getName());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
     }
 }
 
