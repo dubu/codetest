@@ -845,13 +845,22 @@ public class R1Test {
     public String ad(String sentence) {
 
         int[] stat  = new int[123];
+        int[] distance  = new int[123];
+
+
+
         for (int i = 0; i <123 ; i++) {
            stat[i]= 0;
+           distance[i]= 0;
+
         }
 
         char[] arrs = sentence.toCharArray();
 
-        for (char arr : arrs) {
+//        for (char arr : arrs) {
+        for (int i = 0; i < arrs.length; i++) {
+
+            char arr = arrs[i];
 //            System.out.println(((int)arr));
 
             if (arr >= 'a' && arr <= 'z') {
@@ -860,9 +869,35 @@ public class R1Test {
                 // 122 z
 
                 stat[arr] = stat[arr]+1;
+
+                if(distance[arr] == 0){
+                    distance[arr] = i;
+                }else{
+                    distance[arr] = i - distance[arr];
+                }
 //                System.out.println(arr);
             }
         }
+
+
+        for (int i = (int)'a'; i <= (int)'z' ; i++) {
+
+            if(stat[i] !=0){
+//                System.out.println(String.format("%c %d",(char)i,stat[i]));
+
+                int adCount = stat[i];
+
+                if (adCount ==1 || adCount >=3) {
+                    //case 1
+                    System.out.println("CASE1");
+
+                }else if (adCount ==2 || distance[i] >=2 ){
+                    //case 2
+                    System.out.println("CASE2");
+                }
+            }
+        }
+
 
         // debug
         for (int i = (int)'a'; i <= (int)'z' ; i++) {
